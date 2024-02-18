@@ -12,13 +12,14 @@
     "url": "git+https://github.com/abuomerSD/E-commerce-website.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Eltayeb Ibrahim",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/abuomerSD/E-commerce-website/issues"
   },
   "homepage": "https://github.com/abuomerSD/E-commerce-website#readme",
   "dependencies": {
+    "chalk": "^4.1.2",
     "dotenv": "^16.4.4",
     "express": "^4.18.2",
     "sequelize": "^6.37.0",

@@ -10,7 +10,7 @@ product :
 - image
 - saledTimes
 - viewedTimes
-- category id
+- categoryid
 
 sales cart :
 

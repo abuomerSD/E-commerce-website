@@ -10,6 +10,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.saveProduct = void 0;
-const saveProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-});
-exports.saveProduct = saveProduct;
+const database_1 = require("../databaseHandler/database");
+const asyncWrapper_1 = require("../middlewares/asyncWrapper");
+exports.saveProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { productName, quantity, cost, price, image } = req.body;
+    yield database_1.Product.create({
+        productName: productName,
+        quantity: quantity,
+        cost: cost,
+        price: price,
+        image: image,
+    }).then((product) => {
+        res.json(product);
+    });
+}));

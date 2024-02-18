@@ -1,11 +1,18 @@
 import express, {Express, Request, Response} from 'express';
 import {config} from 'dotenv';
 import  {adminRouter} from './routes/adminRoute'
+import {logger} from './middlewares/logger';
+
 const app: Express = express();
 
 config();
 const port: Number | String = process.env.PORT || 3000;
 
+// Request logger middleware for Debuging
+app.use(logger);
+
+// to be sure that the application will accept json
+app.use(express.json());
 
 app.use('/admin', adminRouter);
 
