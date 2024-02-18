@@ -25,7 +25,7 @@ Product.init({
     primaryKey: true,
     defaultValue: UUIDV4,
   },
-  productName: {
+  name: {
     type :DataTypes.STRING,
     allowNull: false,
     unique: true,
@@ -58,5 +58,24 @@ Product.init({
 , {
   sequelize,
   modelName: 'Product',
-  timestamps: true,
 });
+
+export class Category extends Model {}
+
+Category.init({
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: UUIDV4,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  }
+},
+{
+  sequelize,
+  modelName: 'Category'
+})

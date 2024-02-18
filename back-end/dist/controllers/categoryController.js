@@ -9,15 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveProduct = void 0;
+exports.saveCategory = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
-exports.saveProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, quantity, cost, price, image } = req.body;
-    console.log(req.file);
-    yield database_1.Product.create({ name, quantity, cost, price, image }).then((product) => {
-        console.log(req.file);
-        console.log(req);
-        res.json(product);
+const httpStatusCodesStates_1 = require("../utils/httpStatusCodesStates");
+exports.saveCategory = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name } = req.body;
+    yield database_1.Category.create({ name }).then((category) => {
+        res.status(201).json({
+            status: httpStatusCodesStates_1.httpStatus.SUCCESS,
+            data: category,
+        });
     });
 }));

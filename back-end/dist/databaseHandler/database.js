@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Product = void 0;
+exports.Category = exports.Product = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize = new sequelize_1.Sequelize({
     dialect: 'sqlite',
@@ -22,7 +22,7 @@ Product.init({
         primaryKey: true,
         defaultValue: sequelize_1.UUIDV4,
     },
-    productName: {
+    name: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         unique: true,
@@ -54,5 +54,23 @@ Product.init({
 }, {
     sequelize,
     modelName: 'Product',
-    timestamps: true,
+});
+class Category extends sequelize_1.Model {
+}
+exports.Category = Category;
+Category.init({
+    id: {
+        type: sequelize_1.DataTypes.UUID,
+        primaryKey: true,
+        allowNull: false,
+        defaultValue: sequelize_1.UUIDV4,
+    },
+    name: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    }
+}, {
+    sequelize,
+    modelName: 'Category'
 });

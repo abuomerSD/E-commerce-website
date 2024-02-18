@@ -3,15 +3,13 @@ import {Product} from '../databaseHandler/database';
 import {asyncWrapper} from '../middlewares/asyncWrapper'
 
 export const saveProduct = asyncWrapper(async (req:Request, res: Response) => {
-    const {productName, quantity, cost, price, image} = req.body;
+    const {name, quantity, cost, price, image} = req.body;
+    console.log(req.file);
 
-    await Product.create({
-        productName: productName,
-        quantity: quantity,
-        cost: cost,
-        price: price,
-        image: image,
-    }).then((product)=> {
+    await Product.create({name, quantity, cost, price, image}).then((product)=> {
+        console.log(req.file);
+        console.log(req);
         res.json(product);
-    })
+        
+    });
 })

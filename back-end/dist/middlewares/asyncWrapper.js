@@ -4,7 +4,11 @@ exports.asyncWrapper = void 0;
 const asyncWrapper = (fn) => {
     return (req, res, next) => {
         fn(req, res, next).catch((err) => {
-            next(err);
+            res.status(400).json({
+                status: 'fail',
+                data: err,
+            });
+            next();
         });
     };
 };
