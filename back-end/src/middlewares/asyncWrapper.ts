@@ -1,4 +1,3 @@
-import { error } from 'console';
 import {Request, Response} from 'express';
 
 export const asyncWrapper = (fn: Function) => {
@@ -10,5 +9,14 @@ export const asyncWrapper = (fn: Function) => {
             })
             next();
         });
+
+        // try {
+        //     fn(req, res, next);
+        // } catch (error) {
+        //     res.status(400).json({
+        //         status: 'fail',
+        //         data: error,
+        //     })
+        // }
     }
 }

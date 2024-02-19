@@ -10,6 +10,14 @@ const asyncWrapper = (fn) => {
             });
             next();
         });
+        // try {
+        //     fn(req, res, next);
+        // } catch (error) {
+        //     res.status(400).json({
+        //         status: 'fail',
+        //         data: error,
+        //     })
+        // }
     };
 };
 exports.asyncWrapper = asyncWrapper;

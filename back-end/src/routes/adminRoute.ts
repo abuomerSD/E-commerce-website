@@ -1,9 +1,29 @@
 import {Router} from 'express';
-import {saveProduct} from '../controllers/productsController'
+export const adminRouter = Router();
+import {getAllProducts, getProductById, saveProduct, updateProductById} from '../controllers/productsController'
 import { saveCategory } from '../controllers/categoryController';
 import multer from 'multer';
-const upload = multer({dest: 'back-end/uploads/'})
-export const adminRouter = Router();
 
-adminRouter.route('/products').post(saveProduct);
-adminRouter.route('/categories').post(upload.single('image') ,saveCategory);
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {        
+        cb(null, 'uploads/products-images');
+    },
+    filename: function(req, file, cb){
+        const fileExtention = file.mimetype.split('/')[1];
+        const fileName = `product-${Date.now()}.${fileExtention}`;
+        cb(null, fileName);
+    }
+});
+
+const upload = multer({storage: storage, fileFilter: function (req, file, cb){
+    const fileType = file.mimetype.split('/')[0];
+    if(fileType === 'image')
+        cb(null, true);
+    else 
+        cb(null, false);
+}
+})
+
+adminRouter.route('/products').get(getAllProducts).post(upload.single('image'), saveProduct);
+adminRouter.route('/products/:id').get(getProductById).put(updateProductById);
+adminRouter.route('/categories').post(saveCategory);

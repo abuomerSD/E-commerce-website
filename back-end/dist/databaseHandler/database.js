@@ -8,7 +8,7 @@ const sequelize = new sequelize_1.Sequelize({
 });
 // initiallize the tables
 function init() {
-    sequelize.sync({ force: true });
+    sequelize.sync();
 }
 init();
 // Product Table creation
@@ -21,6 +21,9 @@ Product.init({
         allowNull: false,
         primaryKey: true,
         defaultValue: sequelize_1.UUIDV4,
+    }, categoryId: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
     },
     name: {
         type: sequelize_1.DataTypes.STRING,
@@ -46,10 +49,12 @@ Product.init({
     saledTimes: {
         type: sequelize_1.DataTypes.BIGINT,
         allowNull: true,
+        defaultValue: 0,
     },
     viewedTimes: {
         type: sequelize_1.DataTypes.BIGINT,
         allowNull: true,
+        defaultValue: 0,
     },
 }, {
     sequelize,

@@ -15,6 +15,8 @@ const port = process.env.PORT || 3000;
 app.use(logger_1.logger);
 // to be sure that the application will accept json
 app.use(express_1.default.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
 // custom error handler 
 app.use(errorHandler_1.errorHandler);
 app.use('/admin', adminRoute_1.adminRouter);
