@@ -1,8 +1,9 @@
 import {Router} from 'express';
 export const adminRouter = Router();
-import {getAllProducts, getProductById, saveProduct, updateProductById} from '../controllers/productsController'
-import { saveCategory } from '../controllers/categoryController';
+import {delelteProduct, getAllProducts, getProductById, saveProduct, updateProductById} from '../controllers/productsController'
+import { deleteCategory, getAllCategories, getCategoryById, saveCategory, updateCategory } from '../controllers/categoryController';
 import multer from 'multer';
+import { renderControlPanelPage } from '../controllers/controlPanelController';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {        
@@ -22,11 +23,28 @@ const upload = multer({storage: storage, fileFilter: function (req, file, cb){
     else 
         cb(null, false);
 }
-})
+});
+
+
+// admin control panel routes 
+adminRouter.route('/').get(renderControlPanelPage);
 
 // products routes
-adminRouter.route('/products').get(getAllProducts).post(upload.single('image'), saveProduct);
-adminRouter.route('/products/:id').get(getProductById).put(upload.single('image') ,updateProductById);
+adminRouter.route('/products')
+.get(getAllProducts)
+.post(upload.single('image'), saveProduct);
+
+adminRouter.route('/products/:id')
+.get(getProductById)
+.put(upload.single('image') ,updateProductById)
+.delete(delelteProduct);
 
 // categories routes
-adminRouter.route('/categories').post(saveCategory);
+adminRouter.route('/categories')
+.get(getAllCategories)
+.post(saveCategory);
+
+adminRouter.route('/categories/:id')
+.get(getCategoryById)
+.put(updateCategory)
+.delete(deleteCategory);

@@ -1,16 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Category = exports.Product = void 0;
+exports.Product = exports.Category = void 0;
 const sequelize_1 = require("sequelize");
-const sequelize = new sequelize_1.Sequelize({
-    dialect: 'sqlite',
-    storage: './back-end/database/database.sqlite'
+const sequelize = new sequelize_1.Sequelize('ecommerce-website', 'asdf', '', {
+    host: 'localhost',
+    dialect: 'postgres',
+    timezone: '+02:00',
+    dialectOptions: {
+        useUTC: false //for reading from database
+    }
 });
+// const sequelize = new Sequelize({
+//   dialect: 'sqlite',
+//   storage: './back-end/database/database.sqlite',
+// });
 // initiallize the tables
 function init() {
-    sequelize.sync();
+    // sequelize.sync();
+    sequelize.sync({ force: true });
 }
 init();
+// Category table creation
+class Category extends sequelize_1.Model {
+}
+exports.Category = Category;
+Category.init({
+    id: {
+        type: sequelize_1.DataTypes.UUID,
+        primaryKey: true,
+        allowNull: false,
+        defaultValue: sequelize_1.UUIDV4,
+    },
+    name: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    }
+}, {
+    sequelize,
+    modelName: 'Category'
+});
 // Product Table creation
 class Product extends sequelize_1.Model {
 }
@@ -21,9 +50,6 @@ Product.init({
         allowNull: false,
         primaryKey: true,
         defaultValue: sequelize_1.UUIDV4,
-    }, categoryId: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
     },
     name: {
         type: sequelize_1.DataTypes.STRING,
@@ -60,22 +86,8 @@ Product.init({
     sequelize,
     modelName: 'Product',
 });
-class Category extends sequelize_1.Model {
-}
-exports.Category = Category;
-Category.init({
-    id: {
-        type: sequelize_1.DataTypes.UUID,
-        primaryKey: true,
-        allowNull: false,
-        defaultValue: sequelize_1.UUIDV4,
-    },
-    name: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    }
-}, {
-    sequelize,
-    modelName: 'Category'
+// Relationships 
+// Category.hasOne(Product);
+Product.belongsTo(Category, {
+    foreignKey: 'categoryId'
 });

@@ -9,6 +9,7 @@ exports.adminRouter = (0, express_1.Router)();
 const productsController_1 = require("../controllers/productsController");
 const categoryController_1 = require("../controllers/categoryController");
 const multer_1 = __importDefault(require("multer"));
+const controlPanelController_1 = require("../controllers/controlPanelController");
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/products-images');
@@ -27,8 +28,21 @@ const upload = (0, multer_1.default)({ storage: storage, fileFilter: function (r
             cb(null, false);
     }
 });
+// admin control panel routes 
+exports.adminRouter.route('/').get(controlPanelController_1.renderControlPanelPage);
 // products routes
-exports.adminRouter.route('/products').get(productsController_1.getAllProducts).post(upload.single('image'), productsController_1.saveProduct);
-exports.adminRouter.route('/products/:id').get(productsController_1.getProductById).put(upload.single('image'), productsController_1.updateProductById);
+exports.adminRouter.route('/products')
+    .get(productsController_1.getAllProducts)
+    .post(upload.single('image'), productsController_1.saveProduct);
+exports.adminRouter.route('/products/:id')
+    .get(productsController_1.getProductById)
+    .put(upload.single('image'), productsController_1.updateProductById)
+    .delete(productsController_1.delelteProduct);
 // categories routes
-exports.adminRouter.route('/categories').post(categoryController_1.saveCategory);
+exports.adminRouter.route('/categories')
+    .get(categoryController_1.getAllCategories)
+    .post(categoryController_1.saveCategory);
+exports.adminRouter.route('/categories/:id')
+    .get(categoryController_1.getCategoryById)
+    .put(categoryController_1.updateCategory)
+    .delete(categoryController_1.deleteCategory);

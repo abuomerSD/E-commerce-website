@@ -1,22 +1,52 @@
 import {DataTypes, Model, Sequelize, UUIDV4} from 'sequelize';
 
-const sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: './back-end/database/database.sqlite'
+const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
+    host: 'localhost',
+    dialect: 'postgres',
+    timezone: '+02:00',
+    dialectOptions: {
+      useUTC: false //for reading from database
+  }
   });
 
+  // const sequelize = new Sequelize({
+  //   dialect: 'sqlite',
+  //   storage: './back-end/database/database.sqlite',
+  // });
 
 // initiallize the tables
 
 function init() {
-  sequelize.sync();
+  // sequelize.sync();
+  sequelize.sync({force: true});
 }
 
 init();
 
+// Category table creation
+export class Category extends Model {}
+Category.init({
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    allowNull: false,
+    defaultValue: UUIDV4,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  }
+},
+{
+  sequelize,
+  modelName: 'Category'
+});
+
 // Product Table creation
 
 export class Product extends Model {}
+
 
 Product.init({
   id: {
@@ -24,9 +54,6 @@ Product.init({
     allowNull: false,
     primaryKey: true,
     defaultValue: UUIDV4,
-  },categoryId: {
-    type: DataTypes.STRING,
-    allowNull: false,
   },
   name: {
     type :DataTypes.STRING,
@@ -65,22 +92,10 @@ Product.init({
   modelName: 'Product',
 });
 
-export class Category extends Model {}
+// Relationships 
 
-Category.init({
-  id: {
-    type: DataTypes.UUID,
-    primaryKey: true,
-    allowNull: false,
-    defaultValue: UUIDV4,
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  }
-},
-{
-  sequelize,
-  modelName: 'Category'
-})
+// Category.hasOne(Product);
+Product.belongsTo(Category,{
+  foreignKey: 'categoryId'
+});
+
