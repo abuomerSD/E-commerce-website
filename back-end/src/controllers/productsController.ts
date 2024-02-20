@@ -1,7 +1,21 @@
 import {Request, Response} from 'express';
 import {Product} from '../databaseHandler/database';
-import {asyncWrapper} from '../middlewares/asyncWrapper'
+import {asyncWrapper} from '../middlewares/asyncWrapper';
+import fs from 'fs';
+import { Model } from 'sequelize';
+import { ifError } from 'assert';
 
+// this interface is only to reperesnt the updatable attributes of Type Product
+interface ProductType {
+    categoryId: string,
+    name: string,
+    quantity: number,
+    cost: number,
+    price: number,
+    image?: string,
+    saledTimes: bigint,
+    viewedTimes: bigint,
+}
 // save product
 export const saveProduct = asyncWrapper(async (req:Request, res: Response) => {
     const {name, categoryId, quantity, cost, price} = req.body;
@@ -29,11 +43,19 @@ export const getProductById = asyncWrapper(async(req: Request, res: Response) =>
 // update single product using the id
 export const updateProductById = asyncWrapper(async (req: Request, res: Response) => {
     const {id} = req.params;
-    const {name, categoryid ,qty, cost, price, saledTimes, viewedTimes} = req.body;
-    const image = req.file?.filename;
-    let product = await Product.findOne({where: {id}});
-    // console.log(product);
-    res.json(product);
-    const newProduct = {name, categoryid ,qty, cost, price, saledTimes, viewedTimes};
+    const newProduct: ProductType = req.body;
+    newProduct.image = req.file?.filename;
+    let oldProduct: any = await Product.findOne({where: {id}});
     
-})
+    // deleting the old image from harddisk to save some space
+    await fs.unlink(`uploads/products-images/${oldProduct.image}`, (err)=> {
+      if (err) res.status(400).json({status: 'fail', data: err.message})  
+    });
+    
+    oldProduct.set(newProduct);
+    await oldProduct?.save().then((product: any) => res.status(201).json(product));
+
+});
+
+
+// categoryid not updating

@@ -8,10 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateProductById = exports.getProductById = exports.getAllProducts = exports.saveProduct = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
+const fs_1 = __importDefault(require("fs"));
 // save product
 exports.saveProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -36,10 +40,15 @@ exports.getProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaite
 exports.updateProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
     const { id } = req.params;
-    const { name, categoryid, qty, cost, price, saledTimes, viewedTimes } = req.body;
-    const image = (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename;
-    let product = yield database_1.Product.findOne({ where: { id } });
-    // console.log(product);
-    res.json(product);
-    const newProduct = { name, categoryid, qty, cost, price, saledTimes, viewedTimes };
+    const newProduct = req.body;
+    newProduct.image = (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename;
+    let oldProduct = yield database_1.Product.findOne({ where: { id } });
+    // deleting the old image from harddisk to save some space
+    yield fs_1.default.unlink(`uploads/products-images/${oldProduct.image}`, (err) => {
+        if (err)
+            res.status(400).json({ status: 'fail', data: err.message });
+    });
+    oldProduct.set(newProduct);
+    yield (oldProduct === null || oldProduct === void 0 ? void 0 : oldProduct.save().then((product) => res.status(201).json(product)));
 }));
+// categoryid not updating

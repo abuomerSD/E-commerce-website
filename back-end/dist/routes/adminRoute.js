@@ -27,6 +27,8 @@ const upload = (0, multer_1.default)({ storage: storage, fileFilter: function (r
             cb(null, false);
     }
 });
+// products routes
 exports.adminRouter.route('/products').get(productsController_1.getAllProducts).post(upload.single('image'), productsController_1.saveProduct);
-exports.adminRouter.route('/products/:id').get(productsController_1.getProductById).put(productsController_1.updateProductById);
+exports.adminRouter.route('/products/:id').get(productsController_1.getProductById).put(upload.single('image'), productsController_1.updateProductById);
+// categories routes
 exports.adminRouter.route('/categories').post(categoryController_1.saveCategory);

@@ -24,6 +24,9 @@ const upload = multer({storage: storage, fileFilter: function (req, file, cb){
 }
 })
 
+// products routes
 adminRouter.route('/products').get(getAllProducts).post(upload.single('image'), saveProduct);
-adminRouter.route('/products/:id').get(getProductById).put(updateProductById);
+adminRouter.route('/products/:id').get(getProductById).put(upload.single('image') ,updateProductById);
+
+// categories routes
 adminRouter.route('/categories').post(saveCategory);
