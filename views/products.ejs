@@ -70,42 +70,39 @@
                     <th scope="col">Product Name</th>
                     <th scope="col">Product Cost</th>
                     <th scope="col">Product Price</th>
+                    <th scope="col">Product Quantity</th>
                     <th scope="col">Product Category</th>
+                    <th scope="col">Product Image</th>
                     <th scope="col">Edit & Delete</th>
                     <!-- <th scope="col">Handle</th> -->
                   </tr>
                 </thead>
                 <tbody>
                   <% let productRowNumber = 0 %>
+                  <% const currencySign = '$' %>
                   <% products.forEach(product => { %>
+                    <% 
+                      let categoryName = "";
+                      categories.forEach(category => {
+                        if (category.id === product.categoryId) {
+                          categoryName = category.name;
+                        }
+                      })
+                      %>
                     <tr>
                       <th scope="row"><%= productRowNumber + 1 %></th>
                       <td><%= product.name %></td>
-                      <td><%= product.cost %></td>
-                      <td><%= product.price %></td>
-                      <td><%= product.categoryId %></td>
+                      <td><%= product.cost + currencySign %></td>
+                      <td><%= product.price + currencySign %></td>
+                      <td><%= product.quantity %></td>
+                      <td><%= categoryName %></td>
+                      <td><img src="/products-images/<%= product.image %> " alt="Product Image" style="width: 70px;height: 70px;"></td>
+                      
                       <!-- <td><%= product.name %></td> -->
                       <td><button class="btn btn-primary">Edit</button> <button class="btn btn-danger">Delete</button></td>
                     </tr>
+                    <% productRowNumber ++ %>
                   <% }); %>
-
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>White T-shirt</td>
-                    <td>30</td>
-                    <td>50</td>
-                    <td>Men's Clothes</td>
-                    <td><button class="btn btn-primary">Edit</button> <button class="btn btn-danger">Delete</button></td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Black T-shirt</td>
-                    <td>30</td>
-                    <td>50</td>
-                    <td>Men's Clothes</td>
-                    <td><button class="btn btn-primary">Edit</button> <button class="btn btn-danger">Delete</button></td>
-                  </tr>
                   
                 </tbody>
               </table>
