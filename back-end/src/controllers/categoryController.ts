@@ -13,12 +13,23 @@ export const saveCategory = asyncWrapper(async (req: Request, res: Response)=> {
     });
 });
 
-export const getAllCategories = asyncWrapper(async (req: Request, res: Response) => {
-    await Category.findAll().then((categories) => res.status(200).json({
-        status: httpStatus.SUCCESS,
-        data: categories,
-    }));
-} );
+export async function getAllCategories() {
+    let categories:any;
+    await Category.findAll().then(result => {
+        categories = result;
+    })
+    return categories;
+}
+
+// export const getAllCategories = asyncWrapper(async (req?: Request, res?: Response) => {
+//     await Category.findAll().then((categories) => {
+//         return categories;
+//         // res.status(200).json({
+//         //     status: httpStatus.SUCCESS,
+//         //     data: categories,
+//         // })
+//     });
+// } );
 
 export const getCategoryById = asyncWrapper(async (req: Request, res: Response) => {
     const {id} = req.params;

@@ -29,7 +29,7 @@ const upload = (0, multer_1.default)({ storage: storage, fileFilter: function (r
     }
 });
 // admin control panel routes 
-exports.adminRouter.route('/').get(controlPanelController_1.renderControlPanelPage);
+exports.adminRouter.route('/').get(controlPanelController_1.renderProductsPage);
 // products routes
 exports.adminRouter.route('/products')
     .get(productsController_1.getAllProducts)

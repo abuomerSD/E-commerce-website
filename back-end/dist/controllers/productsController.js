@@ -29,15 +29,19 @@ exports.saveProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(v
         });
     });
 }));
-// get all products as json 
-exports.getAllProducts = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield database_1.Product.findAll().then((products) => {
-        res.status(200).json({
-            status: httpStatusCodesStates_1.httpStatus.SUCCESS,
-            data: products,
-        });
+// get all products as array 
+const getAllProducts = () => __awaiter(void 0, void 0, void 0, function* () {
+    let products = [];
+    yield database_1.Product.findAll().then((result) => {
+        products = result;
+        // res.status(200).json({
+        //     status: httpStatus.SUCCESS,
+        //     data: products,
+        // });
     });
-}));
+    return products;
+});
+exports.getAllProducts = getAllProducts;
 // get single product by id
 exports.getProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;

@@ -29,15 +29,18 @@ export const saveProduct = asyncWrapper(async (req:Request, res: Response) => {
     });
 });
 
-// get all products as json 
-export const getAllProducts = asyncWrapper(async(req: Request, res: Response) => {
-    await Product.findAll().then((products)=> {
-        res.status(200).json({
-            status: httpStatus.SUCCESS,
-            data: products,
-        });
-    });     
-});
+// get all products as array 
+export const getAllProducts = async() => {
+    let products: any = [];
+    await Product.findAll().then((result)=> {
+        products = result;
+        // res.status(200).json({
+        //     status: httpStatus.SUCCESS,
+        //     data: products,
+        // });
+    });
+    return products;
+}
 
 // get single product by id
 export const getProductById = asyncWrapper(async(req: Request, res: Response) => {

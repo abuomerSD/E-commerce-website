@@ -22,12 +22,25 @@ exports.saveCategory = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(
         });
     });
 }));
-exports.getAllCategories = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield database_1.Category.findAll().then((categories) => res.status(200).json({
-        status: httpStatusCodesStates_1.httpStatus.SUCCESS,
-        data: categories,
-    }));
-}));
+function getAllCategories() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let categories;
+        yield database_1.Category.findAll().then(result => {
+            categories = result;
+        });
+        return categories;
+    });
+}
+exports.getAllCategories = getAllCategories;
+// export const getAllCategories = asyncWrapper(async (req?: Request, res?: Response) => {
+//     await Category.findAll().then((categories) => {
+//         return categories;
+//         // res.status(200).json({
+//         //     status: httpStatus.SUCCESS,
+//         //     data: categories,
+//         // })
+//     });
+// } );
 exports.getCategoryById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     yield database_1.Category.findOne({ where: { id } }).then(category => res.status(200).json({
