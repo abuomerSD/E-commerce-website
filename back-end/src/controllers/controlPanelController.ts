@@ -7,6 +7,10 @@ import { getAllProducts } from "./productsController";
 
 // getAllCategories().then(result => categories = result);
 
+export const renderAdminHomePage = asyncWrapper(async (req: Request, res: Response) => {
+    res.redirect('/admin/products');
+})
+
 export const renderProductsPage = asyncWrapper( async (req:Request, res: Response) => {
     // the default page is products page
 
@@ -22,7 +26,7 @@ export const renderProductsPage = asyncWrapper( async (req:Request, res: Respons
         products = result;
     });
     
-    res.render('products',{categories, products});
+    res.render('products',{categories, products, title: 'Products'});
     
  }
-)
+);

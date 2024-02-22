@@ -21,13 +21,23 @@ const categoryController_1 = require("./categoryController");
 // save product
 exports.saveProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const { name, categoryId, quantity, cost, price } = req.body;
+    const { name, category_name, quantity, cost, price } = req.body;
     const image = (_a = req.file) === null || _a === void 0 ? void 0 : _a.filename;
+    // to get the categoryId from given Category name
+    let categories = [];
+    let categoryId = '';
+    yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
+    categories.forEach(category => {
+        if (category_name === category.name) {
+            categoryId = category.id;
+        }
+    });
     yield database_1.Product.create({ name, categoryId, quantity, cost, price, image }).then((product) => {
-        res.status(201).json({
-            status: httpStatusCodesStates_1.httpStatus.SUCCESS,
-            data: product,
-        });
+        res.status(201).redirect('/admin/products');
+        // res.status(201).json({
+        //     status: httpStatus.SUCCESS,
+        //     data: product,
+        // });
     });
 }));
 // get all products as array 
@@ -57,7 +67,7 @@ exports.renderProductsPageWithFilteredProducts = (0, asyncWrapper_1.asyncWrapper
     yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
     console.log('pro', products);
     console.log('cat', categories);
-    res.render('products', { products, categories });
+    res.render('products', { products, categories, title: 'Products' });
 }));
 // get single product by id
 exports.getProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

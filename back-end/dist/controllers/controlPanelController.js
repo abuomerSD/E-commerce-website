@@ -9,11 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderProductsPage = void 0;
+exports.renderProductsPage = exports.renderAdminHomePage = void 0;
 const categoryController_1 = require("./categoryController");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const productsController_1 = require("./productsController");
 // getAllCategories().then(result => categories = result);
+exports.renderAdminHomePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.redirect('/admin/products');
+}));
 exports.renderProductsPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // the default page is products page
     let categories = [];
@@ -24,5 +27,5 @@ exports.renderProductsPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __aw
     yield (0, productsController_1.getAllProducts)().then(result => {
         products = result;
     });
-    res.render('products', { categories, products });
+    res.render('products', { categories, products, title: 'Products' });
 }));

@@ -4,7 +4,7 @@ exports.asyncWrapper = void 0;
 const asyncWrapper = (fn) => {
     return (req, res, next) => {
         fn(req, res, next).catch((err) => {
-            res.status(400).send(err.message);
+            res.status(400).render('Error', { error: err.stack, title: 'Error' });
         });
     };
 };

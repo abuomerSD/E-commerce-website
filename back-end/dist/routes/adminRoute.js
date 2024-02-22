@@ -29,10 +29,10 @@ const upload = (0, multer_1.default)({ storage: storage, fileFilter: function (r
     }
 });
 // admin control panel routes 
-exports.adminRouter.route('/').get(controlPanelController_1.renderProductsPage);
+exports.adminRouter.route('/').get(controlPanelController_1.renderAdminHomePage);
 // products routes
 exports.adminRouter.route('/products')
-    .get(productsController_1.getAllProducts)
+    .get(controlPanelController_1.renderProductsPage)
     .post(upload.single('image'), productsController_1.saveProduct);
 exports.adminRouter.route('/products-filter')
     .post(productsController_1.renderProductsPageWithFilteredProducts);

@@ -19,14 +19,25 @@ interface ProductType {
 }
 // save product
 export const saveProduct = asyncWrapper(async (req:Request, res: Response) => {
-    const {name, categoryId, quantity, cost, price} = req.body;
-    const image = req.file?.filename;
+    const {name, category_name, quantity, cost, price} = req.body;
+    const image = req.file?.filename;    
+
+    // to get the categoryId from given Category name
+    let categories: Array<any> = [];
+    let categoryId: string = '';
+    await getAllCategories().then(result => categories = result);
+    categories.forEach(category => {
+        if(category_name === category.name) {
+            categoryId = category.id;
+        }
+    })
     
     await Product.create({name, categoryId, quantity, cost, price, image}).then((product)=> {
-        res.status(201).json({
-            status: httpStatus.SUCCESS,
-            data: product,
-        });
+        res.status(201).redirect('/admin/products');
+        // res.status(201).json({
+        //     status: httpStatus.SUCCESS,
+        //     data: product,
+        // });
         
     });
 });
@@ -62,7 +73,7 @@ export const renderProductsPageWithFilteredProducts = asyncWrapper(async (req:Re
     console.log('cat', categories);
     
     
-    res.render('products', {products ,categories});
+    res.render('products', {products ,categories, title: 'Products'});
 })
 
 // get single product by id
