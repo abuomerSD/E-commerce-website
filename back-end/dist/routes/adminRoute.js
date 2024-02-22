@@ -34,6 +34,8 @@ exports.adminRouter.route('/').get(controlPanelController_1.renderProductsPage);
 exports.adminRouter.route('/products')
     .get(productsController_1.getAllProducts)
     .post(upload.single('image'), productsController_1.saveProduct);
+exports.adminRouter.route('/products-filter')
+    .post(productsController_1.renderProductsPageWithFilteredProducts);
 exports.adminRouter.route('/products/:id')
     .get(productsController_1.getProductById)
     .put(upload.single('image'), productsController_1.updateProductById)

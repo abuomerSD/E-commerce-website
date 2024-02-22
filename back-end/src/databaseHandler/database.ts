@@ -6,7 +6,7 @@ const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
     timezone: '+02:00',
     dialectOptions: {
       useUTC: false //for reading from database
-  }
+  },
   });
 
   // const sequelize = new Sequelize({

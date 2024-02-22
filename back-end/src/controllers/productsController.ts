@@ -1,8 +1,10 @@
 import {Request, Response} from 'express';
-import {Product} from '../databaseHandler/database';
+import {Category, Product} from '../databaseHandler/database';
 import {asyncWrapper} from '../middlewares/asyncWrapper';
 import fs from 'fs';
 import { httpStatus } from '../utils/httpStatusCodesStates';
+import { getAllCategories } from './categoryController';
+import { Sequelize } from 'sequelize';
 
 // this interface is only to reperesnt the updatable attributes of Type Product
 interface ProductType {
@@ -41,6 +43,27 @@ export const getAllProducts = async() => {
     });
     return products;
 }
+
+const getFilteredProducts = async (req: Request) => {
+    let products : Array<Product> = [];
+    const {product_name_search_input} = req.body
+    const name: string = product_name_search_input;
+    // console.log(productName);
+    
+    await Product.findAll({where:{name}}).then(result => products = result);
+    return products;
+}
+
+export const renderProductsPageWithFilteredProducts = asyncWrapper(async (req:Request, res:Response) => {
+    const products : Array<Product> = await getFilteredProducts(req);
+    let categories: Array<Category> = [];
+    await getAllCategories().then(result => categories =result);
+    console.log('pro', products);
+    console.log('cat', categories);
+    
+    
+    res.render('products', {products ,categories});
+})
 
 // get single product by id
 export const getProductById = asyncWrapper(async(req: Request, res: Response) => {

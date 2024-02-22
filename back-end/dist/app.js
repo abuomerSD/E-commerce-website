@@ -8,6 +8,7 @@ const dotenv_1 = require("dotenv");
 const adminRoute_1 = require("./routes/adminRoute");
 const logger_1 = require("./middlewares/logger");
 const errorHandler_1 = require("./middlewares/errorHandler");
+const body_parser_1 = __importDefault(require("body-parser"));
 const app = (0, express_1.default)();
 (0, dotenv_1.config)();
 const port = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.set('view engine', 'ejs');
 app.use(logger_1.logger);
 // to be sure that the application will accept json
 app.use(express_1.default.json());
+app.use(body_parser_1.default.urlencoded({ extended: false }));
 // custom error handler 
 app.use(errorHandler_1.errorHandler);
 app.use('/admin', adminRoute_1.adminRouter);

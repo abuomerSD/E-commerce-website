@@ -5,6 +5,7 @@ import {logger} from './middlewares/logger';
 import { errorHandler } from './middlewares/errorHandler';
 import exp from 'constants';
 import path from 'path';
+import bodyParser from 'body-parser';
 const app: Express = express();
 
 config();
@@ -20,6 +21,8 @@ app.use(logger);
 
 // to be sure that the application will accept json
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 // custom error handler 
 app.use(errorHandler);

@@ -12,11 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.delelteProduct = exports.updateProductById = exports.getProductById = exports.getAllProducts = exports.saveProduct = void 0;
+exports.delelteProduct = exports.updateProductById = exports.getProductById = exports.renderProductsPageWithFilteredProducts = exports.getAllProducts = exports.saveProduct = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const fs_1 = __importDefault(require("fs"));
 const httpStatusCodesStates_1 = require("../utils/httpStatusCodesStates");
+const categoryController_1 = require("./categoryController");
 // save product
 exports.saveProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -42,6 +43,22 @@ const getAllProducts = () => __awaiter(void 0, void 0, void 0, function* () {
     return products;
 });
 exports.getAllProducts = getAllProducts;
+const getFilteredProducts = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    let products = [];
+    const { product_name_search_input } = req.body;
+    const name = product_name_search_input;
+    // console.log(productName);
+    yield database_1.Product.findAll({ where: { name } }).then(result => products = result);
+    return products;
+});
+exports.renderProductsPageWithFilteredProducts = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const products = yield getFilteredProducts(req);
+    let categories = [];
+    yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
+    console.log('pro', products);
+    console.log('cat', categories);
+    res.render('products', { products, categories });
+}));
 // get single product by id
 exports.getProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;

@@ -55,8 +55,21 @@
             <!-- search product starts -->
             <div class="search-product">
               <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search Product" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+                <form action="/admin/products-filter/" method="POST" class="input-group mb-3">
+                  <input type="text" name="product_name_search_input" id="serach-product-input" class="form-control" placeholder="Search Product" aria-describedby="button-addon2" list="products-datalist">
+
+                  <!-- <button class="btn btn-outline-secondary" id="serach-product-button"  type="button" id="button-addon2">Search</button> -->
+
+                  <input type="submit" value="Search" class="btn btn-outline-secondary">
+                  <datalist id="products-datalist">
+                    <% products.forEach(product => { %>
+                      <option value="<%= product.name %>"></option>
+                    <% }); %>
+                  </datalist>
+                </form>
+
+                
+                
               </div>
             </div>
             <!-- search product ends -->
