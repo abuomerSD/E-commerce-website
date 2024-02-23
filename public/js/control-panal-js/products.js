@@ -3,40 +3,38 @@
 // handle search product 
 const searchProductInput = document.getElementById('serach-product-input');
 const searchProductButton = document.getElementById('serach-product-button');
+const paginationLink = document.getElementById('pagination-link');
 
-// searchProductButton.addEventListener('click', async function () {
-//     console.log('search button:', searchProductInput.value);
-//     const data = {"name": searchProductInput.value,}
-//     console.log(JSON.stringify(data));
+// delete product by id
+function showDeleteAlert(id, name) {
+    document.getElementById('deleteAlertBody').innerHTML = `Are you sure you want to delete: ${name} ?`;
+    document.getElementById('deleteAlertButton').addEventListener('click', deleteProduct(id));
+}
 
-//     try {
-//         const response = await fetch('/admin/products/search',{
-//             method: 'post',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 // "Accept": "application/json"
-//             },
-//             body: JSON.stringify(data)
-//         });
-    
-//         const filteredProducts = await response.json();
-//         console.log(filteredProducts);
-//     } catch (error) {
-//         console.log(error.message);
-//         console.log(error.stack);
-//     }
-
-    
-// })
-
-
+async function deleteProduct(id) {
+    const response = await fetch(`/admin/products/${id}`, {
+        method: 'DELETE',
+    });
+    const res = await response.json();
+    console.log(res);
+}
 // fires on load
 const onLoadFuntion = ()=> {
     document.getElementById('products-nav-link').classList.add('active');
-    console.log('test');
-    const data = {"name": "searchProductInput.value,"}
-    console.log(JSON.stringify(data));
-    // getAllCategories();
+
+    // to add active class to current page 
+    setPaginationLinkActive();
+}
+
+function setPaginationLinkActive() {
+    const searchParams = new URLSearchParams(window.location.search);
+    let pageNumber = searchParams.get('pageNumber');
+    if(pageNumber === null) {
+        pageNumber = 1;
+        return;
+    }  
+    const currentPageLink = document.getElementById('pagination-link-' + pageNumber);
+    currentPageLink.classList.add('active');
 }
 
 

@@ -114,8 +114,11 @@ exports.delelteProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaite
         if (err)
             res.status(400).json({ status: 'fail', data: err.message });
     });
-    yield database_1.Product.destroy({ where: { id } }).then(rows => res.status(200).json({
-        status: httpStatusCodesStates_1.httpStatus.SUCCESS,
-        data: `${rows} product deleted`
-    }));
+    yield database_1.Product.destroy({ where: { id } }).then(rows => {
+        res.status(200).json({
+            status: httpStatusCodesStates_1.httpStatus.SUCCESS,
+            data: `${rows} rows deleted`,
+        });
+    });
+    // res.status(200).redirect('/admin/products'));
 }));

@@ -128,8 +128,11 @@ export const delelteProduct = asyncWrapper(async (req: Request, res: Response) =
         if (err) res.status(400).json({status: 'fail', data: err.message})  
     });
 
-    await Product.destroy({where: {id}}).then(rows => res.status(200).json({
-        status: httpStatus.SUCCESS,
-        data: `${rows} product deleted`
-    }))
+    await Product.destroy({where: {id}}).then(rows => {
+        res.status(200).json({
+            status: httpStatus.SUCCESS,
+            data: `${rows} rows deleted`,
+        })
+    })
+        // res.status(200).redirect('/admin/products'));
 });

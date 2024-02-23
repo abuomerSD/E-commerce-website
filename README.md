@@ -59,5 +59,7 @@ supplliers :
 
 todo :
 
+- fix search single product issue
+<!-- - add active to current pagination link -->
 - // categoryid not updating
 - 404 page

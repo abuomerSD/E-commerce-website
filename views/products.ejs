@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
-  <%- include('./partials/adminHead.ejs') %>
+  <%- include('./control-panel/partials/adminHead.ejs') %>
   <body>
     
-
+    <!-- main container start -->
     <div class="main-container">
-      <%- include('./partials/nav.ejs') %>
+      <%- include('./control-panel/partials/nav.ejs') %>
         <!-- products section start -->
-        <div class="products m-3">
+        <div class="products">
             <!-- form starts -->
             <form class="row g-3" action="/admin/products" method="POST" enctype="multipart/form-data">
                 <div class="col-md-4">
@@ -52,6 +52,8 @@
             <hr>
 
             <!-- search product starts -->
+           
+            <!-- search product ends -->
             <div class="search-product">
               <div class="input-group mb-3">
                 <form action="/admin/products-filter/" method="POST" class="input-group mb-3">
@@ -71,89 +73,115 @@
                 
               </div>
             </div>
-            <!-- search product ends -->
-
-            <!-- products table start -->
+            <h3>Products</h3>
+            <% if (products.length > 0 ) { %>
+              <!-- products table start -->
             <table class="table">
-                <h3>Products</h3>
-                <thead>
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Product Cost</th>
+                  <th scope="col">Product Price</th>
+                  <th scope="col">Product Quantity</th>
+                  <th scope="col">Product Category</th>
+                  <th scope="col">Product Image</th>
+                  <th scope="col">Edit & Delete</th>
+                  <!-- <th scope="col">Handle</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <% let productRowNumber = ((pageNumber - 1)* pageLimit) + 1 %>
+                <% const currencySign = '$' %>
+                <% limitedProducts.forEach(product => { %>
+                  <% 
+                    let categoryName = "";
+                    categories.forEach(category => {
+                      if (category.id === product.categoryId) {
+                        categoryName = category.name;
+                      }
+                    })
+                    %>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Product Cost</th>
-                    <th scope="col">Product Price</th>
-                    <th scope="col">Product Quantity</th>
-                    <th scope="col">Product Category</th>
-                    <th scope="col">Product Image</th>
-                    <th scope="col">Edit & Delete</th>
-                    <!-- <th scope="col">Handle</th> -->
+                    <th scope="row"><%= productRowNumber %></th>
+                    <td><%= product.name %></td>
+                    <td><%= product.cost + currencySign %></td>
+                    <td><%= product.price + currencySign %></td>
+                    <td><%= product.quantity %></td>
+                    <td><%= categoryName %></td>
+                    <td><img src="/products-images/<%= product.image %> " alt="Product Image"  class="img-thumbnail" style="width: 70px;height: 70px;"></td>
+                    
+                    <!-- <td><%= product.name %></td> -->
+                    <td><button class="btn btn-primary">Edit</button> <button type="button" class="btn btn-danger" onclick= "showDeleteAlert('<%= product.id%>', '<%= product.name %>')" data-bs-toggle="modal" data-bs-target="#deleteAlert" >Delete</button></td>
                   </tr>
-                </thead>
-                <tbody>
-                  <% let productRowNumber = ((pageNumber - 1)* pageLimit) + 1 %>
-                  <% const currencySign = '$' %>
-                  <% limitedProducts.forEach(product => { %>
-                    <% 
-                      let categoryName = "";
-                      categories.forEach(category => {
-                        if (category.id === product.categoryId) {
-                          categoryName = category.name;
-                        }
-                      })
-                      %>
-                    <tr>
-                      <th scope="row"><%= productRowNumber %></th>
-                      <td><%= product.name %></td>
-                      <td><%= product.cost + currencySign %></td>
-                      <td><%= product.price + currencySign %></td>
-                      <td><%= product.quantity %></td>
-                      <td><%= categoryName %></td>
-                      <td><img src="/products-images/<%= product.image %> " alt="Product Image"  class="img-thumbnail" style="width: 70px;height: 70px;"></td>
-                      
-                      <!-- <td><%= product.name %></td> -->
-                      <td><button class="btn btn-primary">Edit</button> <button class="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <% productRowNumber ++ %>
-                  <% }); %>
-                  
-                </tbody>
-            </table>
-            <!-- products table end -->
+                  <% productRowNumber ++ %>
+                <% }); %>
+                
+              </tbody>
+          </table>
+          <!-- products table end -->
 
-            <!-- products pagination starts -->
-              <% 
-                const paginationLimit = 5;
-                const productsCount = products.length;
-                const pagesCount= Math.ceil(productsCount / pageLimit);
-              %>
-              <% if(products.length > paginationLimit) {%>
-                <nav>    
-                  <ul class="pagination justify-content-center">
-                    <% if(pageNumber == 1) { %>
-                      <li class="page-item disabled"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber -1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
-                    <% } else {%>
-                      <li class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber -1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
-                    <% } %>
-                    <% for(let i = 1 ;i <= pagesCount ; i++) { %>
+          <!-- products pagination starts -->
+            <% 
+              const paginationLimit = 5;
+              const productsCount = products.length;
+              const pagesCount= Math.ceil(productsCount / pageLimit);
+            %>
+            <% if(products.length > paginationLimit) {%>
+              <nav>    
+                <ul class="pagination justify-content-center">
+                  <% if(pageNumber == 1) { %>
+                    <li  class="page-item disabled"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber -1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
+                  <% } else {%>
+                    <li  class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber -1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
+                  <% } %>
+                  <% for(let i = 1 ;i <= pagesCount ; i++) { %>
 
-                      <li class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= i %>&pageLimit=<%= pageLimit %>"><%= i %></a></li>
-                      
-                    <% }%>
-                    <% if(pageNumber == Math.ceil(products.length / pageLimit)) { %>
-                      <li class="page-item disabled"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber+1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
-                    <% } else { %>
-                      <li class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber+1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
-                    <% } %>
-                  </ul>
-                </nav>
-              <% } %>
+                    <li id="pagination-link-<%= i %>" class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= i %>&pageLimit=<%= pageLimit %>"><%= i %></a></li>
+                    
+                  <% }%>
+                  <% if(pageNumber == Math.ceil(products.length / pageLimit)) { %>
+                    <li class="page-item disabled"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber+1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
+                  <% } else { %>
+                    <li class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber+1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
+                  <% } %>
+                </ul>
+              </nav>
+            <% } %>
 
-            <!-- products pagination end -->
+          <!-- products pagination end -->
+
+            <% } else { %>
+              <h5> No Products to show</h5>
+            <% } %>
           
 
         </div>
         <!-- products section end -->
+        
+
+      <!-- delete product Alert Modal -->
+      <div class="modal fade" id="deleteAlert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Product</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="deleteAlertBody">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" id="deleteAlertButton">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+        
     </div>
+    <!-- main container end -->
+
 
     
 
