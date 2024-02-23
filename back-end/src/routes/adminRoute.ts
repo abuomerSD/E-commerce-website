@@ -29,6 +29,7 @@ const upload = multer({storage: storage, fileFilter: function (req, file, cb){
 // admin control panel routes 
 adminRouter.route('/').get(renderAdminHomePage);
 
+
 // products routes
 adminRouter.route('/products')
 .get(renderProductsPage)

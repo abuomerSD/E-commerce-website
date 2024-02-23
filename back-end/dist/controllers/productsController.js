@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.delelteProduct = exports.updateProductById = exports.getProductById = exports.renderProductsPageWithFilteredProducts = exports.getAllProducts = exports.saveProduct = void 0;
+exports.delelteProduct = exports.updateProductById = exports.getProductById = exports.renderProductsPageWithFilteredProducts = exports.getLimitedByPaginationProducts = exports.getAllProducts = exports.saveProduct = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const fs_1 = __importDefault(require("fs"));
@@ -53,6 +53,7 @@ const getAllProducts = () => __awaiter(void 0, void 0, void 0, function* () {
     return products;
 });
 exports.getAllProducts = getAllProducts;
+// get filtered products using the search input
 const getFilteredProducts = (req) => __awaiter(void 0, void 0, void 0, function* () {
     let products = [];
     const { product_name_search_input } = req.body;
@@ -61,6 +62,14 @@ const getFilteredProducts = (req) => __awaiter(void 0, void 0, void 0, function*
     yield database_1.Product.findAll({ where: { name } }).then(result => products = result);
     return products;
 });
+// get limited products for the pagination
+const getLimitedByPaginationProducts = (req, pageNumber, pageLimit) => __awaiter(void 0, void 0, void 0, function* () {
+    let products = [];
+    yield database_1.Product.findAll({ limit: pageLimit, offset: (pageNumber - 1) * pageLimit })
+        .then(result => products = result);
+    return products;
+});
+exports.getLimitedByPaginationProducts = getLimitedByPaginationProducts;
 exports.renderProductsPageWithFilteredProducts = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield getFilteredProducts(req);
     let categories = [];

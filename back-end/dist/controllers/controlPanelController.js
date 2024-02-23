@@ -21,11 +21,17 @@ exports.renderProductsPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __aw
     // the default page is products page
     let categories = [];
     let products = [];
-    yield (0, categoryController_1.getAllCategories)().then(result => {
-        categories = result;
-    });
-    yield (0, productsController_1.getAllProducts)().then(result => {
-        products = result;
-    });
-    res.render('products', { categories, products, title: 'Products' });
+    let limitedProducts = [];
+    console.log(req.query);
+    let pageNumber = Number(req.query.pageNumber);
+    let pageLimit = Number(req.query.pageLimit);
+    if (Object.keys(req.query).length === 0) {
+        pageNumber = 1;
+        pageLimit = 5;
+    }
+    yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
+    yield (0, productsController_1.getAllProducts)().then(result => products = result);
+    // limited products by pagination to show in the page
+    yield (0, productsController_1.getLimitedByPaginationProducts)(req, pageNumber, pageLimit).then(result => limitedProducts = result);
+    res.render('products', { categories, products, limitedProducts, pageNumber, pageLimit, title: 'Products' });
 }));

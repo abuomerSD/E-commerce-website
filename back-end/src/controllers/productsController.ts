@@ -4,7 +4,6 @@ import {asyncWrapper} from '../middlewares/asyncWrapper';
 import fs from 'fs';
 import { httpStatus } from '../utils/httpStatusCodesStates';
 import { getAllCategories } from './categoryController';
-import { Sequelize } from 'sequelize';
 
 // this interface is only to reperesnt the updatable attributes of Type Product
 interface ProductType {
@@ -55,6 +54,7 @@ export const getAllProducts = async() => {
     return products;
 }
 
+// get filtered products using the search input
 const getFilteredProducts = async (req: Request) => {
     let products : Array<Product> = [];
     const {product_name_search_input} = req.body
@@ -62,6 +62,16 @@ const getFilteredProducts = async (req: Request) => {
     // console.log(productName);
     
     await Product.findAll({where:{name}}).then(result => products = result);
+    return products;
+}
+// get limited products for the pagination
+export const getLimitedByPaginationProducts = async (req: Request, pageNumber: number, pageLimit: number) => {
+    
+
+    let products: Array<Product> = [];
+
+    await Product.findAll({limit: pageLimit, offset: (pageNumber - 1) * pageLimit}) 
+        .then(result => products = result);
     return products;
 }
 
