@@ -74,8 +74,6 @@ exports.renderProductsPageWithFilteredProducts = (0, asyncWrapper_1.asyncWrapper
     const products = yield getFilteredProducts(req);
     let categories = [];
     yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
-    console.log('pro', products);
-    console.log('cat', categories);
     res.render('products', { products, categories, title: 'Products' });
 }));
 // get single product by id
@@ -115,10 +113,7 @@ exports.delelteProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaite
             res.status(400).json({ status: 'fail', data: err.message });
     });
     yield database_1.Product.destroy({ where: { id } }).then(rows => {
-        res.status(200).json({
-            status: httpStatusCodesStates_1.httpStatus.SUCCESS,
-            data: `${rows} rows deleted`,
-        });
+        res.status(200).end();
     });
     // res.status(200).redirect('/admin/products'));
 }));

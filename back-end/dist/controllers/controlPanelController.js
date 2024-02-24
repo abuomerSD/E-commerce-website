@@ -22,7 +22,6 @@ exports.renderProductsPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __aw
     let categories = [];
     let products = [];
     let limitedProducts = [];
-    console.log(req.query);
     let pageNumber = Number(req.query.pageNumber);
     let pageLimit = Number(req.query.pageLimit);
     if (Object.keys(req.query).length === 0) {

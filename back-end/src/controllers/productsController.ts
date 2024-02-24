@@ -79,9 +79,6 @@ export const renderProductsPageWithFilteredProducts = asyncWrapper(async (req:Re
     const products : Array<Product> = await getFilteredProducts(req);
     let categories: Array<Category> = [];
     await getAllCategories().then(result => categories =result);
-    console.log('pro', products);
-    console.log('cat', categories);
-    
     
     res.render('products', {products ,categories, title: 'Products'});
 })
@@ -129,10 +126,7 @@ export const delelteProduct = asyncWrapper(async (req: Request, res: Response) =
     });
 
     await Product.destroy({where: {id}}).then(rows => {
-        res.status(200).json({
-            status: httpStatus.SUCCESS,
-            data: `${rows} rows deleted`,
-        })
+        res.status(200).end();
     })
         // res.status(200).redirect('/admin/products'));
 });

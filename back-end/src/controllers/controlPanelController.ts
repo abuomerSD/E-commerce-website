@@ -18,7 +18,6 @@ export const renderProductsPage = asyncWrapper( async (req:Request, res: Respons
     let products: any = [];
     let limitedProducts: any = [];
 
-    console.log(req.query);
     let pageNumber : number = Number(req.query.pageNumber);
     let pageLimit : number = Number(req.query.pageLimit);
 
