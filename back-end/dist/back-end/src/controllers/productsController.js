@@ -92,24 +92,21 @@ exports.updateProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awa
     newProduct.image = (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename;
     let oldProduct = yield database_1.Product.findOne({ where: { id } });
     // to get the categoryId from given Category name
-    let categories = [];
-    let categoryId = '';
-    yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
-    categories.forEach(category => {
-        if (newProduct.categoryName === category.name) {
-            categoryId = category.id;
-        }
-    });
+    //   let categories: Array<any> = [];
+    //   let categoryId: string = '';
+    //   await getAllCategories().then(result => categories = result);
+    //   categories.forEach(category => {
+    //       if(newProduct.categoryName === category.name) {
+    //           categoryId = category.id;
+    //       }
+    //   })
     // deleting the old image from harddisk to save some space
     yield fs_1.default.unlink(`uploads/products-images/${oldProduct.image}`, (err) => {
         if (err)
-            res.status(400).json({ status: 'fail', data: err.message });
+            return res.status(400).send(err.stack);
     });
     oldProduct.set(newProduct);
-    yield (oldProduct === null || oldProduct === void 0 ? void 0 : oldProduct.save().then((product) => res.status(200).json({
-        status: httpStatusCodesStates_1.httpStatus.SUCCESS,
-        data: product,
-    })));
+    yield (oldProduct === null || oldProduct === void 0 ? void 0 : oldProduct.save().then((product) => res.status(200).end()));
 }));
 // categoryid not updating
 exports.delelteProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -4,18 +4,9 @@ import {asyncWrapper} from '../middlewares/asyncWrapper';
 import fs from 'fs';
 import { httpStatus } from '../utils/httpStatusCodesStates';
 import { getAllCategories } from './categoryController';
+import { ProductType } from '../../../utils/entites/productType';
 
-// this interface is only to reperesnt the updatable attributes of Type Product
-interface ProductType {
-    // categoryId: string,
-    name: string,
-    quantity: number,
-    cost: number,
-    price: number,
-    image?: string,
-    saledTimes: bigint,
-    viewedTimes: bigint,
-}
+
 // save product
 export const saveProduct = asyncWrapper(async (req:Request, res: Response) => {
     const {name, category_name, quantity, cost, price} = req.body;
@@ -98,17 +89,24 @@ export const updateProductById = asyncWrapper(async (req: Request, res: Response
     const newProduct: ProductType = req.body;
     newProduct.image = req.file?.filename;
     let oldProduct: any = await Product.findOne({where: {id}});
+
+      // to get the categoryId from given Category name
+    //   let categories: Array<any> = [];
+    //   let categoryId: string = '';
+    //   await getAllCategories().then(result => categories = result);
+    //   categories.forEach(category => {
+    //       if(newProduct.categoryName === category.name) {
+    //           categoryId = category.id;
+    //       }
+    //   })
     
     // deleting the old image from harddisk to save some space
     await fs.unlink(`uploads/products-images/${oldProduct.image}`, (err)=> {
-        if (err) res.status(400).json({status: 'fail', data: err.message})  
+        if (err) return res.status(400).send(err.stack);  
     });
 
     oldProduct.set(newProduct);
-    await oldProduct?.save().then((product: any) => res.status(200).json({
-        status: httpStatus.SUCCESS,
-        data: product,
-    }));
+    await oldProduct?.save().then((product: any) => res.status(200).end());
 });
 
 

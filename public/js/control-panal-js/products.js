@@ -44,6 +44,57 @@ function showEditAlert(productId, productName, productCost, productPrice, catego
             categorySelect.selectedIndex = categoriesArray.indexOf(element);
         }
     });
+
+    // add event listener to edit product button 
+
+    document.getElementById('editAlertButton').addEventListener('click', async (e)=> {
+        const product  = {
+            name: document.getElementById('edit-product-name-input').value,
+            // categoryId ,
+            categoryId: document.getElementById('edit-productCategory-select').value,
+            quantity: document.getElementById('edit-product-quantity-input').value,
+            cost: document.getElementById('edit-product-cost-input').value,
+            price: document.getElementById('edit-product-price-input').value,
+            image: document.getElementById('edit-formFile').value,
+        }
+
+        // console.log(product);
+
+        // console.log('edit clicked');
+
+        // sending the put request using form data , because we are using multer package
+        const updateForm = document.getElementById('updateProductForm');
+        const formData = new FormData(updateForm);
+
+        // formData.append('name',product.name)
+        // formData.append('categoryId',product.categoryId)
+        // formData.append('quantity',product.quantity)
+        // formData.append('cost',product.cost)
+        // formData.append('price',product.price)
+        // formData.append('image', product.image)
+        
+        // console.log(document.getElementById('edit-formFile').value);
+        // for(const value of formData.values()){
+        //     console.log(value);
+
+        // }
+        // console.log(window.location.href);
+        
+        const reloadUrl = window.location.href;
+        // console.log(`/admin/products/${productId}`);
+        await fetch(`/admin/products/${productId}`, {
+            method: 'PUT',
+            body: formData,
+        }).then((response => {
+            // window.location.href = reloadUrl;
+            window.location.replace(reloadUrl);
+            // window.location.reload();
+        }))
+        
+
+        // const result = await response.json();
+        // console.log(result);
+    })
 }
 
 

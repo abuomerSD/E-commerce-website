@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/abuomerSD/E-commerce-website#readme",
   "dependencies": {
+    "@types/sequelize": "^4.28.20",
     "body-parser": "^1.20.2",
     "chalk": "^4.1.2",
     "dotenv": "^16.4.4",
