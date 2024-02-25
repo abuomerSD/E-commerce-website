@@ -32,17 +32,45 @@ function showEditAlert(productId, productName, productCost, productPrice, catego
     document.getElementById('edit-product-name-input').value = productName;
     document.getElementById('edit-product-cost-input').value = productCost;
     document.getElementById('edit-product-price-input').value = productPrice;
-    // document.getElementById('edit-productCategory-select').text = categoryName;
     document.getElementById('edit-product-quantity-input').value = productQuantity;
     document.getElementById('editProductImage').src = `/products-images/${productImage}`;
+
+    // to select the current category name 
+    const categorySelect = document.getElementById('edit-productCategory-select');
+    const categoriesArray = Array.from(categorySelect.options);
+
+    categoriesArray.forEach(element => {
+        if (element.innerHTML === categoryName) {
+            categorySelect.selectedIndex = categoriesArray.indexOf(element);
+        }
+    });
 }
 
+
+// to change the image on the edit modal
 function changeImage() {
     const imageSelect = document.getElementById("edit-formFile");
     imageSelect.click();
-    // const path = (window.URL || window.webkitURL).createObjectURL(imageSelect);
-    // document.getElementById('editProductImage').src = `${path}`;
-    console.log(imageSelect.files);
+    imageSelect.addEventListener('change', (e)=> {
+
+        const preview = document.getElementById('editProductImage');
+        const file = imageSelect.files[0];
+        const reader = new FileReader();
+    
+        reader.addEventListener(
+        "load",
+        () => {
+            // convert image file to base64 string
+            preview.src = reader.result;
+        },
+        false,
+        );
+    
+        if (file) {
+        reader.readAsDataURL(file);
+        }
+
+        })
 }
 
 
