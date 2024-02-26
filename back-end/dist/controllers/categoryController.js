@@ -16,10 +16,7 @@ const httpStatusCodesStates_1 = require("../utils/httpStatusCodesStates");
 exports.saveCategory = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.body;
     yield database_1.Category.create({ name }).then((category) => {
-        res.status(201).json({
-            status: httpStatusCodesStates_1.httpStatus.SUCCESS,
-            data: category,
-        });
+        res.status(201).redirect('/admin/categories');
     });
 }));
 function getAllCategories() {

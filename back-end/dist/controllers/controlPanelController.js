@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderProductsPage = exports.renderAdminHomePage = void 0;
+exports.renderCategoriesPage = exports.renderProductsPage = exports.renderAdminHomePage = void 0;
 const categoryController_1 = require("./categoryController");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const productsController_1 = require("./productsController");
@@ -33,4 +33,9 @@ exports.renderProductsPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __aw
     // limited products by pagination to show in the page
     yield (0, productsController_1.getLimitedByPaginationProducts)(req, pageNumber, pageLimit).then(result => limitedProducts = result);
     res.render('cpProducts', { categories, products, limitedProducts, pageNumber, pageLimit, title: 'Products' });
+}));
+exports.renderCategoriesPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let categories = [];
+    yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
+    res.render('cpCategories', { title: 'Categories', categories });
 }));

@@ -42,7 +42,7 @@ exports.adminRouter.route('/products/:id')
     .delete(productsController_1.delelteProduct);
 // categories routes
 exports.adminRouter.route('/categories')
-    .get(categoryController_1.getAllCategories)
+    .get(controlPanelController_1.renderCategoriesPage)
     .post(categoryController_1.saveCategory);
 exports.adminRouter.route('/categories/:id')
     .get(categoryController_1.getCategoryById)

@@ -3,7 +3,7 @@ export const adminRouter = Router();
 import {delelteProduct, getAllProducts, getProductById, renderProductsPageWithFilteredProducts, saveProduct, updateProductById} from '../controllers/productsController'
 import { deleteCategory, getAllCategories, getCategoryById, saveCategory, updateCategory } from '../controllers/categoryController';
 import multer from 'multer';
-import { renderAdminHomePage, renderProductsPage } from '../controllers/controlPanelController';
+import { renderAdminHomePage, renderCategoriesPage, renderProductsPage } from '../controllers/controlPanelController';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {        
@@ -45,7 +45,7 @@ adminRouter.route('/products/:id')
 
 // categories routes
 adminRouter.route('/categories')
-.get(getAllCategories)
+.get(renderCategoriesPage)
 .post(saveCategory);
 
 adminRouter.route('/categories/:id')

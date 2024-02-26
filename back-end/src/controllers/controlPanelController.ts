@@ -2,13 +2,14 @@ import { Request, Response } from "express";
 import { getAllCategories } from "./categoryController";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllProducts, getLimitedByPaginationProducts } from "./productsController";
+import { Category } from "../databaseHandler/database";
 
 
 // getAllCategories().then(result => categories = result);
 
 export const renderAdminHomePage = asyncWrapper(async (req: Request, res: Response) => {
     res.redirect('/admin/products');
-})
+});
 
 export const renderProductsPage = asyncWrapper( async (req:Request, res: Response) => {
     // the default page is products page
@@ -36,3 +37,10 @@ export const renderProductsPage = asyncWrapper( async (req:Request, res: Respons
     
  }
 );
+
+export const renderCategoriesPage = asyncWrapper(async (req: Request, res: Response) => {
+    let categories: Array<Category> = [];
+
+    await getAllCategories().then(result => categories = result);
+    res.render('cpCategories',{title: 'Categories', categories});
+});
