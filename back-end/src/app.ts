@@ -3,8 +3,6 @@ import {config} from 'dotenv';
 import  {adminRouter} from './routes/adminRoute'
 import {logger} from './middlewares/logger';
 import { errorHandler } from './middlewares/errorHandler';
-import exp from 'constants';
-import path from 'path';
 import bodyParser from 'body-parser';
 const app: Express = express();
 

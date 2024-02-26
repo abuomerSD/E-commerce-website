@@ -32,5 +32,5 @@ exports.renderProductsPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __aw
     yield (0, productsController_1.getAllProducts)().then(result => products = result);
     // limited products by pagination to show in the page
     yield (0, productsController_1.getLimitedByPaginationProducts)(req, pageNumber, pageLimit).then(result => limitedProducts = result);
-    res.render('products', { categories, products, limitedProducts, pageNumber, pageLimit, title: 'Products' });
+    res.render('cpProducts', { categories, products, limitedProducts, pageNumber, pageLimit, title: 'Products' });
 }));

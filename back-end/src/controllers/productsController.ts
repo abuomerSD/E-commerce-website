@@ -4,7 +4,8 @@ import {asyncWrapper} from '../middlewares/asyncWrapper';
 import fs from 'fs';
 import { httpStatus } from '../utils/httpStatusCodesStates';
 import { getAllCategories } from './categoryController';
-import { ProductType } from '../../../utils/entites/productType';
+import { ProductType } from '../utils/productType';
+
 
 
 // save product
@@ -71,7 +72,7 @@ export const renderProductsPageWithFilteredProducts = asyncWrapper(async (req:Re
     let categories: Array<Category> = [];
     await getAllCategories().then(result => categories =result);
     
-    res.render('products', {products ,categories, title: 'Products'});
+    res.render('cpProducts', {products ,categories, title: 'Products'});
 })
 
 // get single product by id

@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { getAllCategories } from "./categoryController";
-import { Category } from "../databaseHandler/database";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllProducts, getLimitedByPaginationProducts } from "./productsController";
 
@@ -33,7 +32,7 @@ export const renderProductsPage = asyncWrapper( async (req:Request, res: Respons
     // limited products by pagination to show in the page
     await getLimitedByPaginationProducts(req, pageNumber, pageLimit).then(result => limitedProducts = result);
     
-    res.render('products',{categories, products, limitedProducts, pageNumber, pageLimit, title: 'Products'});
+    res.render('cpProducts',{categories, products, limitedProducts, pageNumber, pageLimit, title: 'Products'});
     
  }
 );
