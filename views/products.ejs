@@ -184,72 +184,73 @@
 
             <!-- edit product Alert Modal -->
             <div class="modal fade" id="editProductAlert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
+              <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Product</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div class="modal-body" id="editAlertBody">
-                    ...
+                  <div class="modal-body" >
+                    <div class="container">
+                      <p id="editAlertBody"></p>
+                      <form action="" id="updateProductForm" enctype="multipart/form-data" onsubmit="return false" >
+                        <div class="row">
+                          <div class="">
+                            <label for="edit-product-name-input" class="form-label">Product Name</label>
+                            <input id="edit-product-name-input" name="name" class="form-control" type="text" placeholder="Product Name">
+                          </div>
+    
+                          <div class="">
+                            <label for="edit-product-cost-input" class="form-label">Product Cost</label>
+                            <input id="edit-product-cost-input" name="cost" class="form-control" type="number" placeholder="Product Cost">
+                          </div>
+    
+                          <div class="">
+                            <label for="edit-product-price-input" class="form-label">Product Price</label>
+                            <input id="edit-product-price-input" name="price" class="form-control" type="number" placeholder="Product Price">
+                          </div>
+    
+                          <div class="">
+                            <label for="edit-product-quantity-input" class="form-label">Product Quantity</label>
+                            <input id="edit-product-quantity-input" name="quantity" class="form-control" type="number" placeholder="Product Quantity">
+                          </div>
+    
+                          <div class="">
+                            <label for="edit-productCategory-select" class="form-label">Product Category</label>
+                            <select id="edit-productCategory-select" name="category_name" class="form-select" aria-label="Default select example">
+                                <% categories.forEach(category => { %>
+                                  <option value="<%= category.id %>"><%= category.name %></option>
+                                <% }); %>
+                                
+                              </select>
+                          </div>
+    
+                          
+          
+                          <div class="">
+                              <!-- <label for="edit-formFile" class="form-label">Product Image</label> -->
+                              <input class="form-control" name="image" type="file" id="edit-formFile" style="display: none;" accept="image/*" >
+                          </div>
+    
+    
+                          <div class="card m-3 p-3" style="width: 25rem;">
+                            <img id="editProductImage" src="#"  class="card-img-top" alt="Product Image">
+                            <div class="card-body">
+                              <!-- <h5 class="card-title">Card title</h5>
+                              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                              <button id="changeImageButton" class="btn btn-primary" onclick="changeImage()">Change Image</button>
+                            </div>
+                          </div>
+    
+    
+                        </div>
+                      </form>
+                      
+                    </div>
                   </div>
                   <!-- edit alert body start -->
                   
-                  <div class="container">
-                    <form action="" id="updateProductForm" enctype="multipart/form-data" onsubmit="return false" >
-                      <div class="row">
-                        <div class="">
-                          <label for="edit-product-name-input" class="form-label">Product Name</label>
-                          <input id="edit-product-name-input" name="name" class="form-control" type="text" placeholder="Product Name">
-                        </div>
-  
-                        <div class="">
-                          <label for="edit-product-cost-input" class="form-label">Product Cost</label>
-                          <input id="edit-product-cost-input" name="cost" class="form-control" type="number" placeholder="Product Cost">
-                        </div>
-  
-                        <div class="">
-                          <label for="edit-product-price-input" class="form-label">Product Price</label>
-                          <input id="edit-product-price-input" name="price" class="form-control" type="number" placeholder="Product Price">
-                        </div>
-  
-                        <div class="">
-                          <label for="edit-product-quantity-input" class="form-label">Product Quantity</label>
-                          <input id="edit-product-quantity-input" name="quantity" class="form-control" type="number" placeholder="Product Quantity">
-                        </div>
-  
-                        <div class="">
-                          <label for="edit-productCategory-select" class="form-label">Product Category</label>
-                          <select id="edit-productCategory-select" name="category_name" class="form-select" aria-label="Default select example">
-                              <% categories.forEach(category => { %>
-                                <option value="<%= category.id %>"><%= category.name %></option>
-                              <% }); %>
-                              
-                            </select>
-                        </div>
-  
-                        
-        
-                        <div class="">
-                            <!-- <label for="edit-formFile" class="form-label">Product Image</label> -->
-                            <input class="form-control" name="image" type="file" id="edit-formFile" style="display: none;" accept="image/*" >
-                        </div>
-  
-  
-                        <div class="card m-3 p-3" style="width: 25rem;">
-                          <img id="editProductImage" src="#"  class="card-img-top" alt="Product Image">
-                          <div class="card-body">
-                            <!-- <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                            <button id="changeImageButton" class="btn btn-primary" onclick="changeImage()">Change Image</button>
-                          </div>
-                        </div>
-  
-  
-                      </div>
-                    </form>
-                    
-                  </div>
+                  
                   <!-- edit alert body end -->
 
                   <div class="modal-footer">

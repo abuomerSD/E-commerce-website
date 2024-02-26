@@ -4,10 +4,20 @@ const searchProductInput = document.getElementById('serach-product-input');
 const searchProductButton = document.getElementById('serach-product-button');
 const paginationLink = document.getElementById('pagination-link');
 const deleteButton = document.getElementById('deleteAlertButton');
+const deleteAlertBody = document.getElementById('deleteAlertBody');
+const editAlertBody = document.getElementById('editAlertBody');
+const editProductNameInput = document.getElementById('edit-product-name-input');
+const editProductCostInput = document.getElementById('edit-product-cost-input');
+const editProductPriceInput = document.getElementById('edit-product-price-input');
+const editProductQuantityInput = document.getElementById('edit-product-quantity-input');
+const editProductImage = document.getElementById('editProductImage');
+const editProductcategorySelect = document.getElementById('edit-productCategory-select');
+const imageSelect = document.getElementById("edit-formFile");
+
 
 // delete product by id
 async function showDeleteAlert(id, name) {
-    document.getElementById('deleteAlertBody').innerHTML = `Are you sure you want to delete: ${name} ?`;
+    deleteAlertBody.innerHTML = `Are you sure you want to delete: ${name} ?`;
 
     deleteButton.addEventListener('click', async ()=> {
         const response = await fetch(`/admin/products/${id}`, {
@@ -18,30 +28,25 @@ async function showDeleteAlert(id, name) {
         window.location.reload();
 
     })
-
-        
-    
-
 }
 
 // edit product
 
 function showEditAlert(productId, productName, productCost, productPrice, categoryId, productQuantity, productImage, categoryName) {
     // console.log(productId, productName, productCost, productPrice, categoryId, productQuantity, productImage, categoryName);
-    document.getElementById('editAlertBody').innerHTML = `Are you sure you want to edit ${productName} ?`
-    document.getElementById('edit-product-name-input').value = productName;
-    document.getElementById('edit-product-cost-input').value = productCost;
-    document.getElementById('edit-product-price-input').value = productPrice;
-    document.getElementById('edit-product-quantity-input').value = productQuantity;
-    document.getElementById('editProductImage').src = `/products-images/${productImage}`;
+    editAlertBody.innerHTML = `Are you sure you want to edit ${productName} ?`
+    editProductNameInput.value = productName;
+    editProductCostInput.value = productCost;
+    editProductPriceInput.value = productPrice;
+    editProductQuantityInput.value = productQuantity;
+    editProductImage.src = `/products-images/${productImage}`;
 
     // to select the current category name 
-    const categorySelect = document.getElementById('edit-productCategory-select');
-    const categoriesArray = Array.from(categorySelect.options);
+    const categoriesArray = Array.from(editProductcategorySelect.options);
 
     categoriesArray.forEach(element => {
         if (element.innerHTML === categoryName) {
-            categorySelect.selectedIndex = categoriesArray.indexOf(element);
+            editProductcategorySelect.selectedIndex = categoriesArray.indexOf(element);
         }
     });
 
@@ -49,62 +54,38 @@ function showEditAlert(productId, productName, productCost, productPrice, catego
 
     document.getElementById('editAlertButton').addEventListener('click', async (e)=> {
         const product  = {
-            name: document.getElementById('edit-product-name-input').value,
+            name: editProductNameInput.value,
             // categoryId ,
-            categoryId: document.getElementById('edit-productCategory-select').value,
-            quantity: document.getElementById('edit-product-quantity-input').value,
-            cost: document.getElementById('edit-product-cost-input').value,
-            price: document.getElementById('edit-product-price-input').value,
-            image: document.getElementById('edit-formFile').value,
+            categoryId: editProductcategorySelect.value,
+            quantity: editProductQuantityInput.value,
+            cost: editProductCostInput.value,
+            price: editProductPriceInput.value,
+            image: editProductImage.value,
         }
-
-        // console.log(product);
-
-        // console.log('edit clicked');
 
         // sending the put request using form data , because we are using multer package
         const updateForm = document.getElementById('updateProductForm');
         const formData = new FormData(updateForm);
-
-        // formData.append('name',product.name)
-        // formData.append('categoryId',product.categoryId)
-        // formData.append('quantity',product.quantity)
-        // formData.append('cost',product.cost)
-        // formData.append('price',product.price)
-        // formData.append('image', product.image)
-        
-        // console.log(document.getElementById('edit-formFile').value);
-        // for(const value of formData.values()){
-        //     console.log(value);
-
-        // }
-        // console.log(window.location.href);
         
         const reloadUrl = window.location.href;
-        // console.log(`/admin/products/${productId}`);
+
         await fetch(`/admin/products/${productId}`, {
             method: 'PUT',
             body: formData,
         }).then((response => {
-            // window.location.href = reloadUrl;
             window.location.replace(reloadUrl);
-            // window.location.reload();
         }))
         
-
-        // const result = await response.json();
-        // console.log(result);
     })
 }
 
 
 // to change the image on the edit modal
 function changeImage() {
-    const imageSelect = document.getElementById("edit-formFile");
     imageSelect.click();
     imageSelect.addEventListener('change', (e)=> {
 
-        const preview = document.getElementById('editProductImage');
+        const preview = editProductImage;
         const file = imageSelect.files[0];
         const reader = new FileReader();
     
@@ -146,6 +127,3 @@ function setPaginationLinkActive() {
 
 
 window.addEventListener('load', onLoadFuntion);
-
-
-
