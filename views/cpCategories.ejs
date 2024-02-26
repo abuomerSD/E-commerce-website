@@ -50,16 +50,39 @@
                     <tr>
                         <th scope="row"><%= rowNumber  %></th>
                         <td> <%= category.name %> </td>
-                        <td><button type="button" class="btn btn-primary">Edit</button>
+                        <td><button type="button" class="btn btn-primary" onclick="showEditCategoryAlert('<%= category.id%>', '<%= category.name %>')" data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit</button>
                             <button type="button" class="btn btn-danger">Delete</button>
                         </td>
-                        <td></td>
                     </tr>
                     <% rowNumber ++; %>
                 <% }); %>
             </tbody>
           </table>
         <!-- Categories Table end -->
+
+        <!-- Edit Category Modal start -->
+  
+        <!-- Modal -->
+        <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5">Edit Category</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="editCategoryModalBody"></p>
+                    <label for="editCategoryInput">Category Name</label>
+                    <input type="text" id="editCategoryInput" class="form-control">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="saveEditCategoryButton">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Edit Category Modal end -->
 
     </div>
     <!-- main container end -->
