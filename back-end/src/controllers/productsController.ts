@@ -88,6 +88,8 @@ export const getProductById = asyncWrapper(async(req: Request, res: Response) =>
 export const updateProductById = asyncWrapper(async (req: Request, res: Response) => {
     const {id} = req.params;
     const newProduct: ProductType = req.body;
+    console.log(newProduct);
+    
     newProduct.image = req.file?.filename;
     let oldProduct: any = await Product.findOne({where: {id}});
 

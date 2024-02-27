@@ -89,6 +89,7 @@ exports.updateProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awa
     var _b;
     const { id } = req.params;
     const newProduct = req.body;
+    console.log(newProduct);
     newProduct.image = (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename;
     let oldProduct = yield database_1.Product.findOne({ where: { id } });
     // to get the categoryId from given Category name

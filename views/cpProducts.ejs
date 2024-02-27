@@ -44,7 +44,7 @@
 
                 <div class="col-md-4">
                     <label for="formFile" class="form-label">Product Image</label>
-                    <input class="form-control" name="image" type="file" id="formFile">
+                    <input class="form-control" name="image" type="file" id="formFile" accept="image/*">
                   </div>
                   <button type="submit" class="btn btn-success">Save Product</button>
             </form>
@@ -217,7 +217,7 @@
     
                           <div class="">
                             <label for="edit-productCategory-select" class="form-label">Product Category</label>
-                            <select id="edit-productCategory-select" name="category_name" class="form-select" aria-label="Default select example">
+                            <select id="edit-productCategory-select" name="categoryId" class="form-select" aria-label="Default select example">
                                 <% categories.forEach(category => { %>
                                   <option value="<%= category.id %>"><%= category.name %></option>
                                 <% }); %>
