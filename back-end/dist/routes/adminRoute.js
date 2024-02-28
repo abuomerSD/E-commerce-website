@@ -22,6 +22,7 @@ const storage = multer_1.default.diskStorage({
 });
 const upload = (0, multer_1.default)({ storage: storage, fileFilter: function (req, file, cb) {
         const fileType = file.mimetype.split('/')[0];
+        console.log('file size', file.size);
         if (fileType === 'image')
             cb(null, true);
         else
@@ -40,6 +41,9 @@ exports.adminRouter.route('/products/:id')
     .get(productsController_1.getProductById)
     .put(upload.single('image'), productsController_1.updateProductById)
     .delete(productsController_1.delelteProduct);
+// this route is only for updating product without updating image
+exports.adminRouter.route('/products/updateProductWithoutImage/:id')
+    .put(productsController_1.updateProductByIdWithoutImage);
 // categories routes
 exports.adminRouter.route('/categories')
     .get(controlPanelController_1.renderCategoriesPage)

@@ -51,7 +51,6 @@ const getFilteredProducts = async (req: Request) => {
     let products : Array<Product> = [];
     const {product_name_search_input} = req.body
     const name: string = product_name_search_input;
-    // console.log(productName);
     
     await Product.findAll({where:{name}}).then(result => products = result);
     return products;
@@ -87,9 +86,7 @@ export const getProductById = asyncWrapper(async(req: Request, res: Response) =>
 // update single product using the id
 export const updateProductById = asyncWrapper(async (req: Request, res: Response) => {
     const {id} = req.params;
-    const newProduct: ProductType = req.body;
-    console.log(newProduct);
-    
+    const newProduct: ProductType = req.body;    
     newProduct.image = req.file?.filename;
     let oldProduct: any = await Product.findOne({where: {id}});
 
@@ -112,6 +109,18 @@ export const updateProductById = asyncWrapper(async (req: Request, res: Response
     await oldProduct?.save().then((product: any) => res.status(200).end());
 });
 
+export const updateProductByIdWithoutImage = asyncWrapper(async(req: Request, res:Response) => {
+    const {id} = req.params;
+    const newProduct = req.body;
+    
+    let oldProduct : any  = {};
+    await Product.findOne({where: {id}}).then(result => {
+        oldProduct = result;
+    });
+    
+    oldProduct?.set(newProduct);
+    await oldProduct?.save().then((_result: any) => res.status(200).end());
+})
 
 // categoryid not updating
 

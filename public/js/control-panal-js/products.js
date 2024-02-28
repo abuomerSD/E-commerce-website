@@ -40,6 +40,10 @@ function showEditAlert(productId, productName, productCost, productPrice, catego
     editProductPriceInput.value = productPrice;
     editProductQuantityInput.value = productQuantity;
     editProductImage.src = `/products-images/${productImage}`;
+    const oldImageURL = window.location.protocol + `//` + window.location.host + `/products-images/${productImage}`;
+    console.log(oldImageURL);
+    console.log(editProductImage.src);
+
 
     // to select the current category name 
     const categoriesArray = Array.from(editProductcategorySelect.options);
@@ -53,25 +57,42 @@ function showEditAlert(productId, productName, productCost, productPrice, catego
     // add event listener to edit product button 
 
     document.getElementById('editAlertButton').addEventListener('click', async (e)=> {
-        const product  = {
-            name: editProductNameInput.value,
-            // categoryId ,
-            categoryId: editProductcategorySelect.value,
-            quantity: editProductQuantityInput.value,
-            cost: editProductCostInput.value,
-            price: editProductPriceInput.value,
-            image: editProductImage.value,
-        }
+        
 
         // sending the put request using form data , because we are using multer package
         const updateForm = document.getElementById('updateProductForm');
         const formData = new FormData(updateForm);
+        let requestBody = formData;
         
         const reloadUrl = window.location.href;
 
+        
+        if (editProductImage.src === oldImageURL) {
+            const product  = {
+                name: editProductNameInput.value,
+                categoryId: editProductcategorySelect.value,
+                quantity: editProductQuantityInput.value,
+                cost: editProductCostInput.value,
+                price: editProductPriceInput.value,
+                // image: editProductImage.value,
+            }
+            requestBody = product;
+
+            await fetch(`/admin/products/updateProductWithoutImage/${productId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody),
+            }).then(response => {
+                window.location.replace(reloadUrl);
+            })
+            return;
+        }
+
         await fetch(`/admin/products/${productId}`, {
             method: 'PUT',
-            body: formData,
+            body: requestBody,
         }).then((response => {
             window.location.replace(reloadUrl);
         }))

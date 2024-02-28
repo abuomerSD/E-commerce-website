@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.delelteProduct = exports.updateProductById = exports.getProductById = exports.renderProductsPageWithFilteredProducts = exports.getLimitedByPaginationProducts = exports.getAllProducts = exports.saveProduct = void 0;
+exports.delelteProduct = exports.updateProductByIdWithoutImage = exports.updateProductById = exports.getProductById = exports.renderProductsPageWithFilteredProducts = exports.getLimitedByPaginationProducts = exports.getAllProducts = exports.saveProduct = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const fs_1 = __importDefault(require("fs"));
@@ -58,7 +58,6 @@ const getFilteredProducts = (req) => __awaiter(void 0, void 0, void 0, function*
     let products = [];
     const { product_name_search_input } = req.body;
     const name = product_name_search_input;
-    // console.log(productName);
     yield database_1.Product.findAll({ where: { name } }).then(result => products = result);
     return products;
 });
@@ -89,7 +88,6 @@ exports.updateProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awa
     var _b;
     const { id } = req.params;
     const newProduct = req.body;
-    console.log(newProduct);
     newProduct.image = (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename;
     let oldProduct = yield database_1.Product.findOne({ where: { id } });
     // to get the categoryId from given Category name
@@ -108,6 +106,16 @@ exports.updateProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awa
     });
     oldProduct.set(newProduct);
     yield (oldProduct === null || oldProduct === void 0 ? void 0 : oldProduct.save().then((product) => res.status(200).end()));
+}));
+exports.updateProductByIdWithoutImage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const newProduct = req.body;
+    let oldProduct = {};
+    yield database_1.Product.findOne({ where: { id } }).then(result => {
+        oldProduct = result;
+    });
+    oldProduct === null || oldProduct === void 0 ? void 0 : oldProduct.set(newProduct);
+    yield (oldProduct === null || oldProduct === void 0 ? void 0 : oldProduct.save().then((_result) => res.status(200).end()));
 }));
 // categoryid not updating
 exports.delelteProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
