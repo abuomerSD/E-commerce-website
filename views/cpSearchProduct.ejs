@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./control-panel/partials/adminHead.ejs') %>
+<body>
+    <%- include('./control-panel/partials/nav.ejs') %>
+    <div class="container" style="margin-top: 5%;">
+      <!-- Page Title -->
+      <div>
+        <h3>Products Search :</h3>
+        <p>showing results for <b><%= searchWords %> :</b></p>
+      </div>
+
+      <!-- products table start -->
+
+      <!-- if there is no products match this search words show: No Products -->
+      <% if (limitedProducts.length === 0) { %>
+        <p>No Products match this search Pleace Search For Another Products</p>
+      <% } else { %>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Product Cost</th>
+                <th scope="col">Product Price</th>
+                <th scope="col">Product Quantity</th>
+                <th scope="col">Product Category</th>
+                <th scope="col">Product Image</th>
+                <th scope="col">Edit & Delete</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+            <% let rowNumber = 1 %>
+            <% let categoryName = '' %>
+            <% limitedProducts.forEach(product => { %>
+              <% categories.forEach(category => {
+                  if(category.id === product.categoryId){
+                    categoryName = category.name;
+                  }
+              }); %>
+              <tr>
+                <th scope="row"><%= rowNumber %></th>
+                <td><%= product.name %></td>
+                <td><%= product.cost %></td>
+                <td><%= product.price %></td>
+                <td><%= product.quantity %></td>
+                <td><%= categoryName %></td>
+                <td><img src="/products-images/<%= product.image %>" alt="Product Image" class="img-thumbnail" style="width: 70px;height: 70px;"></td>
+                <td><button class="btn btn-primary">Edit</button> <button class="btn btn-danger">Delete</button></td>
+              </tr>
+              <% rowNumber ++ %>
+            <% }); %>
+            </tbody>
+          </table>
+        </div>  
+      <% } %>
+
+
+      
+    <!-- products table end -->
+    <%- include('./control-panel/partials/footer.ejs') %>
+    </div>
+</body>
+</html>

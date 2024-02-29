@@ -13,7 +13,10 @@ exports.renderCategoriesPage = exports.renderProductsPage = exports.renderAdminH
 const categoryController_1 = require("./categoryController");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const productsController_1 = require("./productsController");
-// getAllCategories().then(result => categories = result);
+const contants_1 = require("../utils/contants");
+// to chane the page number and products limit change this two values
+const defaultPageNumber = contants_1.DEFAULT_PAGE_NUMBER;
+const defaultPageLimit = contants_1.DEFAULT_PAGE_LIMIT;
 exports.renderAdminHomePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.redirect('/admin/products');
 }));
@@ -25,8 +28,8 @@ exports.renderProductsPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __aw
     let pageNumber = Number(req.query.pageNumber);
     let pageLimit = Number(req.query.pageLimit);
     if (Object.keys(req.query).length === 0) {
-        pageNumber = 1;
-        pageLimit = 5;
+        pageNumber = defaultPageNumber;
+        pageLimit = defaultPageLimit;
     }
     yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
     yield (0, productsController_1.getAllProducts)().then(result => products = result);

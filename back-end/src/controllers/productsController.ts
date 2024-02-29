@@ -5,6 +5,8 @@ import fs from 'fs';
 import { httpStatus } from '../utils/httpStatusCodesStates';
 import { getAllCategories } from './categoryController';
 import { ProductType } from '../utils/productType';
+import {Op} from 'sequelize';
+import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_NUMBER } from '../utils/contants';
 
 
 
@@ -52,7 +54,9 @@ const getFilteredProducts = async (req: Request) => {
     const {product_name_search_input} = req.body
     const name: string = product_name_search_input;
     
-    await Product.findAll({where:{name}}).then(result => products = result);
+    await Product.findAll({where:{name: {
+        [Op.iLike]: `%${name}%`,
+    }}}).then(result => products = result);
     return products;
 }
 // get limited products for the pagination
@@ -66,12 +70,18 @@ export const getLimitedByPaginationProducts = async (req: Request, pageNumber: n
     return products;
 }
 
+//  render when using the serach product
 export const renderProductsPageWithFilteredProducts = asyncWrapper(async (req:Request, res:Response) => {
-    const products : Array<Product> = await getFilteredProducts(req);
+    const limitedProducts : Array<Product> = await getFilteredProducts(req);
+    let products : Array<Product> = [];
     let categories: Array<Category> = [];
+    const searchWords = req.body.product_name_search_input;
+    
+
+    await getAllProducts().then(result => products = result );
     await getAllCategories().then(result => categories =result);
     
-    res.render('cpProducts', {products ,categories, title: 'Products'});
+    res.render('cpSearchProduct', {categories, limitedProducts, searchWords ,title: 'Search Products', pageNumber:DEFAULT_PAGE_NUMBER, pageLimit:DEFAULT_PAGE_LIMIT});
 })
 
 // get single product by id

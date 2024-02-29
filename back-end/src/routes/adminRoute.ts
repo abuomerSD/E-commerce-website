@@ -38,7 +38,7 @@ adminRouter.route('/products')
 .get(renderProductsPage)
 .post(upload.single('image'), saveProduct);
 
-adminRouter.route('/products-filter')
+adminRouter.route('/searchProduct')
 .post(renderProductsPageWithFilteredProducts);
 
 adminRouter.route('/products/:id')

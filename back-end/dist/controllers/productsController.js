@@ -18,6 +18,8 @@ const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const fs_1 = __importDefault(require("fs"));
 const httpStatusCodesStates_1 = require("../utils/httpStatusCodesStates");
 const categoryController_1 = require("./categoryController");
+const sequelize_1 = require("sequelize");
+const contants_1 = require("../utils/contants");
 // save product
 exports.saveProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -58,7 +60,9 @@ const getFilteredProducts = (req) => __awaiter(void 0, void 0, void 0, function*
     let products = [];
     const { product_name_search_input } = req.body;
     const name = product_name_search_input;
-    yield database_1.Product.findAll({ where: { name } }).then(result => products = result);
+    yield database_1.Product.findAll({ where: { name: {
+                [sequelize_1.Op.iLike]: `%${name}%`,
+            } } }).then(result => products = result);
     return products;
 });
 // get limited products for the pagination
@@ -69,11 +73,15 @@ const getLimitedByPaginationProducts = (req, pageNumber, pageLimit) => __awaiter
     return products;
 });
 exports.getLimitedByPaginationProducts = getLimitedByPaginationProducts;
+//  render when using the serach product
 exports.renderProductsPageWithFilteredProducts = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const products = yield getFilteredProducts(req);
+    const limitedProducts = yield getFilteredProducts(req);
+    let products = [];
     let categories = [];
+    const searchWords = req.body.product_name_search_input;
+    yield (0, exports.getAllProducts)().then(result => products = result);
     yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
-    res.render('cpProducts', { products, categories, title: 'Products' });
+    res.render('cpSearchProduct', { categories, limitedProducts, searchWords, title: 'Search Products', pageNumber: contants_1.DEFAULT_PAGE_NUMBER, pageLimit: contants_1.DEFAULT_PAGE_LIMIT });
 }));
 // get single product by id
 exports.getProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

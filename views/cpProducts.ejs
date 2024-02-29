@@ -55,48 +55,49 @@
 
             <!-- search product starts -->
            
-            <!-- search product ends -->
-            <div class="search-product">
-              <div class="input-group mb-3">
-                <form action="/admin/products-filter/" method="POST" class="input-group mb-3">
+            <div class="row">
+              <div class="col-md-4">
+                <form action="/admin/searchProduct/" method="POST" class="input-group">
                   <input type="text" name="product_name_search_input" id="serach-product-input" class="form-control" placeholder="Search Product" aria-describedby="button-addon2" list="products-datalist">
-
+                  
                   <!-- <button class="btn btn-outline-secondary" id="serach-product-button"  type="button" id="button-addon2">Search</button> -->
-
+                  
                   <input type="submit" value="Search" class="btn btn-outline-secondary">
                   <datalist id="products-datalist">
                     <% products.forEach(product => { %>
                       <option value="<%= product.name %>"></option>
-                    <% }); %>
-                  </datalist>
-                </form>
-
-                
-                
+                      <% }); %>
+                    </datalist>
+                  </form>
+                  
+                  
+                  
+                </div>
               </div>
-            </div>
-            <h3>Products</h3>
-            <% if (products.length > 0 ) { %>
-              <!-- products table start -->
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Product Name</th>
-                  <th scope="col">Product Cost</th>
-                  <th scope="col">Product Price</th>
-                  <th scope="col">Product Quantity</th>
-                  <th scope="col">Product Category</th>
-                  <th scope="col">Product Image</th>
-                  <th scope="col">Edit & Delete</th>
-                  <!-- <th scope="col">Handle</th> -->
-                </tr>
-              </thead>
-              <tbody>
-                <% let productRowNumber = ((pageNumber - 1)* pageLimit) + 1 %>
-                <% const currencySign = '$' %>
-                <% limitedProducts.forEach(product => { %>
-                  <% 
+              <!-- search product ends -->
+
+              <h3>Products</h3>
+              <% if (products.length > 0 ) { %>
+                <!-- products table start -->
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Product Cost</th>
+                      <th scope="col">Product Price</th>
+                      <th scope="col">Product Quantity</th>
+                      <th scope="col">Product Category</th>
+                      <th scope="col">Product Image</th>
+                      <th scope="col">Edit & Delete</th>
+                      <!-- <th scope="col">Handle</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% let productRowNumber = ((pageNumber - 1)* pageLimit) + 1 %>
+                    <% const currencySign = '$' %>
+                    <% limitedProducts.forEach(product => { %>
+                      <% 
                     let categoryName = "";
                     categories.forEach(category => {
                       if (category.id === product.categoryId) {
@@ -117,52 +118,52 @@
                     <td><button class="btn btn-primary" data-bs-toggle="modal" onclick="showEditAlert('<%= product.id %>', '<%= product.name %>', '<%= product.cost %>', '<%= product.price %>', '<%= product.categoryId %>','<%= product.quantity %>','<%= product.image %>','<%= categoryName %>')" data-bs-target="#editProductAlert" >Edit</button> <button type="button" class="btn btn-danger" onclick= "showDeleteAlert('<%= product.id%>', '<%= product.name %>')" data-bs-toggle="modal" data-bs-target="#deleteProductAlert" >Delete</button></td>
                   </tr>
                   <% productRowNumber ++ %>
-                <% }); %>
-                
-              </tbody>
-          </table>
+                  <% }); %>
+                  
+                </tbody>
+              </table>
           <!-- products table end -->
-
+          
           <!-- products pagination starts -->
-            <% 
+          <% 
               const paginationLimit = 5;
               const productsCount = products.length;
               const pagesCount= Math.ceil(productsCount / pageLimit);
-            %>
+              %>
             <% if(products.length > paginationLimit) {%>
               <nav>    
                 <ul class="pagination justify-content-center">
                   <% if(pageNumber == 1) { %>
                     <li  class="page-item disabled"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber -1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
-                  <% } else {%>
-                    <li  class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber -1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
-                  <% } %>
-                  <% for(let i = 1 ;i <= pagesCount ; i++) { %>
-
-                    <li id="pagination-link-<%= i %>" class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= i %>&pageLimit=<%= pageLimit %>"><%= i %></a></li>
-                    
-                  <% }%>
-                  <% if(pageNumber == Math.ceil(products.length / pageLimit)) { %>
-                    <li class="page-item disabled"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber+1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
-                  <% } else { %>
-                    <li class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber+1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
-                  <% } %>
-                </ul>
-              </nav>
-            <% } %>
-
-          <!-- products pagination end -->
-
-            <% } else { %>
-              <h5 class="justify-content-center"> No Products to show</h5>
-            <% } %>
-          
-
-        </div>
-        <!-- products section end -->
-        
-
-      <!-- delete product Alert Modal -->
+                    <% } else {%>
+                      <li  class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber -1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
+                      <% } %>
+                      <% for(let i = 1 ;i <= pagesCount ; i++) { %>
+                        
+                        <li id="pagination-link-<%= i %>" class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= i %>&pageLimit=<%= pageLimit %>"><%= i %></a></li>
+                        
+                        <% }%>
+                        <% if(pageNumber == Math.ceil(products.length / pageLimit)) { %>
+                          <li class="page-item disabled"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber+1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
+                          <% } else { %>
+                            <li class="page-item"><a class="page-link" href="/admin/products/?pageNumber=<%= pageNumber+1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
+                            <% } %>
+                          </ul>
+                        </nav>
+                        <% } %>
+                        
+                        <!-- products pagination end -->
+                        
+                        <% } else { %>
+                          <h5 class="justify-content-center"> No Products to show</h5>
+                          <% } %>
+                          
+                          
+                        </div>
+                        <!-- products section end -->
+                        
+                        
+                        <!-- delete product Alert Modal -->
       <div class="modal fade" id="deleteProductAlert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -262,11 +263,11 @@
             </div>
             <!-- edit product Alert Modal end -->
       
+            <%- include('./control-panel/partials/footer.ejs') %>
     </div>
     <!-- main container end -->
 
 
-    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="/js/control-panal-js/products.js"></script>

@@ -35,7 +35,7 @@ exports.adminRouter.route('/').get(controlPanelController_1.renderAdminHomePage)
 exports.adminRouter.route('/products')
     .get(controlPanelController_1.renderProductsPage)
     .post(upload.single('image'), productsController_1.saveProduct);
-exports.adminRouter.route('/products-filter')
+exports.adminRouter.route('/searchProduct')
     .post(productsController_1.renderProductsPageWithFilteredProducts);
 exports.adminRouter.route('/products/:id')
     .get(productsController_1.getProductById)

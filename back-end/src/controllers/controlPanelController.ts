@@ -3,9 +3,12 @@ import { getAllCategories } from "./categoryController";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllProducts, getLimitedByPaginationProducts } from "./productsController";
 import { Category } from "../databaseHandler/database";
+import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_NUMBER } from "../utils/contants";
 
+// to chane the page number and products limit change this two values
 
-// getAllCategories().then(result => categories = result);
+const defaultPageNumber = DEFAULT_PAGE_NUMBER;
+const defaultPageLimit = DEFAULT_PAGE_LIMIT ;
 
 export const renderAdminHomePage = asyncWrapper(async (req: Request, res: Response) => {
     res.redirect('/admin/products');
@@ -22,8 +25,8 @@ export const renderProductsPage = asyncWrapper( async (req:Request, res: Respons
     let pageLimit : number = Number(req.query.pageLimit);
 
     if( Object.keys(req.query).length === 0 ) {
-        pageNumber = 1;
-        pageLimit = 5;
+        pageNumber = defaultPageNumber;
+        pageLimit = defaultPageLimit;
     }
 
     await getAllCategories().then(result => categories = result);
