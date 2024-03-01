@@ -12,27 +12,27 @@
             <form class="row g-3" action="/admin/products" method="POST" enctype="multipart/form-data">
                 <div class="col-md-4">
                     <label for="product-name-input" class="form-label">Product Name</label>
-                    <input id="product-name-input" name="name" class="form-control" type="text" placeholder="Product Name">
+                    <input id="product-name-input" name="name" class="form-control" type="text" placeholder="Product Name" required>
                 </div>
 
                 <div class="col-md-4">
                     <label for="product-cost-input" class="form-label">Product Cost</label>
-                    <input id="product-cost-input" name="cost" class="form-control" type="number" placeholder="Product Cost">
+                    <input id="product-cost-input" name="cost" class="form-control" type="number" placeholder="Product Cost" required>
                 </div>
 
                 <div class="col-md-4">
                     <label for="product-price-input" class="form-label">Product Price</label>
-                    <input id="product-price-input" name="price" class="form-control" type="number" placeholder="Product Price">
+                    <input id="product-price-input" name="price" class="form-control" type="number" placeholder="Product Price" required>
                 </div>
 
                 <div class="col-md-4">
                   <label for="product-quantity-input" class="form-label">Product Quantity</label>
-                  <input id="product-quantity-input" name="quantity" class="form-control" type="number" placeholder="Product Quantity">
+                  <input id="product-quantity-input" name="quantity" class="form-control" type="number" placeholder="Product Quantity" required>
                 </div>
                 
                 <div class="col-md-4">
                     <label for="product-select" class="form-label">Product Category</label>
-                    <select id="products-select" name="category_name" class="form-select" aria-label="Default select example">
+                    <select id="products-select" name="category_name" class="form-select" aria-label="Default select example" required>
                         <% categories.forEach(category => { %>
                           <option value="<%= category.name %>"><%= category.name %></option>
                         <% }); %>
@@ -44,7 +44,7 @@
 
                 <div class="col-md-4">
                     <label for="formFile" class="form-label">Product Image</label>
-                    <input class="form-control" name="image" type="file" id="formFile" accept="image/*">
+                    <input class="form-control" name="image" type="file" id="formFile" accept="image/*" required>
                   </div>
                   <button type="submit" class="btn btn-success">Save Product</button>
             </form>
@@ -58,7 +58,7 @@
             <div class="row">
               <div class="col-md-4">
                 <form action="/admin/searchProduct/" method="POST" class="input-group">
-                  <input type="text" name="product_name_search_input" id="serach-product-input" class="form-control" placeholder="Search Product" aria-describedby="button-addon2" list="products-datalist">
+                  <input type="text" name="product_name_search_input" id="serach-product-input" class="form-control" placeholder="Search Product" aria-describedby="button-addon2" list="products-datalist" required>
                   
                   <!-- <button class="btn btn-outline-secondary" id="serach-product-button"  type="button" id="button-addon2">Search</button> -->
                   
@@ -113,8 +113,6 @@
                     <td><%= product.quantity %></td>
                     <td><%= categoryName %></td>
                     <td><img src="/products-images/<%= product.image %> " alt="Product Image"  class="img-thumbnail" style="width: 70px;height: 70px;"></td>
-                    
-                    <!-- <td><%= product.name %></td> -->
                     <td><button class="btn btn-primary" data-bs-toggle="modal" onclick="showEditAlert('<%= product.id %>', '<%= product.name %>', '<%= product.cost %>', '<%= product.price %>', '<%= product.categoryId %>','<%= product.quantity %>','<%= product.image %>','<%= categoryName %>')" data-bs-target="#editProductAlert" >Edit</button> <button type="button" class="btn btn-danger" onclick= "showDeleteAlert('<%= product.id%>', '<%= product.name %>')" data-bs-toggle="modal" data-bs-target="#deleteProductAlert" >Delete</button></td>
                   </tr>
                   <% productRowNumber ++ %>

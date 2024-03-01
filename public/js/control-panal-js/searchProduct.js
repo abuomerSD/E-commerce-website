@@ -44,7 +44,6 @@ function showEditAlert(productId, productName, productCost, productPrice, catego
     // console.log(oldImageURL);
     // console.log(editProductImage.src);
 
-
     // to select the current category name 
     const categoriesArray = Array.from(editProductcategorySelect.options);
 
@@ -64,7 +63,7 @@ function showEditAlert(productId, productName, productCost, productPrice, catego
         const formData = new FormData(updateForm);
         let requestBody = formData;
         
-        const reloadUrl = window.location.href;
+        const reloadUrl = '/admin/products';
 
         
         if (editProductImage.src === oldImageURL) {
@@ -130,21 +129,6 @@ function changeImage() {
 // fires on load
 const onLoadFuntion = ()=> {
     document.getElementById('products-nav-link').classList.add('active');
-
-    // to add active class to current page 
-    setPaginationLinkActive();
 }
-
-function setPaginationLinkActive() {
-    const searchParams = new URLSearchParams(window.location.search);
-    let pageNumber = searchParams.get('pageNumber');
-    if(pageNumber === null) {
-        pageNumber = 1;
-        return;
-    }  
-    const currentPageLink = document.getElementById('pagination-link-' + pageNumber);
-    currentPageLink.classList.add('active');
-}
-
 
 window.addEventListener('load', onLoadFuntion);
