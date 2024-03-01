@@ -47,10 +47,10 @@
             </thead>
             <tbody>
 
-                <% let rowNumber = 1 %>
+                <% let rowNumber = ((pageNumber -1) * pageLimit) + 1 %>
                 <% limitedCategories.forEach(category => { %>
                     <tr>
-                        <th scope="row"><%= rowNumber  %></th>
+                        <th scope="row"><%= rowNumber %></th>
                         <td> <%= category.name %> </td>
                         <td><button type="button" class="btn btn-primary" onclick="showEditCategoryAlert('<%= category.id%>', '<%= category.name %>')" data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit</button>
                             <button type="button" class="btn btn-danger">Delete</button>
@@ -65,17 +65,24 @@
         <!-- category pagination start -->
         <% if(categories.length > pageLimit) { %>
             <% let numberOfPages =  Math.ceil(categories.length / pageLimit)%>
-            <!-- <% for(let i = 1;) %> -->
-        
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="/admin/categories/?pageNumber=<%= pageNumber - 1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="/admin/categories/?pageNumber=<%= pageNumber + 1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
+                    <% if (pageNumber === 1) { %>
+                        <li class="page-item disabled"><a class="page-link" href="/admin/categories/?pageNumber=<%= pageNumber - 1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
+                    <% } else {%>
+                        <li class="page-item"><a class="page-link" href="/admin/categories/?pageNumber=<%= pageNumber - 1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
+                    <% } %>
+                    <% for(let i = 1; i <= numberOfPages ; i ++) { %>
+                        <li class="page-item"><a class="page-link" href="/admin/categories/?pageNumber=<%= i %>&pageLimit=<%= pageLimit %>"><%= i %></a></li>
+                    <% }%>
+                    <% if(pageNumber === numberOfPages) {%>
+                        <li class="page-item disabled"><a class="page-link" href="/admin/categories/?pageNumber=<%= pageNumber + 1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
+                    <% } else {%>
+                        <li class="page-item"><a class="page-link" href="/admin/categories/?pageNumber=<%= pageNumber + 1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
+                    <% } %>
                 </ul>
             </nav>
+        
         <% } %>
 
         <!-- category pagination end -->
