@@ -37,29 +37,33 @@
 
         <!-- Categories Table start -->
         <h3 class="mt-2">Categories</h3>
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>                
-                <th scope="col">Category Name</th>
-                <th scope="col">Edit & Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-
-                <% let rowNumber = ((pageNumber -1) * pageLimit) + 1 %>
-                <% limitedCategories.forEach(category => { %>
-                    <tr>
-                        <th scope="row"><%= rowNumber %></th>
-                        <td> <%= category.name %> </td>
-                        <td><button type="button" class="btn btn-primary" onclick="showEditCategoryAlert('<%= category.id%>', '<%= category.name %>')" data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit</button>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal" onclick="showDeleteCategoryModal('<%= category.name %>', '<%= category.id %>')">Delete</button>
-                        </td>
-                    </tr>
-                    <% rowNumber ++; %>
-                <% }); %>
-            </tbody>
-          </table>
+        <% if (limitedCategories.length === 0) { %>
+            <h5>No Categories to show</h5>
+        <% } else { %>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>                
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Edit & Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+    
+                    <% let rowNumber = ((pageNumber -1) * pageLimit) + 1 %>
+                    <% limitedCategories.forEach(category => { %>
+                        <tr>
+                            <th scope="row"><%= rowNumber %></th>
+                            <td> <%= category.name %> </td>
+                            <td><button type="button" class="btn btn-primary" onclick="showEditCategoryAlert('<%= category.id%>', '<%= category.name %>')" data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal" onclick="showDeleteCategoryModal('<%= category.name %>', '<%= category.id %>')">Delete</button>
+                            </td>
+                        </tr>
+                        <% rowNumber ++; %>
+                    <% }); %>
+                </tbody>
+              </table>
+        <% } %>
         <!-- Categories Table end -->
 
         <!-- category pagination start -->

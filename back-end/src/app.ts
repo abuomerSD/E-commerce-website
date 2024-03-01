@@ -25,6 +25,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // custom error handler 
 app.use(errorHandler);
 
+app.get('/', (req, res) => {
+    res.render('index');
+})
+
 app.use('/admin', adminRouter);
 
 app.listen(port, ()=> {

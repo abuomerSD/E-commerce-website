@@ -23,6 +23,9 @@ app.use(express_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 // custom error handler 
 app.use(errorHandler_1.errorHandler);
+app.get('/', (req, res) => {
+    res.render('index');
+});
 app.use('/admin', adminRoute_1.adminRouter);
 app.listen(port, () => {
     console.log(`server is listening to port : ${port}`);
