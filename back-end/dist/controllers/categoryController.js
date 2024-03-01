@@ -9,11 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCategory = exports.updateCategory = exports.getCategoryById = exports.getAllCategoriesLimitedByPageLimit = exports.getAllCategories = exports.saveCategory = void 0;
+exports.deleteCategory = exports.updateCategory = exports.getCategoryById = exports.renderSearchCategoryPage = exports.getAllCategoriesLimitedByPageLimit = exports.getAllCategories = exports.saveCategory = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const httpStatusCodesStates_1 = require("../utils/httpStatusCodesStates");
 const contants_1 = require("../utils/contants");
+const sequelize_1 = require("sequelize");
 const pageLimit = contants_1.DEFAULT_PAGE_LIMIT;
 // to save category to database
 exports.saveCategory = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -43,6 +44,15 @@ function getAllCategoriesLimitedByPageLimit(pageNumber) {
     });
 }
 exports.getAllCategoriesLimitedByPageLimit = getAllCategoriesLimitedByPageLimit;
+// render search category page 
+exports.renderSearchCategoryPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name } = req.body;
+    let filteredCategories = [];
+    yield database_1.Category.findAll({ where: { name: {
+                [sequelize_1.Op.iLike]: `%${name}%`,
+            } } }).then(result => filteredCategories = result);
+    res.render('cpSearchCategory', { title: 'Search Category', name, filteredCategories });
+}));
 // export const getAllCategories = asyncWrapper(async (req?: Request, res?: Response) => {
 //     await Category.findAll().then((categories) => {
 //         return categories;

@@ -21,13 +21,13 @@
         <hr>
 
         <!-- search category start -->
-        <form action="/admin/categories" method="POST">
+        <form action="/admin/categories/searchCategory" method="POST">
             
             <label for="categoryNameSearchInput">Search Category</label>
             <div class="row" >
                 <div class="col-md-4">
                     <div class="input-group">
-                        <input type="text" class="form-control" id="categoryNameSearchInput" name="name" placeholder="Category Name" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <input type="text" class="form-control" id="categoryNameSearchInput" name="name" placeholder="Category Name" aria-label="Example text with button addon" aria-describedby="button-addon1" required>
                         <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Search</button>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                         <th scope="row"><%= rowNumber %></th>
                         <td> <%= category.name %> </td>
                         <td><button type="button" class="btn btn-primary" onclick="showEditCategoryAlert('<%= category.id%>', '<%= category.name %>')" data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal" onclick="showDeleteCategoryModal('<%= category.name %>', '<%= category.id %>')">Delete</button>
                         </td>
                     </tr>
                     <% rowNumber ++; %>
@@ -110,6 +110,26 @@
             </div>
         </div>
         <!-- Edit Category Modal end -->
+
+        <!-- Delete Category Modal start -->
+        <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Category</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="deleteCategoryModalBodyText"></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" id="deleteCategoryModalButton">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- Delete Category Modal end -->
 
         <%- include('./control-panel/partials/footer.ejs') %>
     </div>

@@ -1,7 +1,7 @@
 import {Router} from 'express';
 export const adminRouter = Router();
 import {delelteProduct, getAllProducts, getProductById, renderProductsPageWithFilteredProducts, saveProduct, updateProductById, updateProductByIdWithoutImage} from '../controllers/productsController'
-import { deleteCategory, getAllCategories, getCategoryById, saveCategory, updateCategory } from '../controllers/categoryController';
+import { deleteCategory, getAllCategories, getCategoryById, renderSearchCategoryPage, saveCategory, updateCategory } from '../controllers/categoryController';
 import multer from 'multer';
 import { renderAdminHomePage, renderCategoriesPage, renderProductsPage } from '../controllers/controlPanelController';
 import { log } from 'console';
@@ -59,3 +59,6 @@ adminRouter.route('/categories/:id')
 .get(getCategoryById)
 .put(updateCategory)
 .delete(deleteCategory);
+
+adminRouter.route('/categories/searchCategory')
+.post(renderSearchCategoryPage)

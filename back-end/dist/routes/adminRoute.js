@@ -52,3 +52,5 @@ exports.adminRouter.route('/categories/:id')
     .get(categoryController_1.getCategoryById)
     .put(categoryController_1.updateCategory)
     .delete(categoryController_1.deleteCategory);
+exports.adminRouter.route('/categories/searchCategory')
+    .post(categoryController_1.renderSearchCategoryPage);

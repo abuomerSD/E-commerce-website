@@ -3,6 +3,7 @@ import { Category } from "../databaseHandler/database" ;
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { httpStatus } from "../utils/httpStatusCodesStates";
 import { DEFAULT_PAGE_LIMIT } from "../utils/contants";
+import {Op} from 'sequelize';
 
 const pageLimit = DEFAULT_PAGE_LIMIT;
 
@@ -32,6 +33,17 @@ export async function getAllCategoriesLimitedByPageLimit(pageNumber: number) {
     await Category.findAll({ limit: pageLimit, offset }).then(result => categories = result);
     return categories;
 }
+
+// render search category page 
+
+export const renderSearchCategoryPage =  asyncWrapper(async (req: Request, res: Response) => {
+    const {name} = req.body;
+    let filteredCategories: Array<Category> = [];
+    await Category.findAll({where: {name:{
+        [Op.iLike]: `%${name}%`,
+    }} }).then(result => filteredCategories = result);
+    res.render('cpSearchCategory', {title: 'Search Category', name, filteredCategories})
+}) 
 
 // export const getAllCategories = asyncWrapper(async (req?: Request, res?: Response) => {
 //     await Category.findAll().then((categories) => {
