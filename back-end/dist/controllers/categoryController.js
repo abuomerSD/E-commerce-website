@@ -47,11 +47,11 @@ exports.getAllCategoriesLimitedByPageLimit = getAllCategoriesLimitedByPageLimit;
 // render search category page 
 exports.renderSearchCategoryPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.body;
-    let filteredCategories = [];
+    let limitedCategories = [];
     yield database_1.Category.findAll({ where: { name: {
                 [sequelize_1.Op.iLike]: `%${name}%`,
-            } } }).then(result => filteredCategories = result);
-    res.render('cpSearchCategory', { title: 'Search Category', name, filteredCategories });
+            } } }).then(result => limitedCategories = result);
+    res.render('cpSearchCategory', { title: 'Search Category', name, limitedCategories });
 }));
 // export const getAllCategories = asyncWrapper(async (req?: Request, res?: Response) => {
 //     await Category.findAll().then((categories) => {

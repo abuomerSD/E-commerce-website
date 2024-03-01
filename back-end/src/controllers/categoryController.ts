@@ -38,11 +38,11 @@ export async function getAllCategoriesLimitedByPageLimit(pageNumber: number) {
 
 export const renderSearchCategoryPage =  asyncWrapper(async (req: Request, res: Response) => {
     const {name} = req.body;
-    let filteredCategories: Array<Category> = [];
+    let limitedCategories: Array<Category> = [];
     await Category.findAll({where: {name:{
         [Op.iLike]: `%${name}%`,
-    }} }).then(result => filteredCategories = result);
-    res.render('cpSearchCategory', {title: 'Search Category', name, filteredCategories})
+    }} }).then(result => limitedCategories = result);
+    res.render('cpSearchCategory', {title: 'Search Category', name, limitedCategories})
 }) 
 
 // export const getAllCategories = asyncWrapper(async (req?: Request, res?: Response) => {

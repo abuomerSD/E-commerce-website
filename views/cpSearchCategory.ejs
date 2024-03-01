@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./control-panel/partials/adminHead.ejs') %>
+<body>
+    <%- include('./control-panel/partials/nav.ejs') %>
+    <div class="main-container">
+        <div>
+            <h3>Search Categories:</h3>
+        </div>
+
+        <!-- search category start -->
+        <form action="/admin/categories/searchCategory" method="POST">
+
+            <label for="categoryNameSearchInput">Search Category</label>
+            <div class="row" >
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="categoryNameSearchInput" name="name" placeholder="Category Name" aria-label="Example text with button addon" aria-describedby="button-addon1" required>
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Search</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- search category end -->   
+
+        <p>show results for <b><%= name %></b> :</p>
+
+        <!-- categories table start -->
+        <div>
+           <% if (limitedCategories.length === 0) { %>
+                <p>No categories Match this search</p>
+           <% } else { %>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>                
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Edit & Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+    
+                    <% let rowNumber = 1 %>
+                    <% limitedCategories.forEach(category => { %>
+                        <tr>
+                            <th scope="row"><%= rowNumber %></th>
+                            <td> <%= category.name %> </td>
+                            <td><button type="button" class="btn btn-primary" onclick="showEditCategoryAlert('<%= category.id%>', '<%= category.name %>')" data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal" onclick="showDeleteCategoryModal('<%= category.name %>', '<%= category.id %>')">Delete</button>
+                            </td>
+                        </tr>
+                        <% rowNumber ++; %>
+                    <% }); %>
+                </tbody>
+              </table>
+           <% } %> 
+        </div>
+        <!-- categories table end -->
+
+    </div>
+
+     <!-- Edit Category Modal start -->
+  
+        <!-- Modal -->
+        <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5">Edit Category</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="editCategoryModalBody"></p>
+                    <label for="editCategoryInput">Category Name</label>
+                    <input type="text" id="editCategoryInput" class="form-control">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning" id="saveEditCategoryButton">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Edit Category Modal end -->
+
+        <!-- Delete Category Modal start -->
+        <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Category</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="deleteCategoryModalBodyText"></p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" id="deleteCategoryModalButton">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- Delete Category Modal end -->
+
+
+    <%- include('./control-panel/partials/footer.ejs') %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script src="/js/control-panal-js/categories.js"></script>
+    
+</body>
+</html>
