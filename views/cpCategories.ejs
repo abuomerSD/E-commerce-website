@@ -11,7 +11,7 @@
             
             <label for="categoryNameInput">Category Name</label>
             <div class="input-group" >
-                <input type="text" class="form-control" id="categoryNameInput" name="name" placeholder="Category Name" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                <input type="text" class="form-control" id="categoryNameInput" name="name" placeholder="Category Name" aria-label="Example text with button addon" aria-describedby="button-addon1" required>
                 <button class="btn btn-success" type="submit" id="button-addon1">Save</button>
             
             </div>
@@ -48,7 +48,7 @@
             <tbody>
 
                 <% let rowNumber = 1 %>
-                <% categories.forEach(category => { %>
+                <% limitedCategories.forEach(category => { %>
                     <tr>
                         <th scope="row"><%= rowNumber  %></th>
                         <td> <%= category.name %> </td>
@@ -61,6 +61,24 @@
             </tbody>
           </table>
         <!-- Categories Table end -->
+
+        <!-- category pagination start -->
+        <% if(categories.length > pageLimit) { %>
+            <% let numberOfPages =  Math.ceil(categories.length / pageLimit)%>
+            <!-- <% for(let i = 1;) %> -->
+        
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="/admin/categories/?pageNumber=<%= pageNumber - 1 %>&pageLimit=<%= pageLimit %>">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="/admin/categories/?pageNumber=<%= pageNumber + 1 %>&pageLimit=<%= pageLimit %>">Next</a></li>
+                </ul>
+            </nav>
+        <% } %>
+
+        <!-- category pagination end -->
 
         <!-- Edit Category Modal start -->
   

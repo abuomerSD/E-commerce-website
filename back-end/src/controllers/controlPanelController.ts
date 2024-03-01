@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllCategories } from "./categoryController";
+import { getAllCategories, getAllCategoriesLimitedByPageLimit } from "./categoryController";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllProducts, getLimitedByPaginationProducts } from "./productsController";
 import { Category } from "../databaseHandler/database";
@@ -43,7 +43,22 @@ export const renderProductsPage = asyncWrapper( async (req:Request, res: Respons
 
 export const renderCategoriesPage = asyncWrapper(async (req: Request, res: Response) => {
     let categories: Array<Category> = [];
+    let limitedCategories : Array<Category> = [];
+
+    let pageNumber : number = Number(req.query.pageNumber);
+    let pageLimit : number = Number(req.query.pageLimit);
+
+    if( Object.keys(req.query).length === 0 ) {
+        pageNumber = defaultPageNumber;
+        pageLimit = defaultPageLimit;
+    }
+    
 
     await getAllCategories().then(result => categories = result);
-    res.render('cpCategories',{title: 'Categories', categories});
+    
+    await getAllCategoriesLimitedByPageLimit(pageNumber).then(result => limitedCategories = result);
+    
+    res.render('cpCategories',{title: 'Categories', categories, limitedCategories, pageLimit, pageNumber});
+
+
 });

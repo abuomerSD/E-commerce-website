@@ -39,6 +39,14 @@ exports.renderProductsPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __aw
 }));
 exports.renderCategoriesPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let categories = [];
+    let limitedCategories = [];
+    let pageNumber = Number(req.query.pageNumber);
+    let pageLimit = Number(req.query.pageLimit);
+    if (Object.keys(req.query).length === 0) {
+        pageNumber = defaultPageNumber;
+        pageLimit = defaultPageLimit;
+    }
     yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
-    res.render('cpCategories', { title: 'Categories', categories });
+    yield (0, categoryController_1.getAllCategoriesLimitedByPageLimit)(pageNumber).then(result => limitedCategories = result);
+    res.render('cpCategories', { title: 'Categories', categories, limitedCategories, pageLimit, pageNumber });
 }));

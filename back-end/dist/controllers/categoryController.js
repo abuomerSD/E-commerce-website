@@ -9,16 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteCategory = exports.updateCategory = exports.getCategoryById = exports.getAllCategories = exports.saveCategory = void 0;
+exports.deleteCategory = exports.updateCategory = exports.getCategoryById = exports.getAllCategoriesLimitedByPageLimit = exports.getAllCategories = exports.saveCategory = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const httpStatusCodesStates_1 = require("../utils/httpStatusCodesStates");
+const contants_1 = require("../utils/contants");
+const pageLimit = contants_1.DEFAULT_PAGE_LIMIT;
+// to save category to database
 exports.saveCategory = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.body;
     yield database_1.Category.create({ name }).then((category) => {
         res.status(201).redirect('/admin/categories');
     });
 }));
+// to get all categories 
 function getAllCategories() {
     return __awaiter(this, void 0, void 0, function* () {
         let categories;
@@ -29,6 +33,16 @@ function getAllCategories() {
     });
 }
 exports.getAllCategories = getAllCategories;
+// to get limited by pagination categories
+function getAllCategoriesLimitedByPageLimit(pageNumber) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let categories = [];
+        let offset = (pageNumber - 1) * pageLimit;
+        yield database_1.Category.findAll({ limit: pageLimit, offset }).then(result => categories = result);
+        return categories;
+    });
+}
+exports.getAllCategoriesLimitedByPageLimit = getAllCategoriesLimitedByPageLimit;
 // export const getAllCategories = asyncWrapper(async (req?: Request, res?: Response) => {
 //     await Category.findAll().then((categories) => {
 //         return categories;

@@ -2,7 +2,12 @@ import { Request, Response } from "express";
 import { Category } from "../databaseHandler/database" ;
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { httpStatus } from "../utils/httpStatusCodesStates";
+import { DEFAULT_PAGE_LIMIT } from "../utils/contants";
 
+const pageLimit = DEFAULT_PAGE_LIMIT;
+
+
+// to save category to database
 export const saveCategory = asyncWrapper(async (req: Request, res: Response)=> {
     const { name } = req.body;
     await Category.create({name}).then((category) => {
@@ -10,11 +15,21 @@ export const saveCategory = asyncWrapper(async (req: Request, res: Response)=> {
     });
 });
 
+// to get all categories 
 export async function getAllCategories() {
     let categories:any;
     await Category.findAll().then(result => {
         categories = result;
     })
+    return categories;
+}
+
+// to get limited by pagination categories
+
+export async function getAllCategoriesLimitedByPageLimit(pageNumber: number) {
+    let categories: Array<Category>  =[];
+    let offset = (pageNumber -1) * pageLimit
+    await Category.findAll({ limit: pageLimit, offset }).then(result => categories = result);
     return categories;
 }
 
