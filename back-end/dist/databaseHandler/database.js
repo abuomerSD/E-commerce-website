@@ -87,7 +87,7 @@ Product.init({
     modelName: 'Product',
 });
 // Relationships 
-// Category.hasOne(Product);
-Product.belongsTo(Category, {
+Category.hasMany(Product, {
     foreignKey: 'categoryId'
 });
+Product.belongsTo(Category);

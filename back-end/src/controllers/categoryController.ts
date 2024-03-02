@@ -4,6 +4,7 @@ import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { httpStatus } from "../utils/httpStatusCodesStates";
 import { DEFAULT_PAGE_LIMIT } from "../utils/contants";
 import {Op} from 'sequelize';
+import { Product } from "../databaseHandler/database";
 
 const pageLimit = DEFAULT_PAGE_LIMIT;
 
@@ -17,11 +18,16 @@ export const saveCategory = asyncWrapper(async (req: Request, res: Response)=> {
 });
 
 // to get all categories 
+
+/**
+ * 
+ * @returns  All Categories Array
+ */
 export async function getAllCategories() {
-    let categories:any;
-    await Category.findAll().then(result => {
+    let categories:Array<Category> = [];
+    await Category.findAll({include: {model: Product}}).then(result => {
         categories = result;
-    })
+    })  
     return categories;
 }
 

@@ -36,6 +36,10 @@ export const saveProduct = asyncWrapper(async (req:Request, res: Response) => {
 });
 
 // get all products as array 
+/**
+ * 
+ * @returns  All Products Array
+ */
 export const getAllProducts = async() => {
     let products: any = [];
     await Product.findAll().then((result)=> {

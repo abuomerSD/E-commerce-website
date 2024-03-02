@@ -4,6 +4,7 @@ import  {adminRouter} from './routes/adminRoute'
 import {logger} from './middlewares/logger';
 import { errorHandler } from './middlewares/errorHandler';
 import bodyParser from 'body-parser';
+import { publicRouter } from './routes/publicRoute';
 const app: Express = express();
 
 config();
@@ -25,11 +26,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // custom error handler 
 app.use(errorHandler);
 
-app.get('/', (req, res) => {
-    res.render('index');
-})
+// handle public routes
+app.get('/', publicRouter);
 
+// handle private routes
 app.use('/admin', adminRouter);
+
+// handle 404 page
+
+app.use((req: Request, res: Response) => {
+    res.render('404', {title: 'Page Not Found'});
+})
 
 app.listen(port, ()=> {
     console.log(`server is listening to port : ${port}`);

@@ -43,6 +43,10 @@ exports.saveProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(v
     });
 }));
 // get all products as array 
+/**
+ *
+ * @returns  All Products Array
+ */
 const getAllProducts = () => __awaiter(void 0, void 0, void 0, function* () {
     let products = [];
     yield database_1.Product.findAll().then((result) => {

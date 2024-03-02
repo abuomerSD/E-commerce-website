@@ -1,3 +1,4 @@
+
 import {DataTypes, Model, Sequelize, UUIDV4} from 'sequelize';
 
 const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
@@ -24,7 +25,10 @@ function init() {
 init();
 
 // Category table creation
-export class Category extends Model {}
+export class Category extends Model {
+  declare name: string;
+  declare Products: Array<Product>;
+}
 Category.init({
   id: {
     type: DataTypes.UUID,
@@ -94,8 +98,10 @@ Product.init({
 
 // Relationships 
 
-// Category.hasOne(Product);
-Product.belongsTo(Category,{
+Category.hasMany(Product, {
   foreignKey: 'categoryId'
 });
+Product.belongsTo(Category);
+
+
 

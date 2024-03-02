@@ -9,6 +9,7 @@ const adminRoute_1 = require("./routes/adminRoute");
 const logger_1 = require("./middlewares/logger");
 const errorHandler_1 = require("./middlewares/errorHandler");
 const body_parser_1 = __importDefault(require("body-parser"));
+const publicRoute_1 = require("./routes/publicRoute");
 const app = (0, express_1.default)();
 (0, dotenv_1.config)();
 const port = process.env.PORT || 3000;
@@ -23,10 +24,14 @@ app.use(express_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 // custom error handler 
 app.use(errorHandler_1.errorHandler);
-app.get('/', (req, res) => {
-    res.render('index');
-});
+// handle public routes
+app.get('/', publicRoute_1.publicRouter);
+// handle private routes
 app.use('/admin', adminRoute_1.adminRouter);
+// handle 404 page
+app.use((req, res) => {
+    res.render('404', { title: 'Page Not Found' });
+});
 app.listen(port, () => {
     console.log(`server is listening to port : ${port}`);
 });

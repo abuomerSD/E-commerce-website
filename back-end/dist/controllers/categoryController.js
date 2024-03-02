@@ -15,6 +15,7 @@ const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const httpStatusCodesStates_1 = require("../utils/httpStatusCodesStates");
 const contants_1 = require("../utils/contants");
 const sequelize_1 = require("sequelize");
+const database_2 = require("../databaseHandler/database");
 const pageLimit = contants_1.DEFAULT_PAGE_LIMIT;
 // to save category to database
 exports.saveCategory = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,10 +25,14 @@ exports.saveCategory = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(
     });
 }));
 // to get all categories 
+/**
+ *
+ * @returns  All Categories Array
+ */
 function getAllCategories() {
     return __awaiter(this, void 0, void 0, function* () {
-        let categories;
-        yield database_1.Category.findAll().then(result => {
+        let categories = [];
+        yield database_1.Category.findAll({ include: { model: database_2.Product } }).then(result => {
             categories = result;
         });
         return categories;
