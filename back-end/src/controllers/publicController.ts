@@ -12,3 +12,7 @@ export const renderPublicHomePage = asyncWrapper(async (req:Request, res: Respon
     const products = await getAllProducts();
     res.render('index', {title: 'Home', categories, products})
 })
+
+export const renderProductLandingPage = asyncWrapper(async (req: Request, res: Response) => {
+    res.render('productLandingPage', {title:'test'});
+})

@@ -6,3 +6,5 @@ const publicController_1 = require("../controllers/publicController");
 exports.publicRouter = (0, express_1.Router)();
 exports.publicRouter.route('/')
     .get(publicController_1.renderPublicHomePage);
+exports.publicRouter.route('/products/:id')
+    .get(publicController_1.renderProductLandingPage);

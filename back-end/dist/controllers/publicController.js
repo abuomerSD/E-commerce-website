@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderPublicHomePage = void 0;
+exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const categoryController_1 = require("./categoryController");
 const productsController_1 = require("./productsController");
@@ -20,4 +20,7 @@ exports.renderPublicHomePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __
     const categories = yield (0, categoryController_1.getAllCategories)();
     const products = yield (0, productsController_1.getAllProducts)();
     res.render('index', { title: 'Home', categories, products });
+}));
+exports.renderProductLandingPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.render('productLandingPage', { title: 'test' });
 }));
