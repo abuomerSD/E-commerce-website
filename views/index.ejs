@@ -134,15 +134,15 @@
                         <div class="card m-4  text-center" style="width: 18rem; display: inline-block">
                            <img src="/products-images/<%= product.image %>" class="card-img-top" alt="Product Image" style="max-height: 180px;">
                            <div class="card-body">
-                             <a href="/products/<%= product.id %>"><h2 class="card-title"><%= product.name %></h2></a>
+                             <a href="/products/<%= product.id %>" target="_blank"><h2 class="card-title"><%= product.name %></h2></a>
                              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio repudiandae labore.</p>
                              <h3 class="card-text">$ <%= product.price %></h3>
                              <a href="#" class="btn btn-secondary">Add to cart</a>
                              <div class="viewed-times" style="display: inline-block;">
                               <i class="fa-solid fa-eye" style="display: inline;"></i>
-                              <p style="display: inline; margin: 0;"></p><%= product.viewedTimes %></p>
+                              <p style="display: inline; margin: 0;" title="viewed times"></p><%= product.viewedTimes %></p>
                               </div>
-                              <div class="saledTimes" style="display: inline-block;">
+                              <div class="saled-times" style="display: inline-block;">
                               <i class="fa-solid fa-cart-shopping"></i>
                               <p style="display: inline; margin: 0;"></p><%= product.saledTimes %></p>
                              </div>

@@ -49,7 +49,11 @@ Category.init({
 
 // Product Table creation
 
-export class Product extends Model {}
+export class Product extends Model {
+  declare name: string;
+  declare viewedTimes: bigint;
+  declare saledTimes: bigint;
+}
 
 
 Product.init({

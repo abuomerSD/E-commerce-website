@@ -28,6 +28,8 @@ app.use(errorHandler_1.errorHandler);
 app.get('/', publicRoute_1.publicRouter);
 // handle private routes
 app.use('/admin', adminRoute_1.adminRouter);
+// handle public products route 
+app.use('/products', publicRoute_1.publicProductsRoute);
 // handle 404 page
 app.use((req, res) => {
     res.render('404', { title: 'Page Not Found' });

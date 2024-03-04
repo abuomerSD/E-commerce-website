@@ -1,4 +1,27 @@
 <%- include('./public-partials/publicHead.ejs') %>
 <%- include('./public-partials/publicNav.ejs') %>
-    <h1>product landing page</h1>
+    <!-- product section start -->
+    <div class="container mt-5">
+        <div style="margin: auto; width: 50%;">
+            <div class="row " style="display: flex; margin-top: 15%;">
+                <h1 class=""><%= product.name %></h1>
+                <button class="btn btn-secondary" style="margin-left: auto; margin-right: 0;">Add to cart</button>
+            </div>
+            <div class="row">
+                <h2>$ <%= product.price %></h2>
+                <div class="viewed-times m-1" style="display: inline-block;">
+                    <i class="fa-solid fa-eye" style="display: inline;"></i>
+                    <p style="display: inline; margin: 0;"></p><%= product.viewedTimes %></p>
+                </div>
+                <div class="saled-times m-1" style="display: inline-block;">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <p style="display: inline; margin: 0;"></p><%= product.saledTimes %></p>
+                </div>
+            </div>
+                <img src="/products-images/<%= product.image %>" alt="">
+                <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias consectetur omnis qui repellat sint ad minus est voluptates, doloremque nostrum, voluptate praesentium, delectus placeat ducimus aperiam odio voluptas illum obcaecati exercitationem facilis consequatur cupiditate? At, eaque? Quae, commodi sunt reiciendis vero error iste ipsam fuga harum perferendis quo eaque recusandae eos fugit. Deserunt distinctio officiis rerum dicta voluptas nam eaque aliquam quas doloribus maxime cum ratione molestias, soluta fuga odit asperiores? Commodi est quae hic? Cupiditate recusandae aspernatur dolorum sunt, tempore vero dolore obcaecati harum magnam dolorem provident facere! Hic odit reprehenderit sunt possimus dicta, nobis vitae cumque repellendus? Consequuntur quis dolorem cumque quas velit laboriosam fuga, in distinctio? Odit sapiente cumque obcaecati quaerat provident, dolores enim asperiores nulla nobis vel. Nobis ullam delectus nulla vero expedita at quos, rerum necessitatibus, numquam tempora, ipsum autem cumque non nihil dolorem consequuntur impedit vel ex quam ratione odit! Cumque laboriosam nobis velit.</h4>
+        </div>
+    </div>
+    <!-- product section end -->
+
 <%- include('./public-partials/publicFooter.ejs') %>

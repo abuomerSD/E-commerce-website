@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllCategories } from "./categoryController";
 import { getAllProducts } from "./productsController";
+import { Product } from "../databaseHandler/database";
 
 
 /**
@@ -13,6 +14,19 @@ export const renderPublicHomePage = asyncWrapper(async (req:Request, res: Respon
     res.render('index', {title: 'Home', categories, products})
 })
 
+/**
+ * render the product landing page
+ */
 export const renderProductLandingPage = asyncWrapper(async (req: Request, res: Response) => {
-    res.render('productLandingPage', {title:'test'});
+    const { id } = req.params;
+    const product = await Product.findOne({where: {id}});
+    console.log('*'.repeat(20));
+    // render product landing page
+    res.render('productLandingPage', {title:product?.name , product});
+    
+    // updating viewedTimes 
+    if (product) {
+       await product.increment('viewedTimes');
+    }
+    
 })
