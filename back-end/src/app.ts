@@ -27,16 +27,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(errorHandler);
 
 // handle public routes
-app.get('/', publicRouter);
+app.get('/', (req,res) => {
+    res.redirect('/shop');
+});
+
+app.use('/shop', publicRouter);
 
 // handle private routes
 app.use('/admin', adminRouter);
 
 // handle public products route 
-app.use('/products', publicProductsRoute);
+// app.use('/products', publicProductsRoute);
 
 // handle categories products route 
-app.use('/categories', publicCategoriesRoute);
+// app.use('/categories', publicCategoriesRoute);
 
 // handle 404 page
 

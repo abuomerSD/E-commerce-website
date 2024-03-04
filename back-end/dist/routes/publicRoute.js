@@ -8,7 +8,11 @@ exports.publicProductsRoute = (0, express_1.Router)();
 exports.publicCategoriesRoute = (0, express_1.Router)();
 exports.publicRouter.route('/')
     .get(publicController_1.renderPublicHomePage);
-exports.publicProductsRoute.route('/:id')
+exports.publicRouter.route('/bestSellers')
+    .get(publicController_1.renderBestSellersPage);
+exports.publicRouter.route('/newReleases')
+    .get(publicController_1.renderNewReleasePage);
+exports.publicRouter.route('/products/:id')
     .get(publicController_1.renderProductLandingPage);
-exports.publicCategoriesRoute.route('/:id')
+exports.publicRouter.route('/categories/:id')
     .get(publicController_1.renderCategoryLandingPage);

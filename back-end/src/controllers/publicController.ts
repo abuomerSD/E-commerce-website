@@ -3,8 +3,10 @@ import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllCategories } from "./categoryController";
 import { getAllProducts } from "./productsController";
 import { Category, Product } from "../databaseHandler/database";
-import { title } from "process";
+import sequelize from "sequelize";
+import { BEST_SELLERS_LIMIT } from "../utils/contants";
 
+const bestSellersLimit = BEST_SELLERS_LIMIT;
 
 /**
  * render public Home Page
@@ -37,5 +39,27 @@ export const renderProductLandingPage = asyncWrapper(async (req: Request, res: R
 export const renderCategoryLandingPage = asyncWrapper(async (req: Request, res: Response) => {
     const { id } = req.params;
     const category = await Category.findOne({where: {id}, include: {model: Product}});
-    res.render('categoryLandingPage', { title: 'test' , category});
+    res.render('categoryLandingPage', { title: category?.name , category});
+});
+
+/**
+ * render best sellers page
+ */
+export const renderBestSellersPage = asyncWrapper(async (req: Request, res: Response) => {
+    const products = await Product.findAll({
+        order: [
+            [sequelize.fn('max', sequelize.col('saledTimes')), 'DESC']
+        ],
+        limit: bestSellersLimit,
+        group: ['Product.id']
+    });
+    res.render('bestSellers', { title: 'Best Sellers', products });
+});
+
+export const renderNewReleasePage = asyncWrapper(async(req: Request, res: Response) => {
+    const products = await Product.findAll({
+        order: sequelize.col('createdAt'),
+        group: ['Product.id'],
+    })
+    res.render('newReleases', { title: 'New Releases' ,products })
 })

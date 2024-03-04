@@ -8,12 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
+exports.renderNewReleasePage = exports.renderBestSellersPage = exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const categoryController_1 = require("./categoryController");
 const productsController_1 = require("./productsController");
 const database_1 = require("../databaseHandler/database");
+const sequelize_1 = __importDefault(require("sequelize"));
+const contants_1 = require("../utils/contants");
+const bestSellersLimit = contants_1.BEST_SELLERS_LIMIT;
 /**
  * render public Home Page
  */
@@ -41,5 +47,25 @@ exports.renderProductLandingPage = (0, asyncWrapper_1.asyncWrapper)((req, res) =
 exports.renderCategoryLandingPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const category = yield database_1.Category.findOne({ where: { id }, include: { model: database_1.Product } });
-    res.render('categoryLandingPage', { title: 'test', category });
+    res.render('categoryLandingPage', { title: category === null || category === void 0 ? void 0 : category.name, category });
+}));
+/**
+ * render best sellers page
+ */
+exports.renderBestSellersPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const products = yield database_1.Product.findAll({
+        order: [
+            [sequelize_1.default.fn('max', sequelize_1.default.col('saledTimes')), 'DESC']
+        ],
+        limit: bestSellersLimit,
+        group: ['Product.id']
+    });
+    res.render('bestSellers', { title: 'Best Sellers', products });
+}));
+exports.renderNewReleasePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const products = yield database_1.Product.findAll({
+        order: sequelize_1.default.col('createdAt'),
+        group: ['Product.id'],
+    });
+    res.render('newReleases', { title: 'New Releases', products });
 }));

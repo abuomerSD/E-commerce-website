@@ -25,13 +25,16 @@ app.use(body_parser_1.default.urlencoded({ extended: false }));
 // custom error handler 
 app.use(errorHandler_1.errorHandler);
 // handle public routes
-app.get('/', publicRoute_1.publicRouter);
+app.get('/', (req, res) => {
+    res.redirect('/shop');
+});
+app.use('/shop', publicRoute_1.publicRouter);
 // handle private routes
 app.use('/admin', adminRoute_1.adminRouter);
 // handle public products route 
-app.use('/products', publicRoute_1.publicProductsRoute);
+// app.use('/products', publicProductsRoute);
 // handle categories products route 
-app.use('/categories', publicRoute_1.publicCategoriesRoute);
+// app.use('/categories', publicCategoriesRoute);
 // handle 404 page
 app.use((req, res) => {
     res.render('404', { title: 'Page Not Found' });
