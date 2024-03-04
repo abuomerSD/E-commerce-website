@@ -4,7 +4,7 @@ import  {adminRouter} from './routes/adminRoute'
 import {logger} from './middlewares/logger';
 import { errorHandler } from './middlewares/errorHandler';
 import bodyParser from 'body-parser';
-import { publicProductsRoute, publicRouter } from './routes/publicRoute';
+import { publicCategoriesRoute, publicProductsRoute, publicRouter } from './routes/publicRoute';
 const app: Express = express();
 
 config();
@@ -34,6 +34,9 @@ app.use('/admin', adminRouter);
 
 // handle public products route 
 app.use('/products', publicProductsRoute);
+
+// handle categories products route 
+app.use('/categories', publicCategoriesRoute);
 
 // handle 404 page
 

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
+exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const categoryController_1 = require("./categoryController");
 const productsController_1 = require("./productsController");
@@ -28,11 +28,18 @@ exports.renderPublicHomePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __
 exports.renderProductLandingPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const product = yield database_1.Product.findOne({ where: { id } });
-    console.log('*'.repeat(20));
     // render product landing page
     res.render('productLandingPage', { title: product === null || product === void 0 ? void 0 : product.name, product });
     // updating viewedTimes 
     if (product) {
         yield product.increment('viewedTimes');
     }
+}));
+/**
+ * render catgeory landing page
+ */
+exports.renderCategoryLandingPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const category = yield database_1.Category.findOne({ where: { id }, include: { model: database_1.Product } });
+    res.render('categoryLandingPage', { title: 'test', category });
 }));

@@ -22,7 +22,7 @@
                      <h1>Categories</h1>
                      <a href="/">Home</a>
                      <% categories.forEach(category => { %>
-                        <a href="#"><%= category.name %></a>
+                        <a href="/categories/<%= category.id %>"><%= category.name %></a>
                      <% }); %>
                   </div>
                   <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
@@ -125,7 +125,7 @@
          <% if(categoriesCount <= 2) { %>
             <div class="category_section">
                <div class="category-title">
-                  <h2 style="text-align: center;"><%= category.name %></h2>
+                  <a href="/categories/<%= category.id %>" target="_blank"><h2 style="text-align: center;"><%= category.name %></h2></a>
                </div>
                <div class="container">
                   <% const productsArray = category.Products %>
