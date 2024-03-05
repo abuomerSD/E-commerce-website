@@ -1,0 +1,9 @@
+/* remove all links decoration */
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.banner {
+    background-image: url('images/background/bg1.jpg');
+}
