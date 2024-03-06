@@ -4,6 +4,72 @@ a {
     color: black;
 }
 
-.banner {
-    background-image: url('images/background/bg1.jpg');
+/* slide start */
+.carousel-item img {
+    height:520px;    
 }
+/* slide end */
+
+/* body font */
+body {
+    font-family: "Laila", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* viewed-times start */
+.viewed-times {
+    display: inline-block;
+}
+
+.viewed-times i {
+    display: inline;
+}
+
+.viewed-times p {
+    display: inline;
+    margin: 0;
+}
+/* viewed-times end */
+
+/* saled-times start */
+
+.saled-times {
+    display: inline-block;
+}
+
+.saled-times p {
+    display: inline;
+    margin: 0;
+}
+
+/* saled-times end */
+
+/* products card start */
+
+.container .card .card-img-top {
+    max-height: 180px;
+}
+
+.container .card {
+    width: 18rem;
+    display: inline-block
+}
+/* products card end */
+
+/* footer start */
+.footer_section {
+    background-color: black;
+    text-align: center;
+    color: #939d9e;
+}
+.footer_section  a{
+    color: #939d9e;
+}
+.footer_section  a:hover{
+    color: white;
+}
+.footer_section  ul{
+    list-style: none;
+}
+/* footer end */
