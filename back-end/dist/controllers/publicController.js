@@ -34,12 +34,13 @@ exports.renderPublicHomePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __
 exports.renderProductLandingPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const product = yield database_1.Product.findOne({ where: { id } });
-    // render product landing page
-    res.render('productLandingPage', { title: product === null || product === void 0 ? void 0 : product.name, product });
+    const categories = yield database_1.Category.findAll();
     // updating viewedTimes 
     if (product) {
         yield product.increment('viewedTimes');
     }
+    // render product landing page
+    res.render('productLandingPage', { title: product === null || product === void 0 ? void 0 : product.name, product, categories });
 }));
 /**
  * render catgeory landing page
@@ -60,8 +61,12 @@ exports.renderBestSellersPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => _
         limit: bestSellersLimit,
         group: ['Product.id']
     });
-    res.render('bestSellers', { title: 'Best Sellers', products });
+    const categories = yield database_1.Category.findAll();
+    res.render('bestSellers', { title: 'Best Sellers', products, categories });
 }));
+/**
+ * render New Releases page
+ */
 exports.renderNewReleasePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield database_1.Product.findAll({
         order: sequelize_1.default.col('createdAt'),

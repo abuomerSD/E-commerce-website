@@ -73,3 +73,40 @@ body {
     list-style: none;
 }
 /* footer end */
+
+/* align text to center */
+
+.text-center {
+    text-align: center;
+}
+
+/* product landing page start */
+.product-lp-details {
+    /* padding: 2%; */
+    margin: 2%;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+    /* border: 3px solid black;
+    border-radius: 1px; */
+}
+.product-lp-details img{
+max-width: 100%;
+max-height: 100%;
+border: 5px solid black;
+border-radius: 5%;
+}
+/* product landing page end */
+
+/* no gutters for products landing page product's card */
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+  
+    > .col,
+    > [class*="col-"] {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }

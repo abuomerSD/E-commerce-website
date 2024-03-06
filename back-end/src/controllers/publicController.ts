@@ -23,14 +23,13 @@ export const renderPublicHomePage = asyncWrapper(async (req:Request, res: Respon
 export const renderProductLandingPage = asyncWrapper(async (req: Request, res: Response) => {
     const { id } = req.params;
     const product = await Product.findOne({where: {id}});
-    // render product landing page
-    res.render('productLandingPage', {title:product?.name , product});
-    
+    const categories = await Category.findAll();
     // updating viewedTimes 
     if (product) {
        await product.increment('viewedTimes');
     }
-    
+    // render product landing page
+    res.render('productLandingPage', {title:product?.name , product, categories});
 });
 
 /**
@@ -53,9 +52,13 @@ export const renderBestSellersPage = asyncWrapper(async (req: Request, res: Resp
         limit: bestSellersLimit,
         group: ['Product.id']
     });
-    res.render('bestSellers', { title: 'Best Sellers', products });
+    const categories = await Category.findAll();
+    res.render('bestSellers', { title: 'Best Sellers', products , categories});
 });
 
+/**
+ * render New Releases page
+ */
 export const renderNewReleasePage = asyncWrapper(async(req: Request, res: Response) => {
     const products = await Product.findAll({
         order: sequelize.col('createdAt'),
