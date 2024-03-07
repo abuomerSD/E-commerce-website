@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,16 +31,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderNewReleasePage = exports.renderBestSellersPage = exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
+exports.renderPublicProductSearchPage = exports.renderNewReleasePage = exports.renderBestSellersPage = exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const categoryController_1 = require("./categoryController");
 const productsController_1 = require("./productsController");
 const database_1 = require("../databaseHandler/database");
-const sequelize_1 = __importDefault(require("sequelize"));
+const sequelize_1 = __importStar(require("sequelize"));
 const contants_1 = require("../utils/contants");
 const bestSellersLimit = contants_1.BEST_SELLERS_LIMIT;
 /**
@@ -48,7 +68,8 @@ exports.renderProductLandingPage = (0, asyncWrapper_1.asyncWrapper)((req, res) =
 exports.renderCategoryLandingPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const category = yield database_1.Category.findOne({ where: { id }, include: { model: database_1.Product } });
-    res.render('categoryLandingPage', { title: category === null || category === void 0 ? void 0 : category.name, category });
+    const categories = yield database_1.Category.findAll();
+    res.render('categoryLandingPage', { title: category === null || category === void 0 ? void 0 : category.name, category, categories });
 }));
 /**
  * render best sellers page
@@ -72,5 +93,18 @@ exports.renderNewReleasePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __
         order: sequelize_1.default.col('createdAt'),
         group: ['Product.id'],
     });
-    res.render('newReleases', { title: 'New Releases', products });
+    const categories = yield database_1.Category.findAll();
+    res.render('newReleases', { title: 'New Releases', products, categories });
+}));
+/**
+ * renser public search product page when using navbar search group to find products
+ */
+exports.renderPublicProductSearchPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { name } = req.body;
+    const products = yield database_1.Product.findAll({ where: { name: {
+                [sequelize_1.Op.iLike]: `%${name}%`,
+            } } });
+    const categories = yield database_1.Category.findAll();
+    const searchWords = name;
+    res.render('publicSearchProduct', { title: 'Search for Products', products, categories, searchWords });
 }));

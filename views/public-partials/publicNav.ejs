@@ -21,7 +21,7 @@
             </button>
             <ul class="dropdown-menu">
               <% categories.forEach(category => { %>
-                <li><a class="dropdown-item" href="/categories/<%= category.id %>"><%= category.name %></a></li>
+                <li><a class="dropdown-item" href="/shop/categories/<%= category.id %>"><%= category.name %></a></li>
               <% }); %>
             </ul>
           </div>
@@ -30,8 +30,8 @@
            <a class="nav-link" href="#">Cart</a>
          </li>
        </ul>
-       <form class="d-flex" role="search">
-         <input class="form-control me-2" type="search" placeholder="Search for Product" aria-label="Search">
+       <form class="d-flex" role="search" method="post" action="/shop/searchProducts">
+         <input class="form-control me-2" type="search" placeholder="Search for Product" aria-label="Search" name="name">
          <button class="btn btn-outline-success" type="submit">Search</button>
        </form>
      </div>

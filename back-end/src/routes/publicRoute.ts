@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage } from "../controllers/publicController";
+import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage } from "../controllers/publicController";
 export const publicRouter = Router();
 export const publicProductsRoute = Router();
 export const publicCategoriesRoute = Router();
@@ -17,4 +17,6 @@ publicRouter.route('/products/:id')
 
 publicRouter.route('/categories/:id')
     .get(renderCategoryLandingPage);
+
+publicRouter.post('/searchProducts', renderPublicProductSearchPage);
 

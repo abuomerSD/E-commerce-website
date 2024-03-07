@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.delelteProduct = exports.updateProductByIdWithoutImage = exports.updateProductById = exports.getProductById = exports.renderProductsPageWithFilteredProducts = exports.getLimitedByPaginationProducts = exports.getAllProducts = exports.saveProduct = void 0;
+exports.delelteProduct = exports.updateProductByIdWithoutImage = exports.updateProductById = exports.getProductById = exports.renderProductsPageWithFilteredProducts = exports.getLimitedByPaginationProducts = exports.getFilteredProducts = exports.getAllProducts = exports.saveProduct = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const fs_1 = __importDefault(require("fs"));
@@ -69,6 +69,7 @@ const getFilteredProducts = (req) => __awaiter(void 0, void 0, void 0, function*
             } } }).then(result => products = result);
     return products;
 });
+exports.getFilteredProducts = getFilteredProducts;
 // get limited products for the pagination
 const getLimitedByPaginationProducts = (req, pageNumber, pageLimit) => __awaiter(void 0, void 0, void 0, function* () {
     let products = [];
@@ -79,7 +80,7 @@ const getLimitedByPaginationProducts = (req, pageNumber, pageLimit) => __awaiter
 exports.getLimitedByPaginationProducts = getLimitedByPaginationProducts;
 //  render when using the serach product
 exports.renderProductsPageWithFilteredProducts = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const limitedProducts = yield getFilteredProducts(req);
+    const limitedProducts = yield (0, exports.getFilteredProducts)(req);
     let products = [];
     let categories = [];
     const searchWords = req.body.product_name_search_input;

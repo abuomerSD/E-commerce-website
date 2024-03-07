@@ -53,7 +53,7 @@ export const getAllProducts = async() => {
 }
 
 // get filtered products using the search input
-const getFilteredProducts = async (req: Request) => {
+export const getFilteredProducts = async (req: Request) => {
     let products : Array<Product> = [];
     const {product_name_search_input} = req.body
     const name: string = product_name_search_input;

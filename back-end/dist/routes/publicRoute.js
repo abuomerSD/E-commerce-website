@@ -16,3 +16,4 @@ exports.publicRouter.route('/products/:id')
     .get(publicController_1.renderProductLandingPage);
 exports.publicRouter.route('/categories/:id')
     .get(publicController_1.renderCategoryLandingPage);
+exports.publicRouter.post('/searchProducts', publicController_1.renderPublicProductSearchPage);

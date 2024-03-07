@@ -1,0 +1,21 @@
+<div>
+    <% products.forEach(product => { %>
+        <div class="card m-4  text-center">
+            <img src="/products-images/<%= product.image %>" class="card-img-top" alt="Product Image">
+            <div class="card-body">
+              <a href="/shop/products/<%= product.id %>" target="_blank"><h4 class="card-title"><%= product.name %></h4></a>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio repudiandae labore.</p>
+              <h5 class="card-text">$ <%= product.price %></h5>
+              <a href="#" class="btn btn-dark">Add to cart</a>
+              <div class="viewed-times">
+               <i class="fa-solid fa-eye"></i>
+               <p title="viewed times"><%= product.viewedTimes %></p>
+               </div>
+               <div class="saled-times">
+               <i class="fa-solid fa-cart-shopping"></i>
+               <p><%= product.saledTimes %></p>
+              </div>
+            </div>
+         </div>
+    <% }); %>
+</div>

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllCategories } from "./categoryController";
-import { getAllProducts } from "./productsController";
+import { getAllProducts, getFilteredProducts } from "./productsController";
 import { Category, Product } from "../databaseHandler/database";
-import sequelize from "sequelize";
+import sequelize, { Op } from "sequelize";
 import { BEST_SELLERS_LIMIT } from "../utils/contants";
 
 const bestSellersLimit = BEST_SELLERS_LIMIT;
@@ -38,7 +38,8 @@ export const renderProductLandingPage = asyncWrapper(async (req: Request, res: R
 export const renderCategoryLandingPage = asyncWrapper(async (req: Request, res: Response) => {
     const { id } = req.params;
     const category = await Category.findOne({where: {id}, include: {model: Product}});
-    res.render('categoryLandingPage', { title: category?.name , category});
+    const categories = await Category.findAll();
+    res.render('categoryLandingPage', { title: category?.name , category, categories});
 });
 
 /**
@@ -63,6 +64,21 @@ export const renderNewReleasePage = asyncWrapper(async(req: Request, res: Respon
     const products = await Product.findAll({
         order: sequelize.col('createdAt'),
         group: ['Product.id'],
-    })
-    res.render('newReleases', { title: 'New Releases' ,products })
+    });
+    const categories = await Category.findAll();
+    res.render('newReleases', { title: 'New Releases' ,products , categories})
+});
+
+/**
+ * renser public search product page when using navbar search group to find products
+ */
+export const renderPublicProductSearchPage = asyncWrapper(async (req: Request, res: Response) => {
+    const { name } = req.body;
+    const products =   await Product.findAll({where:{name: {
+        [Op.iLike]: `%${name}%`,
+    }}});
+    const categories = await Category.findAll();
+    const searchWords = name;
+    res.render('publicSearchProduct', { title: 'Search for Products', products , categories ,searchWords })
+
 })

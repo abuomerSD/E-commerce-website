@@ -1,0 +1,15 @@
+<%- include('./public-partials/publicHead.ejs') %>
+<%- include('./public-partials/publicNav.ejs') %>
+
+<!-- this page needs products array and searchWords to render -->
+<div class="container">
+    <p class="m-3">showing results for <b><%= searchWords %></b> :</p>
+    <!-- products start -->
+    <% if(products.length < 1) { %>
+        <h5>No Products Found for this search Please try search for another products</h5>
+    <% } else {%>
+        <%- include('./public-partials/productsForNewReleasesAndBestSellers.ejs') %>
+    <% } %>
+    <!-- products end -->
+</div>
+<%- include('./public-partials/publicFooter.ejs') %>
