@@ -1,23 +1,30 @@
 <%- include('./public-partials/publicHead.ejs') %>
 <%- include('./public-partials/publicNav.ejs') %>
 <div class="container">
-    <div class="login-section">
-        <div class="login">
+    <div class="signup-section">
+        <div class="signup">
             <form action="/login" method="post">
                 <div class="row m-2">
-                    <input type="text" name="username" placeholder="Enter your username or Email" class="form-control" required>
+                    <input type="text" name="firstName" placeholder="Enter your First Name" class="form-control" required>
                 </div>
                 <div class="row m-2">
-                    <input type="password" name="password" placeholder="Enter your password" class="form-control" required>
+                    <input type="text" name="lastName" placeholder="Enter your Last Name" class="form-control" required>
                 </div>
                 <div class="row m-2">
-                    <a href="#" class="col"><b>Forget password?</b></a>
+                    <input type="email" name="email" placeholder="Enter your Email" class="form-control" required>
                 </div>
                 <div class="row m-2">
-                    <button type="submit" class="btn btn-dark col">Login</button>
+                    <input type="text" name="username" placeholder="Enter a valid username" class="form-control" required>
+                    <p id="checkUserNameOnDbPraghraph" class="checkUserNameOnDbPraghraph"></p>
                 </div>
                 <div class="row m-2">
-                    <p>Don't have an account? Please <a href="#"><b>Sign up</b></a></p>
+                    <input type="password" name="password" placeholder="Enter a password" class="form-control" required>
+                </div>
+                <div class="row m-2">
+                    <input type="password" name="passwordRepeat" placeholder="Repeat the password" class="form-control" required>
+                </div>
+                <div class="row m-2">
+                    <button type="submit" class="btn btn-dark col">Sign up</button>
                 </div>
             </form>
         </div>

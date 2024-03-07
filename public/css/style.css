@@ -128,6 +128,27 @@ margin-left: 0;
 }
 /* login end */
 
+/* signup start */
+.signup-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh
+}
+
+.signup {
+    width: 40%;
+    margin: auto;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 2%;
+}
+
+.signup .checkUserNameOnDbPraghraph {
+    display: none;
+}
+/* signup end */
+
 /* public footer start */
 .footer_section {
     position: relative;
