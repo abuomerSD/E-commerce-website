@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderPublicProductSearchPage = exports.renderNewReleasePage = exports.renderBestSellersPage = exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
+exports.renderSignupPage = exports.renderLoginPage = exports.renderPublicProductSearchPage = exports.renderNewReleasePage = exports.renderBestSellersPage = exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const categoryController_1 = require("./categoryController");
 const productsController_1 = require("./productsController");
@@ -107,4 +107,12 @@ exports.renderPublicProductSearchPage = (0, asyncWrapper_1.asyncWrapper)((req, r
     const categories = yield database_1.Category.findAll();
     const searchWords = name;
     res.render('publicSearchProduct', { title: 'Search for Products', products, categories, searchWords });
+}));
+exports.renderLoginPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const categories = yield database_1.Category.findAll();
+    res.render('login', { title: 'Login', categories });
+}));
+exports.renderSignupPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const categories = yield database_1.Category.findAll();
+    res.render('signup', { title: 'Sign Up', categories });
 }));

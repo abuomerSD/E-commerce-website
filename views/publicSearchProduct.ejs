@@ -6,7 +6,7 @@
     <p class="m-3">showing results for <b><%= searchWords %></b> :</p>
     <!-- products start -->
     <% if(products.length < 1) { %>
-        <h5>No Products Found for this search Please try search for another products</h5>
+        <p><b>No Products Found for this search Please try search for another products</b></p>
     <% } else {%>
         <%- include('./public-partials/productsForNewReleasesAndBestSellers.ejs') %>
     <% } %>

@@ -17,3 +17,7 @@ exports.publicRouter.route('/products/:id')
 exports.publicRouter.route('/categories/:id')
     .get(publicController_1.renderCategoryLandingPage);
 exports.publicRouter.post('/searchProducts', publicController_1.renderPublicProductSearchPage);
+exports.publicRouter.route('/login')
+    .get(publicController_1.renderLoginPage);
+exports.publicRouter.route('/signup')
+    .get(publicController_1.renderSignupPage);

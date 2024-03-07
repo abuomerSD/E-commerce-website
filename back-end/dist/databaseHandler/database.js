@@ -7,12 +7,12 @@ const sequelize = new sequelize_1.Sequelize('ecommerce-website', 'asdf', '', {
     dialect: 'postgres',
     timezone: '+02:00',
     dialectOptions: {
-        useUTC: false //for reading from database
+        useUTC: false
     },
 });
 // const sequelize = new Sequelize({
 //   dialect: 'sqlite',
-//   storage: './back-end/database/database.sqlite',
+//   storage: './back-end/db/database.sqlite',
 // });
 // initiallize the tables
 function init() {

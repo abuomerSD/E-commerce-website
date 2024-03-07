@@ -1,0 +1,26 @@
+<%- include('./public-partials/publicHead.ejs') %>
+<%- include('./public-partials/publicNav.ejs') %>
+<div class="container">
+    <div class="login-section">
+        <div class="login">
+            <form action="/login" method="post">
+                <div class="row m-2">
+                    <input type="text" name="username" placeholder="Enter your username or Email" class="form-control" required>
+                </div>
+                <div class="row m-2">
+                    <input type="password" name="password" placeholder="Enter your password" class="form-control" required>
+                </div>
+                <div class="row m-2">
+                    <a href="#" class="col"><b>Forget password?</b></a>
+                </div>
+                <div class="row m-2">
+                    <button type="submit" class="btn btn-dark col">Login</button>
+                </div>
+                <div class="row m-2">
+                    <p>Don't have an account? Please <a href="#"><b>Sign up</b></a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('./public-partials/publicFooter.ejs') %>

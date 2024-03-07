@@ -81,4 +81,15 @@ export const renderPublicProductSearchPage = asyncWrapper(async (req: Request, r
     const searchWords = name;
     res.render('publicSearchProduct', { title: 'Search for Products', products , categories ,searchWords })
 
+});
+
+export const renderLoginPage = asyncWrapper(async (req:Request, res: Response) => {
+    const categories = await Category.findAll();
+    res.render('login', { title: 'Login',  categories});
+});
+
+export const renderSignupPage = asyncWrapper(async (req:Request, res: Response) => {
+    const categories = await Category.findAll();
+    res.render('signup', { title: 'Sign Up',  categories});
+    
 })

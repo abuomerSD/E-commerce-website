@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage } from "../controllers/publicController";
+import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage, renderLoginPage , renderSignupPage} from "../controllers/publicController";
 export const publicRouter = Router();
 export const publicProductsRoute = Router();
 export const publicCategoriesRoute = Router();
@@ -20,3 +20,8 @@ publicRouter.route('/categories/:id')
 
 publicRouter.post('/searchProducts', renderPublicProductSearchPage);
 
+publicRouter.route('/login')
+    .get(renderLoginPage)
+
+publicRouter.route('/signup')
+    .get(renderSignupPage)
