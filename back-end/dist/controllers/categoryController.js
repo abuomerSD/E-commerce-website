@@ -18,6 +18,9 @@ const sequelize_1 = require("sequelize");
 const database_2 = require("../databaseHandler/database");
 const pageLimit = contants_1.DEFAULT_PAGE_LIMIT;
 // to save category to database
+/**
+ * to save category to the database
+ */
 exports.saveCategory = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name } = req.body;
     yield database_1.Category.create({ name }).then((category) => {

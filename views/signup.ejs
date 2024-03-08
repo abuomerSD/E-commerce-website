@@ -3,7 +3,7 @@
 <div class="container">
     <div class="signup-section">
         <div class="signup">
-            <form action="/login" method="post">
+            <form id="signupForm">
                 <div class="row m-2">
                     <input type="text" name="firstName" placeholder="Enter your First Name" class="form-control" required>
                 </div>
@@ -12,6 +12,7 @@
                 </div>
                 <div class="row m-2">
                     <input type="email" name="email" placeholder="Enter your Email" class="form-control" required>
+                    <p id="checkEmailPraghraph" class="checkEmailPraghraph"></p>
                 </div>
                 <div class="row m-2">
                     <input type="text" name="username" placeholder="Enter a valid username" class="form-control" required>
@@ -22,12 +23,14 @@
                 </div>
                 <div class="row m-2">
                     <input type="password" name="passwordRepeat" placeholder="Repeat the password" class="form-control" required>
+                    <p id="checkPasswordRepeatPraghraph" class="checkPasswordRepeatPraghraph"></p>
                 </div>
                 <div class="row m-2">
-                    <button type="submit" class="btn btn-dark col">Sign up</button>
+                    <button type="submit" name="submit" class="btn btn-dark col">Sign up</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script src="/js/public-js/signup.js"></script>
 <%- include('./public-partials/publicFooter.ejs') %>

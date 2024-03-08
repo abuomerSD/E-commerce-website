@@ -6,6 +6,9 @@ export const asyncWrapper = (fn: Function) => {
         fn(req, res, next).catch((err:Error)=> {
             let categories ;
             Category.findAll().then(result => categories = result);
+            console.log('error', err.message);
+            console.log('stack', err);
+            
             res.status(400).render('Error', {error : err, title: 'Error', categories});
         });
 

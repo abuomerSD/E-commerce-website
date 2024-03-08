@@ -18,7 +18,7 @@ const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
 // initiallize the tables
 
 function init() {
-  sequelize.sync();
+  sequelize.sync({alter: true});
   // sequelize.sync({force: true});
 }
 
@@ -99,6 +99,45 @@ Product.init({
   sequelize,
   modelName: 'Product',
 });
+
+// Users table creation
+export class User extends Model{}
+
+User.init({
+  id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+    defaultValue: UUIDV4
+  },
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  role: {
+    type: DataTypes.STRING,
+    defaultValue: 'user',
+  }
+}, {
+  sequelize,
+  modelName: 'User',
+})
 
 // Relationships 
 

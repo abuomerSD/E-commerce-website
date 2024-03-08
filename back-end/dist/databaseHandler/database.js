@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Product = exports.Category = void 0;
+exports.User = exports.Product = exports.Category = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize = new sequelize_1.Sequelize('ecommerce-website', 'asdf', '', {
     host: 'localhost',
@@ -16,7 +16,7 @@ const sequelize = new sequelize_1.Sequelize('ecommerce-website', 'asdf', '', {
 // });
 // initiallize the tables
 function init() {
-    sequelize.sync();
+    sequelize.sync({ alter: true });
     // sequelize.sync({force: true});
 }
 init();
@@ -85,6 +85,45 @@ Product.init({
 }, {
     sequelize,
     modelName: 'Product',
+});
+// Users table creation
+class User extends sequelize_1.Model {
+}
+exports.User = User;
+User.init({
+    id: {
+        type: sequelize_1.DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        defaultValue: sequelize_1.UUIDV4
+    },
+    firstName: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    lastName: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    email: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    username: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    password: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    role: {
+        type: sequelize_1.DataTypes.STRING,
+        defaultValue: 'user',
+    }
+}, {
+    sequelize,
+    modelName: 'User',
 });
 // Relationships 
 Category.hasMany(Product, {

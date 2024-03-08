@@ -10,6 +10,9 @@ const pageLimit = DEFAULT_PAGE_LIMIT;
 
 
 // to save category to database
+/**
+ * to save category to the database
+ */
 export const saveCategory = asyncWrapper(async (req: Request, res: Response)=> {
     const { name } = req.body;
     await Category.create({name}).then((category) => {

@@ -7,6 +7,8 @@ const asyncWrapper = (fn) => {
         fn(req, res, next).catch((err) => {
             let categories;
             database_1.Category.findAll().then(result => categories = result);
+            console.log('error', err.message);
+            console.log('stack', err);
             res.status(400).render('Error', { error: err, title: 'Error', categories });
         });
     };
