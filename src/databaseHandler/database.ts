@@ -101,7 +101,14 @@ Product.init({
 });
 
 // Users table creation
-export class User extends Model{}
+export class User extends Model{
+  declare firstName: string;
+  declare lastName: string;
+  declare email: string;
+  declare username: string;
+  declare password: string;
+  declare role: string;
+}
 
 User.init({
   id: {
