@@ -37,7 +37,7 @@ const nodemailer = __importStar(require("nodemailer"));
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const myEmail = process.env.EMAIL || 'eltayeb.293@gmail.com';
-const appPassword = process.env.APP_PASSWORD || 'tggkqgoxilaztgit';
+const appPassword = process.env.APP_PASSWORD;
 /**
  * you need to turn on 2 steps verfication if you are using gmail
  * @param from the sender name
