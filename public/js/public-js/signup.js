@@ -39,7 +39,7 @@ function enableSubmitButton() {
 */
 passwordRepeatInput.addEventListener('keyup', (e)=> {
     if (passwordInput.value === '') {
-        checkPasswordRepeatPraghraph.style = 'display: block; color: red';
+        checkPasswordRepeatPraghraph.style = 'display: block; color: red; margin: 0';
         checkPasswordRepeatPraghraph.innerHTML = `${errorIcon} please enter the password above first`;
         disableSubmitButton();
         return;

@@ -134,7 +134,8 @@ margin-left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vh
+    min-height: 70vh;
+    /* flex-direction: column; */
 }
 
 .signup {
@@ -160,10 +161,8 @@ margin-left: 0;
 
 /* public footer start */
 .footer_section {
-    position: relative;
-    width: 100%;
-    bottom: 0;
-    margin-top: 10px;
+    height: 200px;
+    margin-top: auto;
 }
 /* public footer end */
 
