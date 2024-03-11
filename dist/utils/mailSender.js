@@ -35,8 +35,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.send = void 0;
 const nodemailer = __importStar(require("nodemailer"));
 const dotenv_1 = require("dotenv");
-(0, dotenv_1.config)();
-const myEmail = process.env.EMAIL || 'eltayeb.293@gmail.com';
+(0, dotenv_1.config)({ path: '../../.env' });
+const myEmail = process.env.EMAIL;
 const appPassword = process.env.APP_PASSWORD;
 /**
  * you need to turn on 2 steps verfication if you are using gmail
@@ -66,13 +66,15 @@ function send(from, to, subject, text, html) {
             text,
             html, // html body
         });
-        console.log(info);
+        // console.log(info);
     });
 }
 exports.send = send;
-console.log('email', myEmail, 'pass', appPassword);
-send({
-    name: 'Eltayeb Node',
-    address: myEmail
-}, 'tayeb1293@yahoo.com', 'Test nodeMailer', 'testing', `<button style="background: red;">Click here</button>`)
-    .catch(err => console.log(err.message));
+// send({
+//     name: 'Eltayeb Node',
+//     address: myEmail
+// },
+//     'tayeb1293@yahoo.com',
+//     'Test nodeMailer', 'testing',
+//     `<button style="background: red;">Click here</button>`)
+//     .catch(err => console.log(err.message));

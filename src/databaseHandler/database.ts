@@ -102,12 +102,14 @@ Product.init({
 
 // Users table creation
 export class User extends Model{
+  declare id: string;
   declare firstName: string;
   declare lastName: string;
   declare email: string;
   declare username: string;
   declare password: string;
   declare role: string;
+  declare isActive: boolean;
 }
 
 User.init({
@@ -140,6 +142,10 @@ User.init({
   role: {
     type: DataTypes.STRING,
     defaultValue: 'user',
+  },
+  isActive: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   }
 }, {
   sequelize,

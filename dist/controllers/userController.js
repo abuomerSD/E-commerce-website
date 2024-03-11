@@ -41,6 +41,13 @@ const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const database_1 = require("../databaseHandler/database");
 const bcrypt = __importStar(require("bcrypt"));
 const validator_1 = require("validator");
+const mailSender = __importStar(require("../utils/mailSender"));
+const contants_1 = require("../utils/contants");
+const dotenv = __importStar(require("dotenv"));
+const categoryController_1 = require("./categoryController");
+dotenv.config({ path: '../../.env' });
+const websiteName = contants_1.WEBSITE_NAME;
+const myEmail = process.env.EMAIL;
 /**
  * save user
  *
@@ -48,17 +55,29 @@ const validator_1 = require("validator");
 exports.saveUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.body;
     // validate the user input
-    if ((0, validator_1.isEmpty)(user.firstName) || (0, validator_1.isEmpty)(user.lastName) || !(0, validator_1.isEmail)(user.email) || (0, validator_1.isEmpty)(user.username) || (0, validator_1.isEmpty)(user.password) || (0, validator_1.isEmpty)(user.role)) {
+    if ((0, validator_1.isEmpty)(user.firstName) || (0, validator_1.isEmpty)(user.lastName) || !(0, validator_1.isEmail)(user.email) || (0, validator_1.isEmpty)(user.username) || (0, validator_1.isEmpty)(user.password)) {
         throw new Error('User Validation Error');
     }
     else {
-        // sendeing email to user
-        // mailSender.send
-        // hashing user's password 
+        // hashing user's password and saving the user
         const hashedPassword = yield bcrypt.hash(user.password, 10);
         user.password = hashedPassword;
         const userCreated = yield database_1.User.create(user);
-        res.json(userCreated);
+        // rendering the confirmation page
+        const categories = yield (0, categoryController_1.getAllCategories)();
+        res.render('userConfirmation', { title: 'User Confirmation', categories });
+        // sending confirmation email to user
+        let link = `/users/confirmation/${userCreated.id}`;
+        let confirmationPageHtml = `
+         <h1>Step Shopping</h1>
+         <h2>Account Activation</h2>
+         <h3>Click this Link to Activate your account</h3>
+         <a href= ${link}
+      `;
+        yield mailSender.send({
+            name: websiteName,
+            address: myEmail
+        }, user.email, 'Please Activate your Account', 'Account Activation', confirmationPageHtml);
     }
 }));
 /**

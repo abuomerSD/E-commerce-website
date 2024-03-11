@@ -15,17 +15,19 @@
            <a id ="products-nav-link" class="nav-link" href="/shop/newReleases">New Releases</a>
          </li>
          <li class="nav-item">
-          <div class="dropdown">
-            <button class="nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Categories
-            </button>
-            <ul class="dropdown-menu">
-              <% categories.forEach(category => { %>
-                <li><a class="dropdown-item" href="/shop/categories/<%= category.id %>"><%= category.name %></a></li>
-              <% }); %>
-            </ul>
-          </div>
-         </li>
+          <% if(categories.length > 0) {%>
+            <div class="dropdown">
+              <button class="nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+              </button>
+              <ul class="dropdown-menu">
+                <% categories.forEach(category => { %>
+                  <li><a class="dropdown-item" href="/shop/categories/<%= category.id %>"><%= category.name %></a></li>
+                <% }); %>
+              </ul>
+            </div>
+           </li>
+          <% } %>
          <li class="nav-item">
            <a class="nav-link" href="#">Cart</a>
          </li>

@@ -1,8 +1,8 @@
 import * as nodemailer  from 'nodemailer';
 import { config } from 'dotenv'
-config();
+config({path: '../../.env'});
 
-const myEmail = process.env.EMAIL || 'eltayeb.293@gmail.com';
+const myEmail = process.env.EMAIL ;
 const appPassword = process.env.APP_PASSWORD ;
 
 /**
@@ -15,7 +15,7 @@ const appPassword = process.env.APP_PASSWORD ;
  * 
  */
 
-export async function send(from: {name:string , address: string}, to: string, subject: string, text: string, html: string) {
+export async function send(from: {name:string , address: any}, to: string, subject: string, text: string, html: string) {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
@@ -35,18 +35,16 @@ export async function send(from: {name:string , address: string}, to: string, su
         html, // html body
       });
 
-      console.log(info);
+      // console.log(info);
       
 }
 
-console.log('email', myEmail, 'pass', appPassword);
 
-
-send({
-    name: 'Eltayeb Node',
-    address: myEmail
-},
-    'tayeb1293@yahoo.com',
-    'Test nodeMailer', 'testing',
-    `<button style="background: red;">Click here</button>`)
-    .catch(err => console.log(err.message));
+// send({
+//     name: 'Eltayeb Node',
+//     address: myEmail
+// },
+//     'tayeb1293@yahoo.com',
+//     'Test nodeMailer', 'testing',
+//     `<button style="background: red;">Click here</button>`)
+//     .catch(err => console.log(err.message));
