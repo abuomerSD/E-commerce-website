@@ -18,8 +18,8 @@ const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
 // initiallize the tables
 
 function init() {
-  sequelize.sync({alter: true});
-  // sequelize.sync({force: true});
+  // sequelize.sync({alter: true});
+  sequelize.sync({force: true});
 }
 
 init();

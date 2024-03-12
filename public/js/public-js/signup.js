@@ -143,8 +143,10 @@ form.addEventListener('submit', async (e) => {
             method: 'POST',
             body: JSON.stringify(user),
         });
-        const userCreated = await response.json();
-        console.log(userCreated);
+        // redirect to confirmation page
+        // const userCreated = await response.json();
+        window.location.replace(`/shop/signup/confirmation`);
+        // console.log(userCreated);
     } catch (error) {
         console.log(error);
     }

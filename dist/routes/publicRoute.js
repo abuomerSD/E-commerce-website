@@ -23,5 +23,9 @@ exports.publicRouter.route('/login')
 exports.publicRouter.route('/signup')
     .get(publicController_1.renderSignupPage)
     .post(userController_1.saveUser);
+exports.publicRouter.route('/signup/confirmation')
+    .get(userController_1.renderUserConfirmatoinPage);
+exports.publicRouter.route('/signup/confirmation/:userId')
+    .get(userController_1.activateUser);
 exports.publicRouter.route('/users')
     .get(userController_1.getAllUsers);

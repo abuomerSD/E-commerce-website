@@ -36,7 +36,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsers = exports.saveUser = void 0;
+exports.activateUser = exports.renderUserConfirmatoinPage = exports.getAllUsers = exports.saveUser = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const database_1 = require("../databaseHandler/database");
 const bcrypt = __importStar(require("bcrypt"));
@@ -44,7 +44,6 @@ const validator_1 = require("validator");
 const mailSender = __importStar(require("../utils/mailSender"));
 const contants_1 = require("../utils/contants");
 const dotenv = __importStar(require("dotenv"));
-const categoryController_1 = require("./categoryController");
 dotenv.config({ path: '../../.env' });
 const websiteName = contants_1.WEBSITE_NAME;
 const myEmail = process.env.EMAIL;
@@ -63,16 +62,15 @@ exports.saveUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void
         const hashedPassword = yield bcrypt.hash(user.password, 10);
         user.password = hashedPassword;
         const userCreated = yield database_1.User.create(user);
-        // rendering the confirmation page
-        const categories = yield (0, categoryController_1.getAllCategories)();
-        res.render('userConfirmation', { title: 'User Confirmation', categories });
+        res.json(userCreated);
         // sending confirmation email to user
-        let link = `/users/confirmation/${userCreated.id}`;
+        let link = `${req.headers.host}/shop/signup/confirmation/${userCreated.id}`;
+        console.log('confirmation link', link);
         let confirmationPageHtml = `
          <h1>Step Shopping</h1>
          <h2>Account Activation</h2>
          <h3>Click this Link to Activate your account</h3>
-         <a href= ${link}
+         <a href= ${link} style="color: white; background: blue">Activate</a>
       `;
         yield mailSender.send({
             name: websiteName,
@@ -86,4 +84,26 @@ exports.saveUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void
 exports.getAllUsers = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield database_1.User.findAll();
     res.status(200).json(users);
+}));
+/**
+ * renderUserConfirmatoinPage
+ */
+exports.renderUserConfirmatoinPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const categories = yield database_1.Category.findAll();
+    res.render('confirm', { title: 'User Confirmation', categories });
+}));
+/**
+ * activate user when click on confirmation link and render the  home page
+ */
+exports.activateUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.params;
+    const user = yield database_1.User.findOne({ where: { id: userId } });
+    if (user) {
+        user.isActive = true;
+        yield user.save();
+        res.redirect('/');
+    }
+    else {
+        res.redirect('/');
+    }
 }));

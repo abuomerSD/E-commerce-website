@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage, renderLoginPage , renderSignupPage} from "../controllers/publicController";
-import { getAllUsers, saveUser } from "../controllers/userController";
+import { activateUser, getAllUsers, renderUserConfirmatoinPage, saveUser } from "../controllers/userController";
 export const publicRouter = Router();
 export const publicProductsRoute = Router();
 export const publicCategoriesRoute = Router();
@@ -27,6 +27,12 @@ publicRouter.route('/login')
 publicRouter.route('/signup')
     .get(renderSignupPage)
     .post(saveUser);
+
+publicRouter.route('/signup/confirmation')
+    .get(renderUserConfirmatoinPage);
+
+publicRouter.route('/signup/confirmation/:userId')
+    .get(activateUser);
 
 publicRouter.route('/users')
     .get(getAllUsers);

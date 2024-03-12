@@ -5,7 +5,7 @@
 
 import { Request, Response } from "express";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
-import { User } from "../databaseHandler/database";
+import { Category, User } from "../databaseHandler/database";
 import * as bcrypt from 'bcrypt';
 import { isEmpty, isEmail } from 'validator';
 import * as mailSender from '../utils/mailSender';
@@ -36,21 +36,18 @@ export const saveUser = asyncWrapper(async (req:Request, res: Response) => {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       user.password = hashedPassword;
       const userCreated: User = await User.create(user);
-      
-      // rendering the confirmation page
-      const categories = await getAllCategories();
-  
-      res.render('userConfirmation', {title: 'User Confirmation', categories});
+      res.json(userCreated);
       
       // sending confirmation email to user
-      let link = `/users/confirmation/${userCreated.id}`;
+      let link = `${req.headers.host}/shop/signup/confirmation/${userCreated.id}`;
+      console.log('confirmation link', link);
+      
       let confirmationPageHtml = `
          <h1>Step Shopping</h1>
          <h2>Account Activation</h2>
          <h3>Click this Link to Activate your account</h3>
-         <a href= ${link}
+         <a href= ${link} style="color: white; background: blue">Activate</a>
       `;
-      
       await mailSender.send({
       name: websiteName,
       address: myEmail   
@@ -72,3 +69,29 @@ export const getAllUsers =  asyncWrapper(async(req: Request, res: Response)=> {
    const users = await User.findAll();
    res.status(200).json(users);
 })
+
+/**
+ * renderUserConfirmatoinPage
+ */
+
+export const renderUserConfirmatoinPage = asyncWrapper(async (req: Request, res: Response) => {
+   const categories = await Category.findAll();
+   res.render('confirm', { title: 'User Confirmation', categories })
+})
+
+/**
+ * activate user when click on confirmation link and render the  home page
+ */
+
+export const activateUser = asyncWrapper( async(req: Request, res: Response) => {
+   const {userId} = req.params;
+   const user = await User.findOne({where: {id: userId}});
+   if (user) {
+      user.isActive = true;
+      await user.save();
+      res.redirect('/');
+   }
+   else {
+      res.redirect('/');
+   }
+} )
