@@ -11,13 +11,13 @@ import { isEmpty, isEmail } from 'validator';
 import * as mailSender from '../utils/mailSender';
 import { WEBSITE_NAME } from "../utils/contants";
 import * as dotenv from 'dotenv';
-import { readFileSync, readFile, link } from 'fs';
-import { getAllCategories } from "./categoryController";
+import { sign } from 'jsonwebtoken';
 
 dotenv.config({path: '../../.env'});
 
 const websiteName = WEBSITE_NAME;
 const myEmail = process.env.EMAIL;
+const jwtSecret = process.env.JWT_SECRET;
 
 /**
  * save user
@@ -89,9 +89,24 @@ export const activateUser = asyncWrapper( async(req: Request, res: Response) => 
    if (user) {
       user.isActive = true;
       await user.save();
+      console.log(user);
+      
+      
       res.redirect('/');
    }
    else {
       res.redirect('/');
    }
 } )
+
+function createToken(user: User) {
+   const maxAge = 1 * 24 * 60 * 60;
+   const token = sign(
+      {id: user.id, username: user.username, role: user.role},
+      jwtSecret,
+      {
+         expiresIn: maxAge;
+      }
+   )
+   
+}

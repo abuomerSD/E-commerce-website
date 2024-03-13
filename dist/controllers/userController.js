@@ -44,9 +44,11 @@ const validator_1 = require("validator");
 const mailSender = __importStar(require("../utils/mailSender"));
 const contants_1 = require("../utils/contants");
 const dotenv = __importStar(require("dotenv"));
+const jsonwebtoken_1 = require("jsonwebtoken");
 dotenv.config({ path: '../../.env' });
 const websiteName = contants_1.WEBSITE_NAME;
 const myEmail = process.env.EMAIL;
+const jwtSecret = process.env.JWT_SECRET;
 /**
  * save user
  *
@@ -101,9 +103,16 @@ exports.activateUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(
     if (user) {
         user.isActive = true;
         yield user.save();
+        console.log(user);
         res.redirect('/');
     }
     else {
         res.redirect('/');
     }
 }));
+function createToken(user) {
+    const maxAge = 1 * 24 * 60 * 60;
+    const token = (0, jsonwebtoken_1.sign)({ id: user.id, username: user.username, role: user.role }, jwtSecret, {
+        expiresIn: maxAge
+    });
+}
