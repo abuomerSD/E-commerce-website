@@ -45,6 +45,7 @@ const mailSender = __importStar(require("../utils/mailSender"));
 const contants_1 = require("../utils/contants");
 const dotenv = __importStar(require("dotenv"));
 const jsonwebtoken_1 = require("jsonwebtoken");
+const categoryController_1 = require("./categoryController");
 dotenv.config({ path: '../../.env' });
 const websiteName = contants_1.WEBSITE_NAME;
 const myEmail = process.env.EMAIL;
@@ -67,12 +68,14 @@ exports.saveUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void
         res.json(userCreated);
         // sending confirmation email to user
         let link = `${req.headers.host}/shop/signup/confirmation/${userCreated.id}`;
-        console.log('confirmation link', link);
+        // console.log('confirmation link', link);
         let confirmationPageHtml = `
          <h1>Step Shopping</h1>
          <h2>Account Activation</h2>
          <h3>Click this Link to Activate your account</h3>
          <a href= ${link} style="color: white; background: blue">Activate</a>
+         <h5>Confirmation Link:</h5>
+         <p>${link}</p>
       `;
         yield mailSender.send({
             name: websiteName,
@@ -97,22 +100,30 @@ exports.renderUserConfirmatoinPage = (0, asyncWrapper_1.asyncWrapper)((req, res)
 /**
  * activate user when click on confirmation link and render the  home page
  */
+const maxAge = 1 * 24 * 60 * 60; // 1 day in seconds
 exports.activateUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.params;
     const user = yield database_1.User.findOne({ where: { id: userId } });
     if (user) {
         user.isActive = true;
         yield user.save();
-        console.log(user);
-        res.redirect('/');
+        const token = createToken(user);
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            maxAge: maxAge * 1000, // 1 day in msec
+        });
+        // res.locals.user = user;
+        const categories = yield (0, categoryController_1.getAllCategories)();
+        res.render('index', { title: 'Home', categories, user });
+        console.log("locals", res.locals);
     }
     else {
         res.redirect('/');
     }
 }));
 function createToken(user) {
-    const maxAge = 1 * 24 * 60 * 60;
     const token = (0, jsonwebtoken_1.sign)({ id: user.id, username: user.username, role: user.role }, jwtSecret, {
-        expiresIn: maxAge
+        expiresIn: maxAge,
     });
+    return token;
 }

@@ -12,12 +12,13 @@ import * as mailSender from '../utils/mailSender';
 import { WEBSITE_NAME } from "../utils/contants";
 import * as dotenv from 'dotenv';
 import { sign } from 'jsonwebtoken';
+import { getAllCategories } from "./categoryController";
 
 dotenv.config({path: '../../.env'});
 
 const websiteName = WEBSITE_NAME;
 const myEmail = process.env.EMAIL;
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret: any = process.env.JWT_SECRET;
 
 /**
  * save user
@@ -40,13 +41,15 @@ export const saveUser = asyncWrapper(async (req:Request, res: Response) => {
       
       // sending confirmation email to user
       let link = `${req.headers.host}/shop/signup/confirmation/${userCreated.id}`;
-      console.log('confirmation link', link);
+      // console.log('confirmation link', link);
       
       let confirmationPageHtml = `
          <h1>Step Shopping</h1>
          <h2>Account Activation</h2>
          <h3>Click this Link to Activate your account</h3>
          <a href= ${link} style="color: white; background: blue">Activate</a>
+         <h5>Confirmation Link:</h5>
+         <p>${link}</p>
       `;
       await mailSender.send({
       name: websiteName,
@@ -83,16 +86,23 @@ export const renderUserConfirmatoinPage = asyncWrapper(async (req: Request, res:
  * activate user when click on confirmation link and render the  home page
  */
 
+const maxAge = 1 * 24 * 60 * 60; // 1 day in seconds
 export const activateUser = asyncWrapper( async(req: Request, res: Response) => {
    const {userId} = req.params;
    const user = await User.findOne({where: {id: userId}});
    if (user) {
       user.isActive = true;
       await user.save();
-      console.log(user);
+      const token = createToken(user);
+      res.cookie('jwt', token, {
+         httpOnly: true,
+         maxAge:  maxAge * 1000, // 1 day in msec
+      });
+      // res.locals.user = user;
+      const categories = await getAllCategories();
+      res.render('index', {title: 'Home', categories, user});
+      console.log("locals",res.locals);
       
-      
-      res.redirect('/');
    }
    else {
       res.redirect('/');
@@ -100,13 +110,13 @@ export const activateUser = asyncWrapper( async(req: Request, res: Response) => 
 } )
 
 function createToken(user: User) {
-   const maxAge = 1 * 24 * 60 * 60;
    const token = sign(
       {id: user.id, username: user.username, role: user.role},
       jwtSecret,
       {
-         expiresIn: maxAge;
+         expiresIn: maxAge,
       }
    )
+   return token;
    
 }

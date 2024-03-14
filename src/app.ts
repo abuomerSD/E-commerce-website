@@ -5,6 +5,7 @@ import {logger} from './middlewares/logger';
 import { errorHandler } from './middlewares/errorHandler';
 import bodyParser from 'body-parser';
 import { publicCategoriesRoute, publicProductsRoute, publicRouter } from './routes/publicRoute';
+import { isUser } from './middlewares/isUser';
 const app: Express = express();
 
 config();
@@ -17,6 +18,9 @@ app.set('view engine', 'ejs');
 
 // Request logger middleware for Debuging
 app.use(logger);
+
+// is user middleware 
+app.use(isUser);
 
 // to be sure that the application will accept json
 app.use(express.json());
