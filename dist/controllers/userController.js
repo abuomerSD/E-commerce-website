@@ -114,8 +114,7 @@ exports.activateUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(
         });
         // res.locals.user = user;
         const categories = yield (0, categoryController_1.getAllCategories)();
-        res.render('index', { title: 'Home', categories, user });
-        console.log("locals", res.locals);
+        res.redirect('/');
     }
     else {
         res.redirect('/');

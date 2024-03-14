@@ -100,9 +100,7 @@ export const activateUser = asyncWrapper( async(req: Request, res: Response) => 
       });
       // res.locals.user = user;
       const categories = await getAllCategories();
-      res.render('index', {title: 'Home', categories, user});
-      console.log("locals",res.locals);
-      
+      res.redirect('/');
    }
    else {
       res.redirect('/');

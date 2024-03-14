@@ -6,6 +6,8 @@ import { errorHandler } from './middlewares/errorHandler';
 import bodyParser from 'body-parser';
 import { publicCategoriesRoute, publicProductsRoute, publicRouter } from './routes/publicRoute';
 import { isUser } from './middlewares/isUser';
+var cookieParser = require('cookie-parser')
+
 const app: Express = express();
 
 config();
@@ -18,6 +20,9 @@ app.set('view engine', 'ejs');
 
 // Request logger middleware for Debuging
 app.use(logger);
+
+// cookie parser
+app.use(cookieParser());
 
 // is user middleware 
 app.use(isUser);
@@ -34,6 +39,7 @@ app.use(errorHandler);
 app.get('/', (req,res) => {
     res.redirect('/shop');
 });
+
 
 app.use('/shop', publicRouter);
 
