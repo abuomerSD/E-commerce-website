@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage, renderLoginPage , renderSignupPage} from "../controllers/publicController";
+import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage, renderLoginPage , renderSignupPage, logout} from "../controllers/publicController";
 import { activateUser, getAllUsers, renderUserConfirmatoinPage, saveUser } from "../controllers/userController";
 export const publicRouter = Router();
 export const publicProductsRoute = Router();
@@ -22,7 +22,10 @@ publicRouter.route('/categories/:id')
 publicRouter.post('/searchProducts', renderPublicProductSearchPage);
 
 publicRouter.route('/login')
-    .get(renderLoginPage)
+    .get(renderLoginPage);
+
+publicRouter.route('/logout')
+    .get(logout);
 
 publicRouter.route('/signup')
     .get(renderSignupPage)

@@ -38,9 +38,16 @@
          <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <% if(user) { %>
-         <div class="user-logo m-2">
-           <p><%= user.username %></p>
-         </div>
+
+         <div class="dropdown m-1">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= user.username %>
+          </button>
+          <ul class="dropdown-menu">
+            <li><button class="dropdown-item btn btn-danger" onclick="logout()">logout</button></li>
+          </ul>
+        </div>
+
          <div class="row ml-2">
           <i class="fa-solid fa-cart-shopping col"><p style="color: red;"></p></i>
          </div>

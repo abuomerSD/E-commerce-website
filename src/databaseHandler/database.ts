@@ -19,7 +19,7 @@ const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
 
 function init() {
   // sequelize.sync({alter: true});
-  sequelize.sync({force: true});
+  // sequelize.sync({force: true});
 }
 
 init();

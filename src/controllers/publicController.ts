@@ -93,3 +93,10 @@ export const renderSignupPage = asyncWrapper(async (req:Request, res: Response) 
     res.render('signup', { title: 'Sign Up',  categories});
     
 })
+
+export const logout = asyncWrapper( async (req: Request, res: Response) => {
+    // removing jwt token from browser
+    res.cookie('jwt', '');
+    // redirecting to index page
+    res.redirect('/');
+})
