@@ -127,6 +127,13 @@ margin-left: 0;
     border: 2px solid black;
     border-radius: 2%;
 }
+
+.login .checkUserEmail {
+    display: none;
+}
+.login .checkUserPassword {
+    display: none;
+}
 /* login end */
 
 /* signup start */
@@ -135,7 +142,6 @@ margin-left: 0;
     justify-content: center;
     align-items: center;
     min-height: 70vh;
-    /* flex-direction: column; */
 }
 
 .signup {

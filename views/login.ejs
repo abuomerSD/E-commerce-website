@@ -3,18 +3,20 @@
 <div class="container">
     <div class="login-section">
         <div class="login">
-            <form action="/shop/login" method="post">
+            <form action="/shop/login" method="post" id="loginForm">
                 <div class="row m-2">
                     <input type="text" name="username" placeholder="Enter your username or Email" class="form-control" required>
+                    <p class="checkUserEmail" id="checkUserEmail"></p>
                 </div>
                 <div class="row m-2">
                     <input type="password" name="password" placeholder="Enter your password" class="form-control" required>
+                    <p class="checkUserPassword" id="checkUserPassword"></p>
                 </div>
                 <div class="row m-2">
                     <a href="#" class="col"><b>Forget password?</b></a>
                 </div>
                 <div class="row m-2">
-                    <button type="submit" class="btn btn-dark col">Login</button>
+                    <button type="submit" name="submit" class="btn btn-dark col">Login</button>
                 </div>
                 <div class="row m-2">
                     <p>Don't have an account? Please <a href="/shop/signup"><b>Sign up</b></a></p>
@@ -23,4 +25,5 @@
         </div>
     </div>
 </div>
+<script src="/js/public-js/login.js"></script>
 <%- include('./public-partials/publicFooter.ejs') %>
