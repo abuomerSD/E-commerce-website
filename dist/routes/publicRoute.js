@@ -19,9 +19,10 @@ exports.publicRouter.route('/categories/:id')
     .get(publicController_1.renderCategoryLandingPage);
 exports.publicRouter.post('/searchProducts', publicController_1.renderPublicProductSearchPage);
 exports.publicRouter.route('/login')
-    .get(publicController_1.renderLoginPage);
+    .get(publicController_1.renderLoginPage)
+    .post(userController_1.login);
 exports.publicRouter.route('/logout')
-    .get(publicController_1.logout);
+    .get(userController_1.logout);
 exports.publicRouter.route('/signup')
     .get(publicController_1.renderSignupPage)
     .post(userController_1.saveUser);

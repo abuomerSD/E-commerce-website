@@ -36,7 +36,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.activateUser = exports.renderUserConfirmatoinPage = exports.getAllUsers = exports.saveUser = void 0;
+exports.logout = exports.login = exports.activateUser = exports.renderUserConfirmatoinPage = exports.getAllUsers = exports.saveUser = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const database_1 = require("../databaseHandler/database");
 const bcrypt = __importStar(require("bcrypt"));
@@ -46,10 +46,13 @@ const contants_1 = require("../utils/contants");
 const dotenv = __importStar(require("dotenv"));
 const jsonwebtoken_1 = require("jsonwebtoken");
 const categoryController_1 = require("./categoryController");
+const bcrypt_1 = require("bcrypt");
+let flash = require('connect-flash');
 dotenv.config({ path: '../../.env' });
 const websiteName = contants_1.WEBSITE_NAME;
 const myEmail = process.env.EMAIL;
 const jwtSecret = process.env.JWT_SECRET;
+const maxAge = contants_1.MAX_AGE;
 /**
  * save user
  *
@@ -100,7 +103,7 @@ exports.renderUserConfirmatoinPage = (0, asyncWrapper_1.asyncWrapper)((req, res)
 /**
  * activate user when click on confirmation link and render the  home page
  */
-const maxAge = 1 * 24 * 60 * 60; // 1 day in seconds
+// const maxAge = 1 * 24 * 60 * 60; // 1 day in seconds
 exports.activateUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.params;
     const user = yield database_1.User.findOne({ where: { id: userId } });
@@ -126,3 +129,40 @@ function createToken(user) {
     });
     return token;
 }
+exports.login = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { username, password } = req.body;
+    // finding the user on the database
+    let user = yield database_1.User.findOne({ where: { username } });
+    if (!user) {
+        user = yield database_1.User.findOne({ where: { email: username } });
+    }
+    if (!user) {
+        res.status(404).send('user not found');
+        // res.flash('success', 'Registration successfully');
+        // res.locals.message = req.flash();
+    }
+    if (user) {
+        // comparing the entered password with the hashed password on the database
+        const result = yield (0, bcrypt_1.compare)(password, user.password);
+        if (result) {
+            // creating jwt token 
+            const token = (0, jsonwebtoken_1.sign)({ id: user.id }, jwtSecret, {
+                expiresIn: maxAge,
+            });
+            res.cookie('jwt', token, {
+                maxAge,
+                httpOnly: true,
+            });
+            res.status(200).redirect('/');
+        }
+        else {
+            res.status(400).send('password is not correct');
+        }
+    }
+}));
+exports.logout = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // removing jwt token from browser
+    res.cookie('jwt', '');
+    // redirecting to index page
+    res.redirect('/');
+}));

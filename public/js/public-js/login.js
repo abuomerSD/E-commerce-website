@@ -28,12 +28,13 @@ username.addEventListener('keyup', async (e) => {
         users.forEach(user => {
             if (user.username === username.value || user.email === username.value) {
                 checkUserEmailParaghraph.style = 'display: block; color: green';
-                checkUserEmailParaghraph.innerHTML = `${correctIcon} user exist please enter the correct password`;
+                checkUserEmailParaghraph.innerHTML = `${correctIcon} correct user`;
                 password.disabled = false;                 
             }
             else {
                 checkUserEmailParaghraph.style = 'display: block ; color: red';
-                checkUserEmailParaghraph.innerHTML = `${errorIcon} Please enter correct username or email`
+                checkUserEmailParaghraph.innerHTML = `${errorIcon} Please enter correct username or email`;
+                password.disabled = true;
             }
         });
     } catch (error) {
@@ -41,8 +42,28 @@ username.addEventListener('keyup', async (e) => {
     }
 });
 
-loginForm.addEventListener('submit', (e) => {
+loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const usernameValue = username.value ;
+    const passwordValue = password.value ;
+    const user = {
+        username: usernameValue,
+        password: passwordValue
+    }
+    try {
+        const response = await fetch('/shop/login', {
+            headers: {
+                'Content-Type': 'application/json',
+                'ACCEPT': 'text/html'
+            },
+            method: 'POST',
+            body: JSON.stringify(user),
+        });
+        console.log(response);
+        // window.location.href = '/shop';
+    } catch (error) {
+        console.log(error);
+    }
 })
 
 window.onload = (e) => {

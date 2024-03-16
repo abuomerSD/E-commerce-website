@@ -2,11 +2,15 @@ import { Request, Response } from "express";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllCategories } from "./categoryController";
 import { getAllProducts, getFilteredProducts } from "./productsController";
-import { Category, Product } from "../databaseHandler/database";
+import { Category, Product, User } from "../databaseHandler/database";
 import sequelize, { Op } from "sequelize";
-import { BEST_SELLERS_LIMIT } from "../utils/contants";
+import { BEST_SELLERS_LIMIT, MAX_AGE } from "../utils/contants";
+import { compare } from 'bcrypt';
+import { sign } from 'jsonwebtoken';
 
 const bestSellersLimit = BEST_SELLERS_LIMIT;
+const jwtSecret: any = process.env.JWT_SECRECT;
+const maxAge = MAX_AGE;
 
 /**
  * render public Home Page
@@ -94,9 +98,3 @@ export const renderSignupPage = asyncWrapper(async (req:Request, res: Response) 
     
 })
 
-export const logout = asyncWrapper( async (req: Request, res: Response) => {
-    // removing jwt token from browser
-    res.cookie('jwt', '');
-    // redirecting to index page
-    res.redirect('/');
-})

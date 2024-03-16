@@ -11,7 +11,9 @@ const errorHandler_1 = require("./middlewares/errorHandler");
 const body_parser_1 = __importDefault(require("body-parser"));
 const publicRoute_1 = require("./routes/publicRoute");
 const isUser_1 = require("./middlewares/isUser");
-var cookieParser = require('cookie-parser');
+let cookieParser = require('cookie-parser');
+let session = require('express-session');
+let flash = require('connect-flash');
 const app = (0, express_1.default)();
 (0, dotenv_1.config)();
 const port = process.env.PORT || 3000;
@@ -23,6 +25,9 @@ app.set('view engine', 'ejs');
 app.use(logger_1.logger);
 // cookie parser
 app.use(cookieParser());
+// flash
+app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(flash());
 // is user middleware 
 app.use(isUser_1.isUser);
 // to be sure that the application will accept json

@@ -9,16 +9,20 @@ import { Category, User } from "../databaseHandler/database";
 import * as bcrypt from 'bcrypt';
 import { isEmpty, isEmail } from 'validator';
 import * as mailSender from '../utils/mailSender';
-import { WEBSITE_NAME } from "../utils/contants";
+import { MAX_AGE, WEBSITE_NAME } from "../utils/contants";
 import * as dotenv from 'dotenv';
 import { sign } from 'jsonwebtoken';
 import { getAllCategories } from "./categoryController";
+import { compare } from 'bcrypt';
+let flash = require('connect-flash');
+
 
 dotenv.config({path: '../../.env'});
 
 const websiteName = WEBSITE_NAME;
 const myEmail = process.env.EMAIL;
 const jwtSecret: any = process.env.JWT_SECRET;
+const maxAge = MAX_AGE;
 
 /**
  * save user
@@ -86,7 +90,7 @@ export const renderUserConfirmatoinPage = asyncWrapper(async (req: Request, res:
  * activate user when click on confirmation link and render the  home page
  */
 
-const maxAge = 1 * 24 * 60 * 60; // 1 day in seconds
+// const maxAge = 1 * 24 * 60 * 60; // 1 day in seconds
 export const activateUser = asyncWrapper( async(req: Request, res: Response) => {
    const {userId} = req.params;
    const user = await User.findOne({where: {id: userId}});
@@ -118,3 +122,46 @@ function createToken(user: User) {
    return token;
    
 }
+
+export const login = asyncWrapper(async (req:Request, res: Response) => {
+   const { username, password } = req.body;
+   // finding the user on the database
+   let user = await User.findOne({where: {username}});
+
+   if (!user) {
+      user = await User.findOne({where: {email: username}})
+   }
+
+   if (!user) {
+      res.status(404).send('user not found');
+      // res.flash('success', 'Registration successfully');
+      // res.locals.message = req.flash();
+
+   }
+
+   if (user) {
+       // comparing the entered password with the hashed password on the database
+       const result = await compare(password, user.password);
+       if (result) {
+           // creating jwt token 
+           const token = sign({ id: user.id }, jwtSecret, {
+              expiresIn: maxAge,
+           });
+           res.cookie('jwt', token, {
+            maxAge,
+            httpOnly: true,
+           });
+           res.status(200).redirect('/');
+       }
+       else {
+          res.status(400).send('password is not correct');
+       }
+   }
+})
+
+export const logout = asyncWrapper( async (req: Request, res: Response) => {
+   // removing jwt token from browser
+   res.cookie('jwt', '');
+   // redirecting to index page
+   res.redirect('/');
+})
