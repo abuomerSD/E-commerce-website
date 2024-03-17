@@ -59,8 +59,8 @@ loginForm.addEventListener('submit', async (e) => {
             method: 'POST',
             body: JSON.stringify(user),
         });
-        console.log(response);
-        // window.location.href = '/shop';
+        // console.log(response);
+        window.location.href = '/shop';
     } catch (error) {
         console.log(error);
     }

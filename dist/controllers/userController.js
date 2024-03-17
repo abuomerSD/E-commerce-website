@@ -36,7 +36,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logout = exports.login = exports.activateUser = exports.renderUserConfirmatoinPage = exports.getAllUsers = exports.saveUser = void 0;
+exports.renderPasswordResetPage = exports.sendPasswordResetConfirmationEmail = exports.renderEnterYouEmailPage = exports.logout = exports.login = exports.activateUser = exports.renderUserConfirmatoinPage = exports.getAllUsers = exports.saveUser = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const database_1 = require("../databaseHandler/database");
 const bcrypt = __importStar(require("bcrypt"));
@@ -165,4 +165,33 @@ exports.logout = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0
     res.cookie('jwt', '');
     // redirecting to index page
     res.redirect('/');
+}));
+exports.renderEnterYouEmailPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const categories = yield (0, categoryController_1.getAllCategories)();
+    res.status(200).render('enterYourEmail', { title: 'Password Reset', categories });
+}));
+exports.sendPasswordResetConfirmationEmail = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const categories = yield (0, categoryController_1.getAllCategories)();
+    const { email } = req.body;
+    const user = yield database_1.User.findOne({ where: { email } });
+    const link = `${req.headers.host}/shop/users/password-reset/${user.id}`;
+    let confirmationPageHtml = `
+   <h1>Step Shopping</h1>
+   <h2>Password Reset</h2>
+   <h3>Click this Link to Change your Password</h3>
+   <a href= ${link} style="color: white; background: blue">Activate</a>
+   <h5>Confirmation Link:</h5>
+   <p>${link}</p>
+`;
+    yield mailSender.send({
+        name: websiteName,
+        address: myEmail
+    }, user.email, 'Please Reset Your Password', 'Password Reset', confirmationPageHtml);
+    res.status(200).end();
+    // res.status(200).render('passwordResetEmailConfirmation', { title: 'Password Reset', categories })
+}));
+exports.renderPasswordResetPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const categories = yield (0, categoryController_1.getAllCategories)();
+    const { userId } = req.params;
+    res.status(200).render('passwordReset', { title: 'Password Reset', categories, userId });
 }));

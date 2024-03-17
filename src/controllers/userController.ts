@@ -165,3 +165,40 @@ export const logout = asyncWrapper( async (req: Request, res: Response) => {
    // redirecting to index page
    res.redirect('/');
 })
+
+export const renderEnterYouEmailPage = asyncWrapper(async (req:Request, res: Response) => {
+   const categories = await getAllCategories();
+   res.status(200).render('enterYourEmail', { title: 'Password Reset' , categories});
+})
+
+export const sendPasswordResetConfirmationEmail = asyncWrapper(async (req:Request, res: Response) => {
+   const categories = await getAllCategories();
+   const { email } = req.body;
+   const user: any = await User.findOne({where: {email}});
+   const link = `${req.headers.host}/shop/users/password-reset/${user.id}`;
+   let confirmationPageHtml = `
+   <h1>Step Shopping</h1>
+   <h2>Password Reset</h2>
+   <h3>Click this Link to Change your Password</h3>
+   <a href= ${link} style="color: white; background: blue">Activate</a>
+   <h5>Confirmation Link:</h5>
+   <p>${link}</p>
+`;
+await mailSender.send({
+name: websiteName,
+address: myEmail   
+},
+user.email,
+'Please Reset Your Password',
+'Password Reset',
+confirmationPageHtml,
+ );
+   res.status(200).end();
+   // res.status(200).render('passwordResetEmailConfirmation', { title: 'Password Reset', categories })
+})
+
+export const renderPasswordResetPage = asyncWrapper( async (req:Request, res: Response) => {
+   const categories = await getAllCategories();
+   const { userId } = req.params;
+   res.status(200).render('passwordReset', { title: 'Password Reset', categories , userId});
+})

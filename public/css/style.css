@@ -172,3 +172,11 @@ margin-left: 0;
 }
 /* public footer end */
 
+/* email-password-reset-form start */
+.email-password-reset-form {
+    margin:200px auto; 
+    width: 40%; 
+    border: 2px solid black; 
+    border-radius: 2%;
+}
+/* email-password-reset-form end */

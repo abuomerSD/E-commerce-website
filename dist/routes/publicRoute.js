@@ -32,3 +32,8 @@ exports.publicRouter.route('/signup/confirmation/:userId')
     .get(userController_1.activateUser);
 exports.publicRouter.route('/users')
     .get(userController_1.getAllUsers);
+exports.publicRouter.route('/users/password-reset/enter-your-email')
+    .get(userController_1.renderEnterYouEmailPage)
+    .post(userController_1.sendPasswordResetConfirmationEmail);
+exports.publicRouter.route('/users/password-reset/:userId')
+    .get(userController_1.renderPasswordResetPage);

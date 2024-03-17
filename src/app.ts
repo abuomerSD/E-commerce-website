@@ -6,9 +6,10 @@ import { errorHandler } from './middlewares/errorHandler';
 import bodyParser from 'body-parser';
 import { publicCategoriesRoute, publicProductsRoute, publicRouter } from './routes/publicRoute';
 import { isUser } from './middlewares/isUser';
+import { getAllCategories } from './controllers/categoryController';
 let cookieParser = require('cookie-parser')
-let session = require('express-session');
-let flash = require('connect-flash');
+// let session = require('express-session');
+// let flash = require('connect-flash');
 
 
 const app: Express = express();
@@ -28,9 +29,9 @@ app.use(logger);
 app.use(cookieParser());
 
 // flash
-app.use(session({cookie: { maxAge: 60000 }}));
+// app.use(session({cookie: { maxAge: 60000 }}));
 
-app.use(flash());
+// app.use(flash());
 
 // is user middleware 
 app.use(isUser);
@@ -62,8 +63,9 @@ app.use('/admin', adminRouter);
 
 // handle 404 page
 
-app.use((req: Request, res: Response) => {
-    res.render('404', {title: 'Page Not Found'});
+app.use(async (req: Request, res: Response) => {
+    const categories = await getAllCategories()
+    res.render('404', {title: 'Page Not Found', categories});
 })
 
 app.listen(port, ()=> {
