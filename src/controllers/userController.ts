@@ -41,7 +41,7 @@ export const saveUser = asyncWrapper(async (req:Request, res: Response) => {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       user.password = hashedPassword;
       const userCreated: User = await User.create(user);
-      res.json(userCreated);
+      res.status(201).end();
       
       // sending confirmation email to user
       let link = `${req.headers.host}/shop/signup/confirmation/${userCreated.id}`;
@@ -201,4 +201,18 @@ export const renderPasswordResetPage = asyncWrapper( async (req:Request, res: Re
    const categories = await getAllCategories();
    const { userId } = req.params;
    res.status(200).render('passwordReset', { title: 'Password Reset', categories , userId});
+})
+
+export const updateUser = asyncWrapper(async (req:Request, res: Response) => {
+   const id = req.params.userId;
+   const newUser = req.body;
+   
+   // hash user password
+   const hashedPassword = await bcrypt.hash(newUser.password, 10);
+   newUser.password = hashedPassword;
+   // fetch old user 
+   const user = await User.findOne({where: {id}});
+   user?.set(newUser);
+   await user?.save();
+   res.status(200).end();
 })

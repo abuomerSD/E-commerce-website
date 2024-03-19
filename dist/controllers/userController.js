@@ -36,7 +36,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderPasswordResetPage = exports.sendPasswordResetConfirmationEmail = exports.renderEnterYouEmailPage = exports.logout = exports.login = exports.activateUser = exports.renderUserConfirmatoinPage = exports.getAllUsers = exports.saveUser = void 0;
+exports.updateUser = exports.renderPasswordResetPage = exports.sendPasswordResetConfirmationEmail = exports.renderEnterYouEmailPage = exports.logout = exports.login = exports.activateUser = exports.renderUserConfirmatoinPage = exports.getAllUsers = exports.saveUser = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const database_1 = require("../databaseHandler/database");
 const bcrypt = __importStar(require("bcrypt"));
@@ -68,7 +68,7 @@ exports.saveUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void
         const hashedPassword = yield bcrypt.hash(user.password, 10);
         user.password = hashedPassword;
         const userCreated = yield database_1.User.create(user);
-        res.json(userCreated);
+        res.status(201).end();
         // sending confirmation email to user
         let link = `${req.headers.host}/shop/signup/confirmation/${userCreated.id}`;
         // console.log('confirmation link', link);
@@ -194,4 +194,16 @@ exports.renderPasswordResetPage = (0, asyncWrapper_1.asyncWrapper)((req, res) =>
     const categories = yield (0, categoryController_1.getAllCategories)();
     const { userId } = req.params;
     res.status(200).render('passwordReset', { title: 'Password Reset', categories, userId });
+}));
+exports.updateUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.userId;
+    const newUser = req.body;
+    // hash user password
+    const hashedPassword = yield bcrypt.hash(newUser.password, 10);
+    newUser.password = hashedPassword;
+    // fetch old user 
+    const user = yield database_1.User.findOne({ where: { id } });
+    user === null || user === void 0 ? void 0 : user.set(newUser);
+    yield (user === null || user === void 0 ? void 0 : user.save());
+    res.status(200).end();
 }));

@@ -36,4 +36,5 @@ exports.publicRouter.route('/users/password-reset/enter-your-email')
     .get(userController_1.renderEnterYouEmailPage)
     .post(userController_1.sendPasswordResetConfirmationEmail);
 exports.publicRouter.route('/users/password-reset/:userId')
-    .get(userController_1.renderPasswordResetPage);
+    .get(userController_1.renderPasswordResetPage)
+    .post(userController_1.updateUser);
