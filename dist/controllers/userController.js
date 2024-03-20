@@ -150,7 +150,7 @@ exports.login = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0,
                 expiresIn: maxAge,
             });
             res.cookie('jwt', token, {
-                maxAge,
+                maxAge: maxAge * 1000,
                 httpOnly: true,
             });
             res.status(200).redirect('/');

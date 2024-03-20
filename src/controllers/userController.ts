@@ -148,7 +148,7 @@ export const login = asyncWrapper(async (req:Request, res: Response) => {
               expiresIn: maxAge,
            });
            res.cookie('jwt', token, {
-            maxAge,
+            maxAge : maxAge * 1000,
             httpOnly: true,
            });
            res.status(200).redirect('/');

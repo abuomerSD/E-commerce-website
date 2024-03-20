@@ -6,7 +6,7 @@ a {
 
 /* slide start */
 .carousel-item img {
-    height:520px;    
+    max-height:520px;  
 }
 /* slide end */
 
