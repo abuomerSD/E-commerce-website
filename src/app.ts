@@ -36,6 +36,7 @@ app.use(cookieParser());
 // is user middleware 
 app.use(isUser);
 
+
 // to be sure that the application will accept json
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));

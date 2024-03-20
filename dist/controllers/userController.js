@@ -47,6 +47,7 @@ const dotenv = __importStar(require("dotenv"));
 const jsonwebtoken_1 = require("jsonwebtoken");
 const categoryController_1 = require("./categoryController");
 const bcrypt_1 = require("bcrypt");
+const httpStatusCodesStates_1 = require("../utils/httpStatusCodesStates");
 let flash = require('connect-flash');
 dotenv.config({ path: '../../.env' });
 const websiteName = contants_1.WEBSITE_NAME;
@@ -153,10 +154,13 @@ exports.login = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0,
                 maxAge: maxAge * 1000,
                 httpOnly: true,
             });
-            res.status(200).redirect('/');
+            res.status(200).json({ status: httpStatusCodesStates_1.httpStatus.SUCCESS });
         }
         else {
-            res.status(400).send('password is not correct');
+            res.status(400).json({
+                status: httpStatusCodesStates_1.httpStatus.FAIL,
+                message: 'password is not correct, please try again',
+            });
         }
     }
 }));

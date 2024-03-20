@@ -4,6 +4,7 @@ const password = loginForm.password;
 const submitButton = loginForm.submit;
 const checkUserEmailParaghraph = document.getElementById('checkUserEmail');
 const checkUserPasswordParaghraph = document.getElementById('checkUserPassword');
+const loginMessageParagraph = document.getElementById('loginMessageParagraph');
 
 // icons for form validation
 const errorIcon = '<i class="fa-solid fa-xmark"></i>';
@@ -60,7 +61,13 @@ loginForm.addEventListener('submit', async (e) => {
             body: JSON.stringify(user),
         });
         // console.log(response);
-        window.location.href = '/shop';
+        const result = await response.json();
+        if (result.status === 'fail') {
+            loginMessageParagraph.style = 'display: block; color: red';
+            loginMessageParagraph.innerHTML = result.message;
+            return;
+        }
+        window.location.reload();
     } catch (error) {
         console.log(error);
     }

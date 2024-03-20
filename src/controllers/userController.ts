@@ -14,6 +14,7 @@ import * as dotenv from 'dotenv';
 import { sign } from 'jsonwebtoken';
 import { getAllCategories } from "./categoryController";
 import { compare } from 'bcrypt';
+import { httpStatus } from "../utils/httpStatusCodesStates";
 let flash = require('connect-flash');
 
 
@@ -151,10 +152,14 @@ export const login = asyncWrapper(async (req:Request, res: Response) => {
             maxAge : maxAge * 1000,
             httpOnly: true,
            });
-           res.status(200).redirect('/');
+           res.status(200).json({status: httpStatus.SUCCESS})
        }
        else {
-          res.status(400).send('password is not correct');
+          res.status(400).json({
+            status: httpStatus.FAIL,
+            message: 'password is not correct, please try again',
+          });
+          
        }
    }
 })
