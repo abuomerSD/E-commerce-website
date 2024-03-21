@@ -38,3 +38,5 @@ exports.publicRouter.route('/users/password-reset/enter-your-email')
 exports.publicRouter.route('/users/password-reset/:userId')
     .get(userController_1.renderPasswordResetPage)
     .post(userController_1.updateUser);
+exports.publicRouter.route('/cart')
+    .get(publicController_1.renderCartPage);

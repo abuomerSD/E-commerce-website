@@ -98,3 +98,7 @@ export const renderSignupPage = asyncWrapper(async (req:Request, res: Response) 
     
 })
 
+
+export const renderCartPage = asyncWrapper(async (req: Request, res: Response) => {
+    res.status(200).render('cart', {title: 'Cart'})
+})

@@ -28,9 +28,14 @@
             </div>
            </li>
           <% } %>
-         <li class="nav-item">
-           <a class="nav-link" href="#">Cart</a>
-         </li>
+           <% if (user) { %>
+              <li class="nav-item">
+                <div >
+                  <a  class="nav-link" href="/shop/cart"><i class="fa-solid fa-cart-shopping col"><p style="color: red;"></p></i> Cart</a>
+                  
+                </div>
+              </li>
+           <% } %>
        </ul>
 
        <form  class="d-flex" role="search" method="post" action="/shop/searchProducts">
@@ -48,9 +53,9 @@
           </ul>
         </div>
 
-         <div class="row ml-2">
+         <!-- <div class="row ml-2">
           <i class="fa-solid fa-cart-shopping col"><p style="color: red;"></p></i>
-         </div>
+         </div> -->
         <% } %>
 
      </div>

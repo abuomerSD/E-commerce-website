@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderSignupPage = exports.renderLoginPage = exports.renderPublicProductSearchPage = exports.renderNewReleasePage = exports.renderBestSellersPage = exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
+exports.renderCartPage = exports.renderSignupPage = exports.renderLoginPage = exports.renderPublicProductSearchPage = exports.renderNewReleasePage = exports.renderBestSellersPage = exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const categoryController_1 = require("./categoryController");
 const productsController_1 = require("./productsController");
@@ -117,4 +117,7 @@ exports.renderLoginPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __await
 exports.renderSignupPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const categories = yield database_1.Category.findAll();
     res.render('signup', { title: 'Sign Up', categories });
+}));
+exports.renderCartPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.status(200).render('cart', { title: 'Cart' });
 }));

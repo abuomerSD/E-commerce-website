@@ -21,6 +21,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const publicRoute_1 = require("./routes/publicRoute");
 const isUser_1 = require("./middlewares/isUser");
 const categoryController_1 = require("./controllers/categoryController");
+const checkCategories_1 = require("./middlewares/checkCategories");
 let cookieParser = require('cookie-parser');
 // let session = require('express-session');
 // let flash = require('connect-flash');
@@ -40,6 +41,8 @@ app.use(cookieParser());
 // app.use(flash());
 // is user middleware 
 app.use(isUser_1.isUser);
+// check categories middleware
+app.use(checkCategories_1.checkCategories);
 // to be sure that the application will accept json
 app.use(express_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));

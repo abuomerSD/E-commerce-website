@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import { publicCategoriesRoute, publicProductsRoute, publicRouter } from './routes/publicRoute';
 import { isUser } from './middlewares/isUser';
 import { getAllCategories } from './controllers/categoryController';
+import { checkCategories } from './middlewares/checkCategories';
 let cookieParser = require('cookie-parser')
 // let session = require('express-session');
 // let flash = require('connect-flash');
@@ -35,6 +36,9 @@ app.use(cookieParser());
 
 // is user middleware 
 app.use(isUser);
+
+// check categories middleware
+app.use(checkCategories);
 
 
 // to be sure that the application will accept json
