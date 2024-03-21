@@ -1,5 +1,5 @@
 
-import {DataTypes, Model, Sequelize, UUIDV4} from 'sequelize';
+import {DATE, DataTypes, Model, Sequelize, UUIDV4} from 'sequelize';
 
 const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
     host: 'localhost',
@@ -19,7 +19,7 @@ const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
 
 function init() {
   // sequelize.sync({alter: true});
-  // sequelize.sync({force: true});
+  sequelize.sync({force: true});
 }
 
 init();
@@ -161,3 +161,155 @@ Product.belongsTo(Category);
 
 
 
+// invoice tables
+
+class salesInvoiceHead extends Model {
+  declare id: bigint;
+  declare date: Date;
+  declare userId: string;
+  declare total: number;
+}
+
+salesInvoiceHead.init({
+  id: {
+    type: DataTypes.BIGINT,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  total: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+  }
+}, 
+{
+  sequelize,
+  modelName: 'SalesInvoiceHead',
+});
+
+class salesInvoiceDetails extends Model {
+  declare invoiceHeadId: number;
+  declare productId: string;
+  declare productName: string;
+  declare productQty: number;
+  declare productPrice: number;
+  declare productTotal: number;
+}
+
+salesInvoiceDetails.init({
+  // invoiceHeadId:{
+  //   type: DataTypes.BIGINT,
+  //   allowNull: false,
+  // },
+  productId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  productName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  productQty: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+  },
+  productPrice: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+  },
+  productTotal: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+  },
+}, {
+  sequelize,
+  modelName: 'SalesInvoiceDetails'
+});
+
+// Relationships 
+
+salesInvoiceHead.hasMany(salesInvoiceDetails, {
+  foreignKey: 'salesInvoiceHeadId'
+});
+salesInvoiceDetails.belongsTo(salesInvoiceHead);
+
+
+// cart tables
+
+class cartHead extends Model {
+  declare id: bigint;
+  declare date: Date;
+  declare userId: string;
+  declare total: number;
+}
+
+cartHead.init({
+  id: {
+    type: DataTypes.BIGINT,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  total: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+  }
+}, 
+{
+  sequelize,
+  modelName: 'CartHead',
+});
+
+class cartDetails extends Model {
+  declare invoiceHeadId: number;
+  declare productId: string;
+  declare productName: string;
+  declare productQty: number;
+  declare productPrice: number;
+  declare productTotal: number;
+}
+
+cartDetails.init({
+  // invoiceHeadId:{
+  //   type: DataTypes.BIGINT,
+  //   allowNull: false,
+  // },
+  productId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  productName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  productQty: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+  },
+  productPrice: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+  },
+  productTotal: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+  },
+}, {
+  sequelize,
+  modelName: 'CartDetails'
+});
+
+// Relationships 
+
+cartHead.hasMany(cartDetails, {
+  foreignKey: 'salesInvoiceHeadId'
+});
+cartDetails.belongsTo(cartHead);
