@@ -18,7 +18,7 @@
                         <a href="/shop/products/<%= product.id %>" target="_blank"><h4 class="card-title"><%= product.name %></h4></a>
                         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio repudiandae labore.</p>
                         <h5 class="card-text">$ <%= product.price %></h5>
-                        <a href="#" class="btn btn-dark">Add to cart</a>
+                        <button class="btn btn-dark" onclick="addToCart('<%= product.id %>')">Add to cart</button>
                         <div class="viewed-times">
                            <i class="fa-solid fa-eye"></i>
                            <p title="viewed times"><%= product.viewedTimes %></p>

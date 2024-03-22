@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = exports.Product = exports.Category = void 0;
+exports.CartDetails = exports.User = exports.Product = exports.Category = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize = new sequelize_1.Sequelize('ecommerce-website', 'asdf', '', {
     host: 'localhost',
@@ -193,9 +193,9 @@ salesInvoiceHead.hasMany(salesInvoiceDetails, {
 });
 salesInvoiceDetails.belongsTo(salesInvoiceHead);
 // cart tables
-class cartHead extends sequelize_1.Model {
+class CartHead extends sequelize_1.Model {
 }
-cartHead.init({
+CartHead.init({
     id: {
         type: sequelize_1.DataTypes.BIGINT,
         autoIncrement: true,
@@ -214,9 +214,10 @@ cartHead.init({
     sequelize,
     modelName: 'CartHead',
 });
-class cartDetails extends sequelize_1.Model {
+class CartDetails extends sequelize_1.Model {
 }
-cartDetails.init({
+exports.CartDetails = CartDetails;
+CartDetails.init({
     // invoiceHeadId:{
     //   type: DataTypes.BIGINT,
     //   allowNull: false,
@@ -246,7 +247,7 @@ cartDetails.init({
     modelName: 'CartDetails'
 });
 // Relationships 
-cartHead.hasMany(cartDetails, {
+CartHead.hasMany(CartDetails, {
     foreignKey: 'salesInvoiceHeadId'
 });
-cartDetails.belongsTo(cartHead);
+CartDetails.belongsTo(CartHead);

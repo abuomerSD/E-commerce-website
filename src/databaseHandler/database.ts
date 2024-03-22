@@ -1,5 +1,5 @@
 
-import {DATE, DataTypes, Model, Sequelize, UUIDV4} from 'sequelize';
+import { DataTypes, Model, Sequelize, UUIDV4 } from 'sequelize';
 
 const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
     host: 'localhost',
@@ -240,14 +240,14 @@ salesInvoiceDetails.belongsTo(salesInvoiceHead);
 
 // cart tables
 
-class cartHead extends Model {
+class CartHead extends Model {
   declare id: bigint;
   declare date: Date;
   declare userId: string;
   declare total: number;
 }
 
-cartHead.init({
+CartHead.init({
   id: {
     type: DataTypes.BIGINT,
     autoIncrement: true,
@@ -268,7 +268,7 @@ cartHead.init({
   modelName: 'CartHead',
 });
 
-class cartDetails extends Model {
+export class CartDetails extends Model {
   declare invoiceHeadId: number;
   declare productId: string;
   declare productName: string;
@@ -277,7 +277,7 @@ class cartDetails extends Model {
   declare productTotal: number;
 }
 
-cartDetails.init({
+CartDetails.init({
   // invoiceHeadId:{
   //   type: DataTypes.BIGINT,
   //   allowNull: false,
@@ -309,7 +309,7 @@ cartDetails.init({
 
 // Relationships 
 
-cartHead.hasMany(cartDetails, {
+CartHead.hasMany(CartDetails, {
   foreignKey: 'salesInvoiceHeadId'
 });
-cartDetails.belongsTo(cartHead);
+CartDetails.belongsTo(CartHead);
