@@ -240,9 +240,8 @@ salesInvoiceDetails.belongsTo(salesInvoiceHead);
 
 // cart tables
 
-class CartHead extends Model {
+export class CartHead extends Model {
   declare id: bigint;
-  declare date: Date;
   declare userId: string;
   declare total: number;
 }
@@ -269,7 +268,7 @@ CartHead.init({
 });
 
 export class CartDetails extends Model {
-  declare invoiceHeadId: number;
+  declare cartHeadId: number;
   declare productId: string;
   declare productName: string;
   declare productQty: number;
@@ -310,6 +309,6 @@ CartDetails.init({
 // Relationships 
 
 CartHead.hasMany(CartDetails, {
-  foreignKey: 'salesInvoiceHeadId'
+  foreignKey: 'cartHeadId'
 });
 CartDetails.belongsTo(CartHead);

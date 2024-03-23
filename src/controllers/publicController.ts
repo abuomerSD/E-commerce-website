@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllCategories } from "./categoryController";
 import { getAllProducts, getFilteredProducts } from "./productsController";
-import { Category, Product, User } from "../databaseHandler/database";
+import { CartDetails, CartHead, Category, Product, User } from "../databaseHandler/database";
 import sequelize, { Op } from "sequelize";
 import { BEST_SELLERS_LIMIT, MAX_AGE } from "../utils/contants";
 import { compare } from 'bcrypt';
@@ -101,4 +101,20 @@ export const renderSignupPage = asyncWrapper(async (req:Request, res: Response) 
 
 export const renderCartPage = asyncWrapper(async (req: Request, res: Response) => {
     res.status(200).render('cart', {title: 'Cart'})
+})
+
+export const getProductByIdAtPublicRoute = asyncWrapper(async (req: Request, res: Response) => {
+    const {id} = req.params;
+    const product = await Product.findOne({where: {id}});
+    res.status(200).json(product);
+    console.log(product);
+    
+})
+
+export const getCartByUserId = asyncWrapper(async (req: Request, res: Response) => {
+    const {userId} = req.params;
+    const cart = await CartHead.findOne({where: {userId}, include: {
+        model: CartDetails,
+    }});
+    res.status(200).json(cart);
 })

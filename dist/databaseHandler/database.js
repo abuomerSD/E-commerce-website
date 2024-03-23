@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CartDetails = exports.User = exports.Product = exports.Category = void 0;
+exports.CartDetails = exports.CartHead = exports.User = exports.Product = exports.Category = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize = new sequelize_1.Sequelize('ecommerce-website', 'asdf', '', {
     host: 'localhost',
@@ -195,6 +195,7 @@ salesInvoiceDetails.belongsTo(salesInvoiceHead);
 // cart tables
 class CartHead extends sequelize_1.Model {
 }
+exports.CartHead = CartHead;
 CartHead.init({
     id: {
         type: sequelize_1.DataTypes.BIGINT,
@@ -248,6 +249,6 @@ CartDetails.init({
 });
 // Relationships 
 CartHead.hasMany(CartDetails, {
-    foreignKey: 'salesInvoiceHeadId'
+    foreignKey: 'cartHeadId'
 });
 CartDetails.belongsTo(CartHead);

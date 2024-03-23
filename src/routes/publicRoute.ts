@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage, renderLoginPage , renderSignupPage, renderCartPage} from "../controllers/publicController";
+import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage, renderLoginPage , renderSignupPage, renderCartPage, getProductByIdAtPublicRoute, getCartByUserId} from "../controllers/publicController";
 import { activateUser, getAllUsers, login, logout, renderEnterYouEmailPage, renderPasswordResetPage, renderUserConfirmatoinPage, saveUser, sendPasswordResetConfirmationEmail, updateUser } from "../controllers/userController";
 export const publicRouter = Router();
 export const publicProductsRoute = Router();
@@ -51,3 +51,9 @@ publicRouter.route('/users/password-reset/:userId')
 
 publicRouter.route('/cart')
     .get(renderCartPage);
+
+publicRouter.route('/product/:id')
+    .get(getProductByIdAtPublicRoute);
+
+publicRouter.route('/cart/cart-details/:userId')
+    .get(getCartByUserId);

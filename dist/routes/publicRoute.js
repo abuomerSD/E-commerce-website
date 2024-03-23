@@ -40,3 +40,7 @@ exports.publicRouter.route('/users/password-reset/:userId')
     .post(userController_1.updateUser);
 exports.publicRouter.route('/cart')
     .get(publicController_1.renderCartPage);
+exports.publicRouter.route('/product/:id')
+    .get(publicController_1.getProductByIdAtPublicRoute);
+exports.publicRouter.route('/cart/cart-details/:userId')
+    .get(publicController_1.getCartByUserId);
