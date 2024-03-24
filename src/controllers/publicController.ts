@@ -108,13 +108,6 @@ export const getProductByIdAtPublicRoute = asyncWrapper(async (req: Request, res
     const product = await Product.findOne({where: {id}});
     res.status(200).json(product);
     console.log(product);
-    
 })
 
-export const getCartByUserId = asyncWrapper(async (req: Request, res: Response) => {
-    const {userId} = req.params;
-    const cart = await CartHead.findOne({where: {userId}, include: {
-        model: CartDetails,
-    }});
-    res.status(200).json(cart);
-})
+

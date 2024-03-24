@@ -241,7 +241,7 @@ salesInvoiceDetails.belongsTo(salesInvoiceHead);
 // cart tables
 
 export class CartHead extends Model {
-  declare id: bigint;
+  declare id?: bigint;
   declare userId: string;
   declare total: number;
 }

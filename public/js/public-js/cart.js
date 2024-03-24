@@ -5,13 +5,18 @@ async function addToCart(productId, userId) {
         console.log(product);
         // fetching the previous cart total
         const cart = await getPreviousCart(userId);
-        console.log('total', cart.total);
-        let total = cart.total;
-        let cartHeadId = cart.id;
+        let total ;
+        let cartHeadId ;
         if (!cart) {
             total = 0;
             cartHeadId = 0;
         }
+        else {
+            total = cart.total;
+            cartHeadId = cart.id;
+        }
+        // console.log('total', cart.total);
+
         // saving data to cart
         const data = {
             CartHead: {
@@ -23,10 +28,13 @@ async function addToCart(productId, userId) {
                 productId: product.id,
                 productName: product.name,
                 productQty: 1,
-                productPrice: product.price,
-                productTotal: productQty * productPrice,
+                // productPrice: product.price,
+                // productTotal: 1 * productPrice,
             }
         }
+
+        await saveCartItem(userId, product);
+
         console.log(data);
     } catch (error) {
         console.log(error);   
@@ -35,7 +43,7 @@ async function addToCart(productId, userId) {
 
 async function getPreviousCart(userId) {
     try {
-        const response = await fetch(`/shop/cart/cart-details/${userId}`, {
+        const response = await fetch(`/shop/cart/${userId}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
@@ -66,3 +74,18 @@ async function getProductById(productId) {
         return null;
     }
 }
+
+async function saveCartItem(userId , product) {
+    try {
+        const response = await fetch(`/shop/cart/${userId}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(product),
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+} 

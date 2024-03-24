@@ -4,6 +4,7 @@ exports.publicCategoriesRoute = exports.publicProductsRoute = exports.publicRout
 const express_1 = require("express");
 const publicController_1 = require("../controllers/publicController");
 const userController_1 = require("../controllers/userController");
+const cartController_1 = require("../controllers/cartController");
 exports.publicRouter = (0, express_1.Router)();
 exports.publicProductsRoute = (0, express_1.Router)();
 exports.publicCategoriesRoute = (0, express_1.Router)();
@@ -42,5 +43,6 @@ exports.publicRouter.route('/cart')
     .get(publicController_1.renderCartPage);
 exports.publicRouter.route('/product/:id')
     .get(publicController_1.getProductByIdAtPublicRoute);
-exports.publicRouter.route('/cart/cart-details/:userId')
-    .get(publicController_1.getCartByUserId);
+exports.publicRouter.route('/cart/:userId')
+    .get(cartController_1.getCartByUserId)
+    .post(cartController_1.saveCartItem);
