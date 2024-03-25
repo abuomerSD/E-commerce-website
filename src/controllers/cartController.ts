@@ -13,18 +13,27 @@ export const getCartByUserId = asyncWrapper(async (req: Request, res: Response) 
 export const saveCartItem = asyncWrapper(async (req:Request, res: Response) => {
     const {userId} = req.params;
     const product = req.body;
+    let headId;
     let cartHead : any = {
         total: 0, 
         userId
     }
-    const savedCartHead = await CartHead.create(cartHead);
+    const checkCartHead = await CartHead.findOne({where: {userId}});
+
+    if (checkCartHead) {
+        headId = checkCartHead.id;
+    }
+    else {
+        const savedCartHead = await CartHead.create(cartHead);
+        headId = savedCartHead?.id;
+    }
     let cartDetails : any = {
         productId: product.id,
         productName: product.name,
         productQty: 1,
         productPrice: product.price,
         productTotal: product.price,
-        cartHeadId: savedCartHead.id,
+        cartHeadId: headId,
     }
     
     await CartDetails.create(cartDetails);

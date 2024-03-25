@@ -15,11 +15,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                </tr>
+                <% let rowNumber = 0 %>
+                <% let total = 0 %>
+                <% cartDetails.forEach(detail => { %>
+                    <% const id = detail.productId %>
+                    <tr id="row-<%= id %>">
+                        <th scope="row"><%= rowNumber + 1 %></th>
+                        <td><%= detail.productName %></td>
+                        <td><input type="number" id="input-product-qty" class="form-control" value="<%= detail.productQty %>" style="width: 70px;"></td>
+                        <td>$<p id="txt-price" style="display: inline;"><%= detail.productPrice %></p></td>
+                        <td id="txt-total">$<%= detail.productTotal %></td>
+                        <td><button class="btn btn-danger">Delete</button></td>
+                    </tr>
+                    <% total += detail.productPrice %>
+                    <% rowNumber++ %>
+                <% }); %>
             </tbody>
         </table>
     </div>
+    <div class="total">
+        <h6>total : $<%= total %></h6>
+    </div>
 </div>
+<script src="/js/public-js/cartDetails.js"></script>
 <%- include('./public-partials/publicFooter.ejs') %>

@@ -100,7 +100,13 @@ export const renderSignupPage = asyncWrapper(async (req:Request, res: Response) 
 
 
 export const renderCartPage = asyncWrapper(async (req: Request, res: Response) => {
-    res.status(200).render('cart', {title: 'Cart'})
+    const categories = await getAllCategories();
+    const {userId} = req.params;
+    const cartHead = await CartHead.findOne({where: {userId}})
+    const cartDetails = await CartDetails.findAll({where : {cartHeadId: cartHead?.id}})
+    res.status(200).render('cart', {title: 'Cart', categories , cartDetails})
+    console.log(cartDetails);
+    
 })
 
 export const getProductByIdAtPublicRoute = asyncWrapper(async (req: Request, res: Response) => {

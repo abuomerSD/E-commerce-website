@@ -22,18 +22,26 @@ exports.getCartByUserId = (0, asyncWrapper_1.asyncWrapper)((req, res) => __await
 exports.saveCartItem = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.params;
     const product = req.body;
+    let headId;
     let cartHead = {
         total: 0,
         userId
     };
-    const savedCartHead = yield database_1.CartHead.create(cartHead);
+    const checkCartHead = yield database_1.CartHead.findOne({ where: { userId } });
+    if (checkCartHead) {
+        headId = checkCartHead.id;
+    }
+    else {
+        const savedCartHead = yield database_1.CartHead.create(cartHead);
+        headId = savedCartHead === null || savedCartHead === void 0 ? void 0 : savedCartHead.id;
+    }
     let cartDetails = {
         productId: product.id,
         productName: product.name,
         productQty: 1,
         productPrice: product.price,
         productTotal: product.price,
-        cartHeadId: savedCartHead.id,
+        cartHeadId: headId,
     };
     yield database_1.CartDetails.create(cartDetails);
     res.status(201).end();

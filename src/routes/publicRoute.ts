@@ -50,7 +50,7 @@ publicRouter.route('/users/password-reset/:userId')
     .get(renderPasswordResetPage)
     .post(updateUser);
 
-publicRouter.route('/cart')
+publicRouter.route('/cart/cart-details/:userId')
     .get(renderCartPage);
 
 publicRouter.route('/product/:id')
