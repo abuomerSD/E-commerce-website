@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveCartItem = exports.getCartByUserId = void 0;
+exports.deleteItemFromCart = exports.saveCartItem = exports.getCartByUserId = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 exports.getCartByUserId = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -45,4 +45,11 @@ exports.saveCartItem = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(
     };
     yield database_1.CartDetails.create(cartDetails);
     res.status(201).end();
+}));
+exports.deleteItemFromCart = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { productId } = req.body;
+    console.log('*'.repeat(40));
+    console.log('productId', productId);
+    yield database_1.CartDetails.destroy({ where: { productId } });
+    res.status(200).end();
 }));

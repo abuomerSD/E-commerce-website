@@ -284,10 +284,12 @@ CartDetails.init({
   productId: {
     type: DataTypes.UUID,
     allowNull: false,
+    unique: true,
   },
   productName: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
   productQty: {
     type: DataTypes.DOUBLE,

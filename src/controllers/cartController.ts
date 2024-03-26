@@ -39,3 +39,13 @@ export const saveCartItem = asyncWrapper(async (req:Request, res: Response) => {
     await CartDetails.create(cartDetails);
     res.status(201).end();
 })
+
+export const deleteItemFromCart = asyncWrapper(async (req:Request, res: Response) => {
+    const {productId} = req.body;
+    console.log('*'.repeat(40));
+    
+    console.log('productId',productId);
+    await CartDetails.destroy({where: {productId}});
+    
+    res.status(200).end();
+})

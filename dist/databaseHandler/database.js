@@ -226,10 +226,12 @@ CartDetails.init({
     productId: {
         type: sequelize_1.DataTypes.UUID,
         allowNull: false,
+        unique: true,
     },
     productName: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
+        unique: true,
     },
     productQty: {
         type: sequelize_1.DataTypes.DOUBLE,

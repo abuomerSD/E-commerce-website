@@ -124,7 +124,6 @@ exports.renderCartPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaite
     const cartHead = yield database_1.CartHead.findOne({ where: { userId } });
     const cartDetails = yield database_1.CartDetails.findAll({ where: { cartHeadId: cartHead === null || cartHead === void 0 ? void 0 : cartHead.id } });
     res.status(200).render('cart', { title: 'Cart', categories, cartDetails });
-    console.log(cartDetails);
 }));
 exports.getProductByIdAtPublicRoute = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;

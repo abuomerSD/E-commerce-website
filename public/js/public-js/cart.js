@@ -18,24 +18,10 @@ async function addToCart(productId, userId) {
         // console.log('total', cart.total);
 
         // saving data to cart
-        const data = {
-            CartHead: {
-                userId,
-                total,
-            },
-            CartDetails: {
-                cartHeadId: cartHeadId + 1,
-                productId: product.id,
-                productName: product.name,
-                productQty: 1,
-                // productPrice: product.price,
-                // productTotal: 1 * productPrice,
-            }
-        }
 
         await saveCartItem(userId, product);
 
-        console.log(data);
+        alert(`${product.name} added to the cart`);
     } catch (error) {
         console.log(error);   
     }

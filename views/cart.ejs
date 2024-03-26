@@ -3,7 +3,7 @@
 <div class="container">
     <h1>Cart</h1>
     <div class="cart-table">
-        <table class="table">
+        <table class="table" id="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -22,10 +22,10 @@
                     <tr id="row-<%= id %>">
                         <th scope="row"><%= rowNumber + 1 %></th>
                         <td><%= detail.productName %></td>
-                        <td><input type="number" id="input-product-qty" class="form-control" value="<%= detail.productQty %>" style="width: 70px;"></td>
-                        <td>$<p id="txt-price" style="display: inline;"><%= detail.productPrice %></p></td>
-                        <td id="txt-total">$<%= detail.productTotal %></td>
-                        <td><button class="btn btn-danger">Delete</button></td>
+                        <td><input type="number" id="input-product-qty-<%= detail.productId %>" class="form-control" value="<%= detail.productQty %>" style="width: 100px;" onchange="changeTotal('<%= detail.productId %>')"></td>
+                        <td>$<p id="txt-price-<%= detail.productId %>" style="display: inline;"><%= detail.productPrice %></p></td>
+                        <td id="txt-total-<%= detail.productId %>">$<%= detail.productTotal %></td>
+                        <td><button class="btn btn-danger" onclick="deleteCartItem('<%= id %>')">Delete</button></td>
                     </tr>
                     <% total += detail.productPrice %>
                     <% rowNumber++ %>
@@ -34,7 +34,7 @@
         </table>
     </div>
     <div class="total">
-        <h6>total : $<%= total %></h6>
+        <h6 id="txt-total">total : $<%= total %></h6>
     </div>
 </div>
 <script src="/js/public-js/cartDetails.js"></script>
