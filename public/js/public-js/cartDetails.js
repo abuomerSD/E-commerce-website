@@ -1,6 +1,8 @@
 const total = document.getElementById('txt-total');
 const table = document.getElementsByTagName('table')[0];
 
+
+
 function changeTotal(productId) {
     const qty = document.getElementById(`input-product-qty-${productId}`);
     const price = document.getElementById(`txt-price-${productId}`);
@@ -22,7 +24,7 @@ function changeTotal(productId) {
         t += Number(rows[i].cells[4].innerHTML.substring(1));
     }
 
-    total.innerHTML = `total : $${t}`;
+    total.innerHTML = `total : $<span id="total-number">${t}</span>`;
 }
 
 async function deleteCartItem(productId) {
@@ -44,5 +46,35 @@ async function deleteCartItem(productId) {
     } catch (error) {
         console.log(error);
     }
-    // delete the item from frontend table
+}
+
+function showPaymentModal() {
+    const totalPaymentAmount = document.getElementById('total-number');
+    const amount = totalPaymentAmount.innerText * 100;
+    try {
+        Moyasar.init({
+            element: '.payment-modal-body',
+            // Amount in the smallest currency unit.
+            // For example:
+            // 10 SAR = 10 * 100 Halalas
+            // 10 KWD = 10 * 1000 Fils
+            // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
+            amount,
+            currency: 'USD',
+            description: 'Coffee Order #1',
+            publishable_api_key: 'pk_test_Rtub55HSgYSAtsemHMLTVgc2edNrt5NQYEoQzLdB',
+            callback_url: 'https://moyasar.com/thanks',
+            methods: ['creditcard'],
+            fixed_width: false, // optional, only for demo purposes
+            on_initiating: function () {
+                  return new Promise(function (_, reject) {
+                      setTimeout(function () {
+                          reject('This is just a sample form, it won\'t work ;)');
+                      }, 2000);
+                  });
+              }
+          })
+    } catch (error) {
+        console.log(error);
+    }
 }

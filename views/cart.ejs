@@ -34,8 +34,16 @@
         </table>
     </div>
     <div class="total">
-        <h6 id="txt-total">total : $<%= total %></h6>
+        <h5 id="txt-total">Total : $ <span id="total-number"><%= total %></span></h5>
     </div>
+    <div class="show-modal">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal" onclick="showPaymentModal()">
+            Save & Pay
+        </button>
+    </div>
+    <!-- modals -->
+    <%- include('./public-partials/paymentModal.ejs') %>
 </div>
 <script src="/js/public-js/cartDetails.js"></script>
 <%- include('./public-partials/publicFooter.ejs') %>
