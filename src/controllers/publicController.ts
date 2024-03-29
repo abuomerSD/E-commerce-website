@@ -114,4 +114,8 @@ export const getProductByIdAtPublicRoute = asyncWrapper(async (req: Request, res
     console.log(product);
 })
 
+export const saveSalesInvoice = asyncWrapper(async (req:Request, res: Response) => {
+    
+})
+
 

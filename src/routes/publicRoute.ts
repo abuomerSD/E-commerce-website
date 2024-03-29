@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage, renderLoginPage , renderSignupPage, renderCartPage, getProductByIdAtPublicRoute} from "../controllers/publicController";
+import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage, renderLoginPage , renderSignupPage, renderCartPage, getProductByIdAtPublicRoute, saveSalesInvoice} from "../controllers/publicController";
 import { activateUser, getAllUsers, login, logout, renderEnterYouEmailPage, renderPasswordResetPage, renderUserConfirmatoinPage, saveUser, sendPasswordResetConfirmationEmail, updateUser } from "../controllers/userController";
 import { deleteItemFromCart, getCartByUserId, saveCartItem } from "../controllers/cartController";
 export const publicRouter = Router();
@@ -62,3 +62,5 @@ publicRouter.route('/product/:id')
 publicRouter.route('/cart/:userId')
     .get(getCartByUserId)
     .post(saveCartItem);
+publicRouter.route('/sales-invoices')
+    .post(saveSalesInvoice);

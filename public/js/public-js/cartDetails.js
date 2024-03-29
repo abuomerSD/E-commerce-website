@@ -1,5 +1,6 @@
 const total = document.getElementById('txt-total');
 const table = document.getElementsByTagName('table')[0];
+const userId = document.getElementById('userId').innerText;
 
 
 
@@ -51,6 +52,7 @@ async function deleteCartItem(productId) {
 function showPaymentModal() {
     const totalPaymentAmount = document.getElementById('total-number');
     const amount = totalPaymentAmount.innerText * 100;
+    const description = 'Step Shop Order';
     try {
         Moyasar.init({
             element: '.payment-modal-body',
@@ -61,7 +63,7 @@ function showPaymentModal() {
             // 10 JPY = 10 JPY (Japanese Yen does not have fractions)
             amount,
             currency: 'USD',
-            description: 'Coffee Order #1',
+            description,
             publishable_api_key: 'pk_test_Rtub55HSgYSAtsemHMLTVgc2edNrt5NQYEoQzLdB',
             callback_url: 'https://moyasar.com/thanks',
             methods: ['creditcard'],
@@ -74,6 +76,23 @@ function showPaymentModal() {
                   });
               }
           })
+
+          saveSalesInvoice();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function saveSalesInvoice() {
+    try {
+        const response = await fetch(`/shop/cart/${userId}`, {
+            headers: {
+                'Accept': 'application/json',
+            },
+            method: "GET",
+        });
+        const cart = await response.json();
+        console.log(cart);
     } catch (error) {
         console.log(error);
     }
