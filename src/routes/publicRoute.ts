@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, renderProductLandingPage, renderPublicHomePage, renderPublicProductSearchPage, renderLoginPage , renderSignupPage, renderCartPage, getProductByIdAtPublicRoute, saveSalesInvoice} from "../controllers/publicController";
 import { activateUser, getAllUsers, login, logout, renderEnterYouEmailPage, renderPasswordResetPage, renderUserConfirmatoinPage, saveUser, sendPasswordResetConfirmationEmail, updateUser } from "../controllers/userController";
-import { deleteItemFromCart, getCartByUserId, saveCartItem } from "../controllers/cartController";
+import { deleteItemFromCart, getCartByUserId, saveCartItem, updateCartItem } from "../controllers/cartController";
 export const publicRouter = Router();
 export const publicProductsRoute = Router();
 export const publicCategoriesRoute = Router();
@@ -55,6 +55,8 @@ publicRouter.route('/cart/cart-details/:userId')
 
 publicRouter.route('/cart/cart-details/')
     .delete(deleteItemFromCart);
+publicRouter.route('/cart/cart-details-update/:productId')
+    .put(updateCartItem);
 
 publicRouter.route('/product/:id')
     .get(getProductByIdAtPublicRoute);

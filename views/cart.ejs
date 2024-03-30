@@ -28,7 +28,7 @@
                         <td id="txt-total-<%= detail.productId %>">$<%= detail.productTotal %></td>
                         <td><button class="btn btn-danger" onclick="deleteCartItem('<%= id %>')">Delete</button></td>
                     </tr>
-                    <% total += detail.productPrice %>
+                    <% total += detail.productPrice * detail.productQty %>
                     <% rowNumber++ %>
                 <% }); %>
             </tbody>

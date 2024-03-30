@@ -22,6 +22,8 @@ async function changeTotal(productId) {
     // change row total
     rowTotal.innerHTML = `$${qty.value * price.innerHTML}` ;
 
+    updateCartItem(productId, +qty.value, +(qty.value * price.innerHTML));
+
     const rows = table.rows;
 
     // change the overall total 
@@ -110,12 +112,41 @@ async function saveSalesInvoice() {
  */
 
 async function getProductQty(productId) {
-    const response = await fetch(`/shop/product/${productId}`, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    const product = await response.json();
-    return product.quantity
+    let qty = 0;
+    let product;
+    try {
+        const response = await fetch(`/shop/product/${productId}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        product = await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+
+
+    qty = product.quantity;
+    return qty;
+}
+
+/**
+ * update cart item qty and total
+ */
+async function updateCartItem(productId, productQty, productTotal) {
+    try {
+        const response = await fetch(`/shop/cart/cart-details-update/${productId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'PUT',
+            body: JSON.stringify({
+                productQty,
+                productTotal,
+            }),
+        })
+    } catch (error) {
+        console.log(error);
+    }
 }

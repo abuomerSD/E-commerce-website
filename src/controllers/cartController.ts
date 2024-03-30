@@ -49,3 +49,19 @@ export const deleteItemFromCart = asyncWrapper(async (req:Request, res: Response
     
     res.status(200).end();
 })
+
+
+/**
+ * update cart item qty and total
+ */
+
+export const updateCartItem = asyncWrapper(async (req:Request, res: Response) => {
+    const { productId } = req.params;
+    const cartItem = await CartDetails.findOne({where : {productId}});
+    const newCartItem = req.body;
+    console.log('new cart body', newCartItem);
+    
+    cartItem?.set(newCartItem);
+    cartItem?.save();
+    res.status(200).end();
+})

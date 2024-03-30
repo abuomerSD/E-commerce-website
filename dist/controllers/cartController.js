@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteItemFromCart = exports.saveCartItem = exports.getCartByUserId = void 0;
+exports.updateCartItem = exports.deleteItemFromCart = exports.saveCartItem = exports.getCartByUserId = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 exports.getCartByUserId = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -51,5 +51,17 @@ exports.deleteItemFromCart = (0, asyncWrapper_1.asyncWrapper)((req, res) => __aw
     console.log('*'.repeat(40));
     console.log('productId', productId);
     yield database_1.CartDetails.destroy({ where: { productId } });
+    res.status(200).end();
+}));
+/**
+ * update cart item qty and total
+ */
+exports.updateCartItem = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { productId } = req.params;
+    const cartItem = yield database_1.CartDetails.findOne({ where: { productId } });
+    const newCartItem = req.body;
+    console.log('new cart body', newCartItem);
+    cartItem === null || cartItem === void 0 ? void 0 : cartItem.set(newCartItem);
+    cartItem === null || cartItem === void 0 ? void 0 : cartItem.save();
     res.status(200).end();
 }));

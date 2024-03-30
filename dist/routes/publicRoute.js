@@ -43,6 +43,8 @@ exports.publicRouter.route('/cart/cart-details/:userId')
     .get(publicController_1.renderCartPage);
 exports.publicRouter.route('/cart/cart-details/')
     .delete(cartController_1.deleteItemFromCart);
+exports.publicRouter.route('/cart/cart-details-update/:productId')
+    .put(cartController_1.updateCartItem);
 exports.publicRouter.route('/product/:id')
     .get(publicController_1.getProductByIdAtPublicRoute);
 exports.publicRouter.route('/cart/:userId')
