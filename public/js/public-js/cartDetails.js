@@ -4,7 +4,7 @@ const userId = document.getElementById('userId').innerText;
 
 
 
-function changeTotal(productId) {
+async function changeTotal(productId) {
     const qty = document.getElementById(`input-product-qty-${productId}`);
     const price = document.getElementById(`txt-price-${productId}`);
     const rowTotal = document.getElementById(`txt-total-${productId}`)
@@ -14,6 +14,11 @@ function changeTotal(productId) {
         qty.value = 1;
     }
 
+    const productQty = await getProductQty(productId);
+    if (qty.value > productQty) {
+        alert('we dont have this quantity now, Please choose less quantity');
+        qty.value = productQty;
+    }
     // change row total
     rowTotal.innerHTML = `$${qty.value * price.innerHTML}` ;
 
@@ -96,4 +101,21 @@ async function saveSalesInvoice() {
     } catch (error) {
         console.log(error);
     }
+}
+
+/**
+ * get product quantity
+ * @param productId : the product id
+ * @returns products quantity : number
+ */
+
+async function getProductQty(productId) {
+    const response = await fetch(`/shop/product/${productId}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    const product = await response.json();
+    return product.quantity
 }

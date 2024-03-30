@@ -111,7 +111,6 @@ export const getProductByIdAtPublicRoute = asyncWrapper(async (req: Request, res
     const {id} = req.params;
     const product = await Product.findOne({where: {id}});
     res.status(200).json(product);
-    console.log(product);
 })
 
 export const saveSalesInvoice = asyncWrapper(async (req:Request, res: Response) => {

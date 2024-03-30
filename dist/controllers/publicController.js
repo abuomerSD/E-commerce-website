@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProductByIdAtPublicRoute = exports.renderCartPage = exports.renderSignupPage = exports.renderLoginPage = exports.renderPublicProductSearchPage = exports.renderNewReleasePage = exports.renderBestSellersPage = exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
+exports.saveSalesInvoice = exports.getProductByIdAtPublicRoute = exports.renderCartPage = exports.renderSignupPage = exports.renderLoginPage = exports.renderPublicProductSearchPage = exports.renderNewReleasePage = exports.renderBestSellersPage = exports.renderCategoryLandingPage = exports.renderProductLandingPage = exports.renderPublicHomePage = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const categoryController_1 = require("./categoryController");
 const productsController_1 = require("./productsController");
@@ -129,5 +129,6 @@ exports.getProductByIdAtPublicRoute = (0, asyncWrapper_1.asyncWrapper)((req, res
     const { id } = req.params;
     const product = yield database_1.Product.findOne({ where: { id } });
     res.status(200).json(product);
-    console.log(product);
+}));
+exports.saveSalesInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));

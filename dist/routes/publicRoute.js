@@ -48,3 +48,5 @@ exports.publicRouter.route('/product/:id')
 exports.publicRouter.route('/cart/:userId')
     .get(cartController_1.getCartByUserId)
     .post(cartController_1.saveCartItem);
+exports.publicRouter.route('/sales-invoices')
+    .post(publicController_1.saveSalesInvoice);
