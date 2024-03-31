@@ -33,8 +33,7 @@ exports.saveSalesInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awai
         total,
         salesInvoiceDetails,
     }, {
-        include: database_1.SalesInvoiceDetails,
-        as: 'salesInvoiceDetails'
+        include: [database_1.salesInvoiceDetailsRelationship]
     });
     console.log('sales invoice head', salesInvoiceHead);
     // saving sales invoice details

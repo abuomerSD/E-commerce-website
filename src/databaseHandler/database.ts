@@ -1,5 +1,5 @@
 
-import { DataTypes, Model, Sequelize, UUIDV4 } from 'sequelize';
+import { DataTypes, HasMany, Model, Sequelize, UUIDV4 } from 'sequelize';
 
 const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
     host: 'localhost',
@@ -18,7 +18,7 @@ const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
 // initiallize the tables
 
 function init() {
-  // sequelize.sync({alter: true});
+  sequelize.sync({alter: true});
   // sequelize.sync({force: true});
 }
 
@@ -201,10 +201,11 @@ export class SalesInvoiceDetails extends Model {
 }
 
 SalesInvoiceDetails.init({
-  // invoiceHeadId:{
-  //   type: DataTypes.BIGINT,
-  //   allowNull: false,
-  // },
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: UUIDV4,
+    primaryKey: true,
+  },
   productId: {
     type: DataTypes.UUID,
     allowNull: false,
@@ -232,8 +233,9 @@ SalesInvoiceDetails.init({
 
 // Relationships 
 
-SalesInvoiceHead.hasMany(SalesInvoiceDetails, {
-  foreignKey: 'salesInvoiceHeadId'
+export const salesInvoiceDetailsRelationship = SalesInvoiceHead.hasMany(SalesInvoiceDetails, {
+  foreignKey: 'salesInvoiceHeadId',
+  as:'salesInvoiceDetails'
 });
 SalesInvoiceDetails.belongsTo(SalesInvoiceHead);
 

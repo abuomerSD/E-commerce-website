@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CartDetails = exports.CartHead = exports.SalesInvoiceDetails = exports.SalesInvoiceHead = exports.User = exports.Product = exports.Category = void 0;
+exports.CartDetails = exports.CartHead = exports.salesInvoiceDetailsRelationship = exports.SalesInvoiceDetails = exports.SalesInvoiceHead = exports.User = exports.Product = exports.Category = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize = new sequelize_1.Sequelize('ecommerce-website', 'asdf', '', {
     host: 'localhost',
@@ -16,7 +16,7 @@ const sequelize = new sequelize_1.Sequelize('ecommerce-website', 'asdf', '', {
 // });
 // initiallize the tables
 function init() {
-    // sequelize.sync({alter: true});
+    sequelize.sync({ alter: true });
     // sequelize.sync({force: true});
 }
 init();
@@ -161,10 +161,11 @@ class SalesInvoiceDetails extends sequelize_1.Model {
 }
 exports.SalesInvoiceDetails = SalesInvoiceDetails;
 SalesInvoiceDetails.init({
-    // invoiceHeadId:{
-    //   type: DataTypes.BIGINT,
-    //   allowNull: false,
-    // },
+    id: {
+        type: sequelize_1.DataTypes.UUID,
+        defaultValue: sequelize_1.UUIDV4,
+        primaryKey: true,
+    },
     productId: {
         type: sequelize_1.DataTypes.UUID,
         allowNull: false,
@@ -190,8 +191,9 @@ SalesInvoiceDetails.init({
     modelName: 'SalesInvoiceDetails'
 });
 // Relationships 
-SalesInvoiceHead.hasMany(SalesInvoiceDetails, {
-    foreignKey: 'salesInvoiceHeadId'
+exports.salesInvoiceDetailsRelationship = SalesInvoiceHead.hasMany(SalesInvoiceDetails, {
+    foreignKey: 'salesInvoiceHeadId',
+    as: 'salesInvoiceDetails'
 });
 SalesInvoiceDetails.belongsTo(SalesInvoiceHead);
 // cart tables

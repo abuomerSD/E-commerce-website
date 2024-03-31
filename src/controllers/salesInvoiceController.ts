@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
-import { SalesInvoiceDetails, SalesInvoiceHead } from "../databaseHandler/database";
+import { SalesInvoiceDetails, SalesInvoiceHead, salesInvoiceDetailsRelationship } from "../databaseHandler/database";
 
 /**
  * save sales invoice in the database
@@ -28,8 +28,7 @@ export const saveSalesInvoice = asyncWrapper(async (req:Request, res: Response) 
         total,
         salesInvoiceDetails,
     }, {
-        include: SalesInvoiceDetails,
-        as: 'salesInvoiceDetails'
+        include: [salesInvoiceDetailsRelationship]
     });
     console.log('sales invoice head', salesInvoiceHead);
     
