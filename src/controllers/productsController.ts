@@ -103,16 +103,6 @@ export const updateProductById = asyncWrapper(async (req: Request, res: Response
     const newProduct: ProductType = req.body;    
     newProduct.image = req.file?.filename;
     let oldProduct: any = await Product.findOne({where: {id}});
-
-      // to get the categoryId from given Category name
-    //   let categories: Array<any> = [];
-    //   let categoryId: string = '';
-    //   await getAllCategories().then(result => categories = result);
-    //   categories.forEach(category => {
-    //       if(newProduct.categoryName === category.name) {
-    //           categoryId = category.id;
-    //       }
-    //   })
     
     // deleting the old image from harddisk to save some space
     await fs.unlink(`uploads/products-images/${oldProduct.image}`, (err)=> {

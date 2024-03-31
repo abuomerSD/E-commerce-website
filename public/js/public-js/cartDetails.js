@@ -56,10 +56,11 @@ async function deleteCartItem(productId) {
     }
 }
 
-function showPaymentModal() {
+async function showPaymentModal() {
     const totalPaymentAmount = document.getElementById('total-number');
     const amount = totalPaymentAmount.innerText * 100;
-    const description = 'Step Shop Order';
+
+    const description = `Step Shop Order`;
     try {
         Moyasar.init({
             element: '.payment-modal-body',
@@ -75,31 +76,28 @@ function showPaymentModal() {
             callback_url: 'https://moyasar.com/thanks',
             methods: ['creditcard'],
             fixed_width: false, // optional, only for demo purposes
-            on_initiating: function () {
-                  return new Promise(function (_, reject) {
-                      setTimeout(function () {
-                          reject('This is just a sample form, it won\'t work ;)');
-                      }, 2000);
-                  });
-              }
+            on_completed: saveSalesInvoice,    
           })
 
-          saveSalesInvoice();
     } catch (error) {
         console.log(error);
     }
 }
 
+
+/**
+ * this fuction fires after payment success to save the sales invoice to the database
+ */
 async function saveSalesInvoice() {
     try {
-        const response = await fetch(`/shop/cart/${userId}`, {
+        const cart = await getCartByUserId(userId);
+        const response = await fetch(`/shop/cart/cart-details/${userId}`, {
             headers: {
-                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             },
-            method: "GET",
+            method: 'POST',
+            body: JSON.stringify(cart),
         });
-        const cart = await response.json();
-        console.log(cart);
     } catch (error) {
         console.log(error);
     }
@@ -146,6 +144,22 @@ async function updateCartItem(productId, productQty, productTotal) {
                 productTotal,
             }),
         })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getCartByUserId(userId) {
+    try {
+        const response = await fetch(`/shop/cart/${userId}`, {
+        headers: {
+            'Accept': 'application/json',
+        },
+        method: "GET",
+        });
+        const cart = await response.json();
+        console.log(cart);
+        return cart;
     } catch (error) {
         console.log(error);
     }

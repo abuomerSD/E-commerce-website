@@ -163,14 +163,14 @@ Product.belongsTo(Category);
 
 // invoice tables
 
-class salesInvoiceHead extends Model {
+export class SalesInvoiceHead extends Model {
   declare id: bigint;
   declare date: Date;
   declare userId: string;
   declare total: number;
 }
 
-salesInvoiceHead.init({
+SalesInvoiceHead.init({
   id: {
     type: DataTypes.BIGINT,
     autoIncrement: true,
@@ -191,7 +191,7 @@ salesInvoiceHead.init({
   modelName: 'SalesInvoiceHead',
 });
 
-class salesInvoiceDetails extends Model {
+export class SalesInvoiceDetails extends Model {
   declare invoiceHeadId: number;
   declare productId: string;
   declare productName: string;
@@ -200,7 +200,7 @@ class salesInvoiceDetails extends Model {
   declare productTotal: number;
 }
 
-salesInvoiceDetails.init({
+SalesInvoiceDetails.init({
   // invoiceHeadId:{
   //   type: DataTypes.BIGINT,
   //   allowNull: false,
@@ -232,10 +232,10 @@ salesInvoiceDetails.init({
 
 // Relationships 
 
-salesInvoiceHead.hasMany(salesInvoiceDetails, {
+SalesInvoiceHead.hasMany(SalesInvoiceDetails, {
   foreignKey: 'salesInvoiceHeadId'
 });
-salesInvoiceDetails.belongsTo(salesInvoiceHead);
+SalesInvoiceDetails.belongsTo(SalesInvoiceHead);
 
 
 // cart tables

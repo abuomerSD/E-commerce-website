@@ -113,8 +113,7 @@ export const getProductByIdAtPublicRoute = asyncWrapper(async (req: Request, res
     res.status(200).json(product);
 })
 
-export const saveSalesInvoice = asyncWrapper(async (req:Request, res: Response) => {
-    
-})
+
+
 
 

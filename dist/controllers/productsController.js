@@ -103,15 +103,6 @@ exports.updateProductById = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awa
     const newProduct = req.body;
     newProduct.image = (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename;
     let oldProduct = yield database_1.Product.findOne({ where: { id } });
-    // to get the categoryId from given Category name
-    //   let categories: Array<any> = [];
-    //   let categoryId: string = '';
-    //   await getAllCategories().then(result => categories = result);
-    //   categories.forEach(category => {
-    //       if(newProduct.categoryName === category.name) {
-    //           categoryId = category.id;
-    //       }
-    //   })
     // deleting the old image from harddisk to save some space
     yield fs_1.default.unlink(`uploads/products-images/${oldProduct.image}`, (err) => {
         if (err)

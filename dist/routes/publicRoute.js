@@ -5,6 +5,7 @@ const express_1 = require("express");
 const publicController_1 = require("../controllers/publicController");
 const userController_1 = require("../controllers/userController");
 const cartController_1 = require("../controllers/cartController");
+const salesInvoiceController_1 = require("../controllers/salesInvoiceController");
 exports.publicRouter = (0, express_1.Router)();
 exports.publicProductsRoute = (0, express_1.Router)();
 exports.publicCategoriesRoute = (0, express_1.Router)();
@@ -40,7 +41,8 @@ exports.publicRouter.route('/users/password-reset/:userId')
     .get(userController_1.renderPasswordResetPage)
     .post(userController_1.updateUser);
 exports.publicRouter.route('/cart/cart-details/:userId')
-    .get(publicController_1.renderCartPage);
+    .get(publicController_1.renderCartPage)
+    .post(salesInvoiceController_1.saveSalesInvoice);
 exports.publicRouter.route('/cart/cart-details/')
     .delete(cartController_1.deleteItemFromCart);
 exports.publicRouter.route('/cart/cart-details-update/:productId')
@@ -50,5 +52,3 @@ exports.publicRouter.route('/product/:id')
 exports.publicRouter.route('/cart/:userId')
     .get(cartController_1.getCartByUserId)
     .post(cartController_1.saveCartItem);
-exports.publicRouter.route('/sales-invoices')
-    .post(publicController_1.saveSalesInvoice);
