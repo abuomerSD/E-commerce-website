@@ -98,12 +98,16 @@ export const renderSignupPage = asyncWrapper(async (req:Request, res: Response) 
     
 })
 
-
 export const renderCartPage = asyncWrapper(async (req: Request, res: Response) => {
     const categories = await getAllCategories();
     const {userId} = req.params;
     const cartHead = await CartHead.findOne({where: {userId}})
-    const cartDetails = await CartDetails.findAll({where : {cartHeadId: cartHead?.id}})
+    let cartDetails;
+    if (cartHead) {
+        cartDetails = await CartDetails.findAll({where : {cartHeadId: cartHead?.id}})
+    } else {
+        cartDetails = null;
+    }
     res.status(200).render('cart', {title: 'Cart', categories , cartDetails})    
 })
 

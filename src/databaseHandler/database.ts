@@ -18,7 +18,7 @@ const sequelize = new Sequelize('ecommerce-website', 'asdf', '',{
 // initiallize the tables
 
 function init() {
-  sequelize.sync({alter: true});
+  // sequelize.sync({alter: true});
   // sequelize.sync({force: true});
 }
 
@@ -52,7 +52,8 @@ Category.init({
 export class Product extends Model {
   declare name: string;
   declare viewedTimes: bigint;
-  declare saledTimes: bigint;
+  declare saledTimes: number;
+  declare quantity: number;
 }
 
 
@@ -201,11 +202,11 @@ export class SalesInvoiceDetails extends Model {
 }
 
 SalesInvoiceDetails.init({
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: UUIDV4,
-    primaryKey: true,
-  },
+  // id: {
+  //   type: DataTypes.UUID,
+  //   defaultValue: UUIDV4,
+  //   primaryKey: true,
+  // },
   productId: {
     type: DataTypes.UUID,
     allowNull: false,

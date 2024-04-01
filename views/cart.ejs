@@ -3,46 +3,50 @@
 <div class="container">
     <p style="display: none;" id="userId"><%= user.id %></p>
     <h1>Cart</h1>
-    <div class="cart-table">
-        <table class="table" id="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Product Qty</th>
-                    <th scope="col">Product Price</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% let rowNumber = 0 %>
-                <% let total = 0 %>
-                <% cartDetails.forEach(detail => { %>
-                    <% const id = detail.productId %>
-                    <tr id="row-<%= id %>">
-                        <th scope="row"><%= rowNumber + 1 %></th>
-                        <td><%= detail.productName %></td>
-                        <td><input type="number" id="input-product-qty-<%= detail.productId %>" class="form-control" value="<%= detail.productQty %>" style="width: 100px;" onchange="changeTotal('<%= detail.productId %>')"></td>
-                        <td>$<p id="txt-price-<%= detail.productId %>" style="display: inline;"><%= detail.productPrice %></p></td>
-                        <td id="txt-total-<%= detail.productId %>">$<%= detail.productTotal %></td>
-                        <td><button class="btn btn-danger" onclick="deleteCartItem('<%= id %>')">Delete</button></td>
-                    </tr>
-                    <% total += detail.productPrice * detail.productQty %>
-                    <% rowNumber++ %>
-                <% }); %>
-            </tbody>
-        </table>
-    </div>
-    <div class="total">
-        <h5 id="txt-total">Total : $ <span id="total-number"><%= total %></span></h5>
-    </div>
-    <div class="show-modal">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal" onclick="showPaymentModal()">
-            Save & Pay
-        </button>
-    </div>
+        <% if(cartDetails) {%>
+            <div class="cart-table">
+                <table class="table" id="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Product Qty</th>
+                            <th scope="col">Product Price</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% let rowNumber = 0 %>
+                        <% let total = 0 %>
+                        <% cartDetails.forEach(detail => { %>
+                            <% const id = detail.productId %>
+                            <tr id="row-<%= id %>">
+                                <th scope="row"><%= rowNumber + 1 %></th>
+                                <td><%= detail.productName %></td>
+                                <td><input type="number" id="input-product-qty-<%= detail.productId %>" class="form-control" value="<%= detail.productQty %>" style="width: 100px;" onchange="changeTotal('<%= detail.productId %>')"></td>
+                                <td>$<p id="txt-price-<%= detail.productId %>" style="display: inline;"><%= detail.productPrice %></p></td>
+                                <td id="txt-total-<%= detail.productId %>">$<%= detail.productTotal %></td>
+                                <td><button class="btn btn-danger" onclick="deleteCartItem('<%= id %>')">Delete</button></td>
+                            </tr>
+                            <% total += detail.productPrice * detail.productQty %>
+                            <% rowNumber++ %>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="total">
+                <h5 id="txt-total">Total : $ <span id="total-number"><%= total %></span></h5>
+            </div>
+            <div class="show-modal">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal" onclick="showPaymentModal()">
+                    Save & Pay
+                </button>
+            </div>
+        <% } else { %>
+            <h4>No items on the cart</h4>
+        <% } %>
     <!-- modals -->
     <%- include('./public-partials/paymentModal.ejs') %>
 </div>

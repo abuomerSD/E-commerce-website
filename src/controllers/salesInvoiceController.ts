@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
-import { SalesInvoiceDetails, SalesInvoiceHead, salesInvoiceDetailsRelationship } from "../databaseHandler/database";
+import { CartDetails, CartHead, Product, SalesInvoiceDetails, SalesInvoiceHead, salesInvoiceDetailsRelationship } from "../databaseHandler/database";
 
 /**
  * save sales invoice in the database
@@ -8,7 +8,6 @@ import { SalesInvoiceDetails, SalesInvoiceHead, salesInvoiceDetailsRelationship 
 export const saveSalesInvoice = asyncWrapper(async (req:Request, res: Response) => {
     const cart = req.body;
     console.log(cart);
-    
     
     // saving sales invoice head
     const userId = cart.userId;
@@ -30,14 +29,21 @@ export const saveSalesInvoice = asyncWrapper(async (req:Request, res: Response) 
     }, {
         include: [salesInvoiceDetailsRelationship]
     });
-    console.log('sales invoice head', salesInvoiceHead);
-    
-    // saving sales invoice details
-
 
     // decrement product qty from the database
+    salesInvoiceDetails.forEach(async (element) => {
+        const product = await Product.findOne({where: {id: element.productId}});
+        product.quantity = product.quantity - element.productQty;
+        product.saledTimes += 1;
+        await product?.save();
+    })
 
     // removing cart items from the database
+    CartHead.destroy({where: {id: cart.id}});
+    cart.CartDetails.forEach((element: { cartHeadId: any; }) => {
+        CartDetails.destroy({where: {cartHeadId: element.cartHeadId}});
+    });
+
     res.status(201).end();
 })
 

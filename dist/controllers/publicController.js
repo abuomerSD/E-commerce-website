@@ -122,7 +122,13 @@ exports.renderCartPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaite
     const categories = yield (0, categoryController_1.getAllCategories)();
     const { userId } = req.params;
     const cartHead = yield database_1.CartHead.findOne({ where: { userId } });
-    const cartDetails = yield database_1.CartDetails.findAll({ where: { cartHeadId: cartHead === null || cartHead === void 0 ? void 0 : cartHead.id } });
+    let cartDetails;
+    if (cartHead) {
+        cartDetails = yield database_1.CartDetails.findAll({ where: { cartHeadId: cartHead === null || cartHead === void 0 ? void 0 : cartHead.id } });
+    }
+    else {
+        cartDetails = null;
+    }
     res.status(200).render('cart', { title: 'Cart', categories, cartDetails });
 }));
 exports.getProductByIdAtPublicRoute = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

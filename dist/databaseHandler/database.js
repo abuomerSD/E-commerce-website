@@ -16,7 +16,7 @@ const sequelize = new sequelize_1.Sequelize('ecommerce-website', 'asdf', '', {
 // });
 // initiallize the tables
 function init() {
-    sequelize.sync({ alter: true });
+    // sequelize.sync({alter: true});
     // sequelize.sync({force: true});
 }
 init();
@@ -161,11 +161,11 @@ class SalesInvoiceDetails extends sequelize_1.Model {
 }
 exports.SalesInvoiceDetails = SalesInvoiceDetails;
 SalesInvoiceDetails.init({
-    id: {
-        type: sequelize_1.DataTypes.UUID,
-        defaultValue: sequelize_1.UUIDV4,
-        primaryKey: true,
-    },
+    // id: {
+    //   type: DataTypes.UUID,
+    //   defaultValue: UUIDV4,
+    //   primaryKey: true,
+    // },
     productId: {
         type: sequelize_1.DataTypes.UUID,
         allowNull: false,

@@ -35,10 +35,18 @@ exports.saveSalesInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awai
     }, {
         include: [database_1.salesInvoiceDetailsRelationship]
     });
-    console.log('sales invoice head', salesInvoiceHead);
-    // saving sales invoice details
     // decrement product qty from the database
+    salesInvoiceDetails.forEach((element) => __awaiter(void 0, void 0, void 0, function* () {
+        const product = yield database_1.Product.findOne({ where: { id: element.productId } });
+        product.quantity = product.quantity - element.productQty;
+        product.saledTimes += 1;
+        yield (product === null || product === void 0 ? void 0 : product.save());
+    }));
     // removing cart items from the database
+    database_1.CartHead.destroy({ where: { id: cart.id } });
+    cart.CartDetails.forEach((element) => {
+        database_1.CartDetails.destroy({ where: { cartHeadId: element.cartHeadId } });
+    });
     res.status(201).end();
 }));
 function updateProductQty(productId) {
