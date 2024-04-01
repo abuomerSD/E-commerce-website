@@ -48,8 +48,13 @@ exports.saveCartItem = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(
 }));
 exports.deleteItemFromCart = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { productId } = req.body;
-    console.log('*'.repeat(40));
-    console.log('productId', productId);
+    // deleting cart head if the cart only contain one element
+    const headId = (yield database_1.CartDetails.findOne({ where: { productId } })).cartHeadId;
+    const cartDetails = yield database_1.CartDetails.findAll({ where: { productId } });
+    if (cartDetails.length === 1) {
+        yield database_1.CartHead.destroy({ where: { id: headId } });
+    }
+    // deleting the cart detail item
     yield database_1.CartDetails.destroy({ where: { productId } });
     res.status(200).end();
 }));

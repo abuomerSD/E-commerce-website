@@ -11,7 +11,11 @@
                       <a href="/products/<%= product.id %>" target="_blank"><h2 class="card-title"><%= product.name %></h2></a>
                       <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio repudiandae labore.</p>
                       <h3 class="card-text">$ <%= product.price %></h3>
-                      <a href="#" class="btn btn-secondary">Add to cart</a>
+                      <% if(user){ %>
+                        <button class="btn btn-dark  col-6" onclick="addToCart('<%= product.id %>', '<%= user.id %>')">Add to cart</button>
+                        <% } else {%>
+                        <button class="btn btn-dark  col-6" disabled>Add to cart</button>
+                      <% }%>
                       <div class="viewed-times" style="display: inline-block;">
                        <i class="fa-solid fa-eye" style="display: inline;"></i>
                        <p style="display: inline; margin: 0;" title="viewed times"></p><%= product.viewedTimes %></p>
