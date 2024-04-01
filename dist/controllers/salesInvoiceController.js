@@ -45,7 +45,7 @@ exports.saveSalesInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awai
     // removing cart items from the database
     database_1.CartHead.destroy({ where: { id: cart.id } });
     cart.CartDetails.forEach((element) => {
-        database_1.CartDetails.destroy({ where: { cartHeadId: element.cartHeadId } });
+        database_1.CartDetails.destroy({ where: { productId: element.productId } });
     });
     res.status(201).end();
 }));
