@@ -93,6 +93,7 @@ exports.saveUser = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void
 exports.getAllUsers = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield database_1.User.findAll();
     res.status(200).json(users);
+    return users;
 }));
 /**
  * renderUserConfirmatoinPage

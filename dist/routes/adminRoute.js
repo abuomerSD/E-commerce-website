@@ -54,3 +54,5 @@ exports.adminRouter.route('/categories/:id')
     .delete(categoryController_1.deleteCategory);
 exports.adminRouter.route('/categories/searchCategory')
     .post(categoryController_1.renderSearchCategoryPage);
+exports.adminRouter.route('/sales-invoices')
+    .get(controlPanelController_1.renderSalesInvoicesPage);

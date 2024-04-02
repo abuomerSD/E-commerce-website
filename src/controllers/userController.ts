@@ -76,6 +76,7 @@ export const saveUser = asyncWrapper(async (req:Request, res: Response) => {
 export const getAllUsers =  asyncWrapper(async(req: Request, res: Response)=> {
    const users = await User.findAll();
    res.status(200).json(users);
+   return users;
 })
 
 /**

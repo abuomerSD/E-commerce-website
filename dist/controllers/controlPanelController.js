@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderCategoriesPage = exports.renderProductsPage = exports.renderAdminHomePage = void 0;
+exports.renderSalesInvoicesPage = exports.renderCategoriesPage = exports.renderProductsPage = exports.renderAdminHomePage = void 0;
 const categoryController_1 = require("./categoryController");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const productsController_1 = require("./productsController");
+const database_1 = require("../databaseHandler/database");
 const contants_1 = require("../utils/contants");
 // to chane the page number and products limit change this two values
 const defaultPageNumber = contants_1.DEFAULT_PAGE_NUMBER;
@@ -49,4 +50,13 @@ exports.renderCategoriesPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __
     yield (0, categoryController_1.getAllCategories)().then(result => categories = result);
     yield (0, categoryController_1.getAllCategoriesLimitedByPageLimit)(pageNumber).then(result => limitedCategories = result);
     res.render('cpCategories', { title: 'Categories', categories, limitedCategories, pageLimit, pageNumber });
+}));
+/**
+ * render sales invoices page
+ */
+exports.renderSalesInvoicesPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const categories = yield (0, categoryController_1.getAllCategories)();
+    const users = yield database_1.User.findAll();
+    const salesInvoicesHeads = yield database_1.SalesInvoiceHead.findAll();
+    res.status(200).render('cpSalesInvoices', { title: 'Sales Invoices', categories, users, salesInvoicesHeads });
 }));

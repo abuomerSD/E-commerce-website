@@ -1,0 +1,45 @@
+<%- include('./control-panel/partials/adminHead.ejs') %>
+<%- include('./control-panel/partials/nav.ejs') %>
+<div class="container">
+    <div class="title">
+        <h3>Sales Invoices</h3>
+    </div>
+    <div class="sales-invoices-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">total</th>
+                    <th scope="col">Show & print</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(salesInvoicesHeads.length > 0 ) { %>
+                    <% salesInvoicesHeads.forEach(invoice => { %>
+                        <tr>
+                            <th scope="row"><%= invoice.id %></th>
+                            <% let date = invoice.createdAt %>
+                            <td><%= date.getDay() %>/<%= date.getMonth() + 1 %>/<%= date.getFullYear() %></td>
+                            <% let userId =  invoice.userId %>
+                            <% let firstName; let lastName; %>
+                            <% users.forEach(user => { %>
+                                <% if(userId === user.id) {
+                                    firstName = user.firstName;
+                                    lastName = user.lastName;
+                                } %>
+                            <% }); %>
+                            <td><%= firstName %> <%= lastName %></td>
+                            <td><%= invoice.total %></td>
+                            <td><button class="btn btn-success">print</button></td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <h6>There is no Sales Invoices</h6>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<%- include('./control-panel/partials/footer.ejs') %>

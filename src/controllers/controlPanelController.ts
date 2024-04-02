@@ -2,8 +2,9 @@ import { Request, Response } from "express";
 import { getAllCategories, getAllCategoriesLimitedByPageLimit } from "./categoryController";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllProducts, getLimitedByPaginationProducts } from "./productsController";
-import { Category } from "../databaseHandler/database";
+import { Category, SalesInvoiceHead, User } from "../databaseHandler/database";
 import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_NUMBER } from "../utils/contants";
+import { getAllUsers } from "./userController";
 
 // to chane the page number and products limit change this two values
 
@@ -62,3 +63,13 @@ export const renderCategoriesPage = asyncWrapper(async (req: Request, res: Respo
 
 
 });
+
+/**
+ * render sales invoices page
+ */
+export const renderSalesInvoicesPage = asyncWrapper(async (req: Request, res: Response) => {
+    const categories = await getAllCategories();
+    const users = await User.findAll();
+    const salesInvoicesHeads = await SalesInvoiceHead.findAll();
+    res.status(200).render('cpSalesInvoices', {title: 'Sales Invoices', categories, users , salesInvoicesHeads})
+})
