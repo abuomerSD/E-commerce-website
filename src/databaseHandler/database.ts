@@ -142,7 +142,7 @@ User.init({
   },
   role: {
     type: DataTypes.STRING,
-    defaultValue: 'user',
+    defaultValue: 'customer',
   },
   isActive: {
     type: DataTypes.BOOLEAN,

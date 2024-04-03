@@ -119,7 +119,7 @@ User.init({
     },
     role: {
         type: sequelize_1.DataTypes.STRING,
-        defaultValue: 'user',
+        defaultValue: 'customer',
     },
     isActive: {
         type: sequelize_1.DataTypes.BOOLEAN,

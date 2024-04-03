@@ -58,3 +58,5 @@ exports.adminRouter.route('/sales-invoices')
     .get(controlPanelController_1.renderSalesInvoicesPage);
 exports.adminRouter.route('/purchase-invoices')
     .get(controlPanelController_1.renderPurchaseInvoicesPage);
+exports.adminRouter.route('/users')
+    .get(controlPanelController_1.renderUsersPage);

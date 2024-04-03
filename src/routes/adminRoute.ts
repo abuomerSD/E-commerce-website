@@ -3,7 +3,7 @@ export const adminRouter = Router();
 import {delelteProduct, getAllProducts, getProductById, renderProductsPageWithFilteredProducts, saveProduct, updateProductById, updateProductByIdWithoutImage} from '../controllers/productsController'
 import { deleteCategory, getAllCategories, getCategoryById, renderSearchCategoryPage, saveCategory, updateCategory } from '../controllers/categoryController';
 import multer from 'multer';
-import { renderAdminHomePage, renderCategoriesPage, renderProductsPage, renderPurchaseInvoicesPage, renderSalesInvoicesPage } from '../controllers/controlPanelController';
+import { renderAdminHomePage, renderCategoriesPage, renderProductsPage, renderPurchaseInvoicesPage, renderSalesInvoicesPage, renderUsersPage } from '../controllers/controlPanelController';
 import { log } from 'console';
 
 const storage = multer.diskStorage({
@@ -68,3 +68,6 @@ adminRouter.route('/sales-invoices')
 
 adminRouter.route('/purchase-invoices')
     .get(renderPurchaseInvoicesPage);
+
+adminRouter.route('/users')
+    .get(renderUsersPage);
