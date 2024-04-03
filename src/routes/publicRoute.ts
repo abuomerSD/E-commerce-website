@@ -3,6 +3,7 @@ import { renderBestSellersPage, renderNewReleasePage,renderCategoryLandingPage, 
 import { activateUser, getAllUsers, login, logout, renderEnterYouEmailPage, renderPasswordResetPage, renderUserConfirmatoinPage, saveUser, sendPasswordResetConfirmationEmail, updateUser } from "../controllers/userController";
 import { deleteItemFromCart, getCartByUserId, saveCartItem, updateCartItem } from "../controllers/cartController";
 import { saveSalesInvoice } from "../controllers/salesInvoiceController";
+import { getAllProductsAsJson } from "../controllers/productsController";
 export const publicRouter = Router();
 export const publicProductsRoute = Router();
 export const publicCategoriesRoute = Router();
@@ -66,3 +67,6 @@ publicRouter.route('/product/:id')
 publicRouter.route('/cart/:userId')
     .get(getCartByUserId)
     .post(saveCartItem);
+
+publicRouter.route('/get-products-json')
+    .get(getAllProductsAsJson);

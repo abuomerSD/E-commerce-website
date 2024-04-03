@@ -144,3 +144,12 @@ export const delelteProduct = asyncWrapper(async (req: Request, res: Response) =
     })
         // res.status(200).redirect('/admin/products'));
 });
+
+/**
+ * return products as json for front end  data validation
+ */
+
+export const getAllProductsAsJson = asyncWrapper(async (req:Request, res: Response) => {
+    const products = await Product.findAll();
+    res.status(200).json(products);
+})

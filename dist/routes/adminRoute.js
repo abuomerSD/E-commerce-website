@@ -62,3 +62,5 @@ exports.adminRouter.route('/users')
     .get(controlPanelController_1.renderUsersPage);
 exports.adminRouter.route('/dashboard')
     .get(controlPanelController_1.renderDashboardPage);
+exports.adminRouter.route('/add-purchase-invoice')
+    .get(controlPanelController_1.renderAddPurchaseInvoicePage);

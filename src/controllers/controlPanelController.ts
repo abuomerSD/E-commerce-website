@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { getAllCategories, getAllCategoriesLimitedByPageLimit } from "./categoryController";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllProducts, getLimitedByPaginationProducts } from "./productsController";
-import { Category, SalesInvoiceHead, User } from "../databaseHandler/database";
+import { Category, Product, SalesInvoiceHead, User } from "../databaseHandler/database";
 import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_NUMBER } from "../utils/contants";
 import { getAllUsers } from "./userController";
 
@@ -79,8 +79,7 @@ export const renderSalesInvoicesPage = asyncWrapper(async (req: Request, res: Re
  */
 
 export const renderPurchaseInvoicesPage = asyncWrapper(async (req:Request, res: Response) => {
-    const categories = await getAllCategories();
-    res.status(200).render('cpPurchaseInvoices', { title: 'Purchase Invoices', categories })
+    res.status(200).render('cpPurchaseInvoices', { title: 'Purchase Invoices' })
 });
 
 /**
@@ -88,8 +87,7 @@ export const renderPurchaseInvoicesPage = asyncWrapper(async (req:Request, res: 
  */
 
 export const renderUsersPage = asyncWrapper(async (req:Request, res: Response) => {
-    const categories = await getAllCategories();
-    res.status(200).render('cpUsers', { title: 'Users', categories })
+    res.status(200).render('cpUsers', { title: 'Users' })
 });
 
 /**
@@ -97,6 +95,15 @@ export const renderUsersPage = asyncWrapper(async (req:Request, res: Response) =
  */
 
 export const renderDashboardPage = asyncWrapper(async (req:Request, res: Response) => {
-    const categories = await getAllCategories();
-    res.status(200).render('cpDashboard', { title: 'Dashboard', categories })
+    res.status(200).render('cpDashboard', { title: 'Dashboard' })
+});
+
+
+/**
+ * render  add purchase invoice page
+ */
+
+export const renderAddPurchaseInvoicePage = asyncWrapper(async (req:Request, res: Response) => {
+    const products = await Product.findAll();
+    res.status(200).render('cpAddPurchaseInvoice', { title: 'New Purchase Invoice' , products});
 });

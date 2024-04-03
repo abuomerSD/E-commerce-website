@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.delelteProduct = exports.updateProductByIdWithoutImage = exports.updateProductById = exports.getProductById = exports.renderProductsPageWithFilteredProducts = exports.getLimitedByPaginationProducts = exports.getFilteredProducts = exports.getAllProducts = exports.saveProduct = void 0;
+exports.getAllProductsAsJson = exports.delelteProduct = exports.updateProductByIdWithoutImage = exports.updateProductById = exports.getProductById = exports.renderProductsPageWithFilteredProducts = exports.getLimitedByPaginationProducts = exports.getFilteredProducts = exports.getAllProducts = exports.saveProduct = void 0;
 const database_1 = require("../databaseHandler/database");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const fs_1 = __importDefault(require("fs"));
@@ -135,4 +135,11 @@ exports.delelteProduct = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaite
         res.status(200).end();
     });
     // res.status(200).redirect('/admin/products'));
+}));
+/**
+ * return products as json for front end  data validation
+ */
+exports.getAllProductsAsJson = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const products = yield database_1.Product.findAll();
+    res.status(200).json(products);
 }));

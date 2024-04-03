@@ -6,6 +6,7 @@ const publicController_1 = require("../controllers/publicController");
 const userController_1 = require("../controllers/userController");
 const cartController_1 = require("../controllers/cartController");
 const salesInvoiceController_1 = require("../controllers/salesInvoiceController");
+const productsController_1 = require("../controllers/productsController");
 exports.publicRouter = (0, express_1.Router)();
 exports.publicProductsRoute = (0, express_1.Router)();
 exports.publicCategoriesRoute = (0, express_1.Router)();
@@ -52,3 +53,5 @@ exports.publicRouter.route('/product/:id')
 exports.publicRouter.route('/cart/:userId')
     .get(cartController_1.getCartByUserId)
     .post(cartController_1.saveCartItem);
+exports.publicRouter.route('/get-products-json')
+    .get(productsController_1.getAllProductsAsJson);

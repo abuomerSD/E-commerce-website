@@ -1,0 +1,52 @@
+<%- include('./control-panel/partials/adminHead.ejs') %>
+<%- include('./control-panel/partials/nav.ejs') %>
+<div class="container">
+    <div class="title">
+        <h3>Add Purchase Invoice</h3>
+    </div>
+    <div class="porduct-form">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="productName">Product Name</label>
+                <input type="text" class="form-control" name="productName" id="productName" placeholder="Product Name" list="products">
+                <datalist id="products">
+                    <% products.forEach(product => { %>
+                        <option value="<%= product.name %>"><%= product.name %></option>
+                    <% }); %>
+                </datalist>
+            </div>
+            <div class="col-md-2">
+                <label for="productQty">Product Quantity</label>
+                <input type="number" class="form-control" name="productQty" id="productQty" placeholder="Product Quantity" disabled>
+            </div>
+            <div class="col-md-2">
+                <label for="productQty">Product Price</label>                
+                <input type="number" class="form-control" name="productPrice" id="productPrice" placeholder="Product Price" disabled>
+            </div>
+            <div class="col-md-2">
+                <label for="productTotal">Total</label>       
+                <input type="number" class="form-control" name="productTotal" id="productTotal" placeholder="Total" disabled>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success mt-4">Add</button>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="products-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Product Qty</th>
+                    <th scope="col">Product Price</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+</div>
+<script src="/js/control-panal-js/addPurchaseInvoice.js"></script>
+<%- include('./control-panel/partials/footer.ejs') %>
