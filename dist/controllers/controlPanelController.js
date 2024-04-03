@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderUsersPage = exports.renderPurchaseInvoicesPage = exports.renderSalesInvoicesPage = exports.renderCategoriesPage = exports.renderProductsPage = exports.renderAdminHomePage = void 0;
+exports.renderDashboardPage = exports.renderUsersPage = exports.renderPurchaseInvoicesPage = exports.renderSalesInvoicesPage = exports.renderCategoriesPage = exports.renderProductsPage = exports.renderAdminHomePage = void 0;
 const categoryController_1 = require("./categoryController");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const productsController_1 = require("./productsController");
@@ -73,4 +73,11 @@ exports.renderPurchaseInvoicesPage = (0, asyncWrapper_1.asyncWrapper)((req, res)
 exports.renderUsersPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const categories = yield (0, categoryController_1.getAllCategories)();
     res.status(200).render('cpUsers', { title: 'Users', categories });
+}));
+/**
+ * render  Dashboard page
+ */
+exports.renderDashboardPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const categories = yield (0, categoryController_1.getAllCategories)();
+    res.status(200).render('cpDashboard', { title: 'Dashboard', categories });
 }));

@@ -91,3 +91,12 @@ export const renderUsersPage = asyncWrapper(async (req:Request, res: Response) =
     const categories = await getAllCategories();
     res.status(200).render('cpUsers', { title: 'Users', categories })
 });
+
+/**
+ * render  Dashboard page
+ */
+
+export const renderDashboardPage = asyncWrapper(async (req:Request, res: Response) => {
+    const categories = await getAllCategories();
+    res.status(200).render('cpDashboard', { title: 'Dashboard', categories })
+});
