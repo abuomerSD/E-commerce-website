@@ -72,4 +72,13 @@ export const renderSalesInvoicesPage = asyncWrapper(async (req: Request, res: Re
     const users = await User.findAll();
     const salesInvoicesHeads = await SalesInvoiceHead.findAll();
     res.status(200).render('cpSalesInvoices', {title: 'Sales Invoices', categories, users , salesInvoicesHeads})
+});
+
+/**
+ * render  purchase invoices page
+ */
+
+export const renderPurchaseInvoicesPage = asyncWrapper(async (req:Request, res: Response) => {
+    const categories = await getAllCategories();
+    res.status(200).render('cpPurchaseInvoices', { title: 'Purchase Invoices', categories })
 })

@@ -56,3 +56,5 @@ exports.adminRouter.route('/categories/searchCategory')
     .post(categoryController_1.renderSearchCategoryPage);
 exports.adminRouter.route('/sales-invoices')
     .get(controlPanelController_1.renderSalesInvoicesPage);
+exports.adminRouter.route('/purchase-invoices')
+    .get(controlPanelController_1.renderPurchaseInvoicesPage);
