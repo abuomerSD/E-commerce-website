@@ -258,3 +258,46 @@ CartHead.hasMany(CartDetails, {
     foreignKey: 'cartHeadId'
 });
 CartDetails.belongsTo(CartHead);
+class PurchaseInvoiceHead extends sequelize_1.Model {
+}
+PurchaseInvoiceHead.init({
+    id: {
+        type: sequelize_1.DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    supplierName: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    total: {
+        type: sequelize_1.DataTypes.DOUBLE,
+        allowNull: false,
+    }
+}, {
+    sequelize,
+    modelName: 'PurchaseInvoiceHead'
+});
+class PurchaseInvoiceDetails extends sequelize_1.Model {
+}
+PurchaseInvoiceDetails.init({
+    productName: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    productQuantity: {
+        type: sequelize_1.DataTypes.DOUBLE,
+        allowNull: false,
+    },
+    productCost: {
+        type: sequelize_1.DataTypes.DOUBLE,
+        allowNull: false,
+    },
+    productTotal: {
+        type: sequelize_1.DataTypes.DOUBLE,
+        allowNull: false,
+    }
+}, {
+    sequelize,
+    modelName: 'PurchaseInvoiceDetails',
+});
