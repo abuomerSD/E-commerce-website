@@ -128,8 +128,8 @@ function addPurchaseInvoiceItem() {
 
     clearInputs();
 
-    let previousTotal = Number(total.innerText);
-    total.innerText = previousTotal + total;
+    let previousTotal = Number(invoiceTotal.innerText);
+    invoiceTotal.innerText = previousTotal + total;
 
     // activate save invoice button
     if (saveInvoiceBtn.disabled === true) {
@@ -165,6 +165,7 @@ function clearInputs() {
  */
 async function saveInvoice() {
     const url = '/admin/add-purchase-invoice';
+    const total = invoiceTotal.innerText;
 
     if (supplierName.value === '') {
         alert('Please Enter the Supplier Name');
@@ -181,6 +182,7 @@ async function saveInvoice() {
 
     let data = {
         supplierName: supplierName.value,
+        total,
         products,
     }
 
