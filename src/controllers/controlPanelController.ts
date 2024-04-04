@@ -108,11 +108,3 @@ export const renderAddPurchaseInvoicePage = asyncWrapper(async (req:Request, res
     res.status(200).render('cpAddPurchaseInvoice', { title: 'New Purchase Invoice' , products});
 });
 
-/**
- * save Purchase Invoice
- */
-
-export const savePurchaseInvoice = asyncWrapper(async (req:Request, res: Response) => {
-    console.log(req.body);
-    res.status(201).end();
-})

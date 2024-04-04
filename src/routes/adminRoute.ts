@@ -3,8 +3,9 @@ export const adminRouter = Router();
 import {delelteProduct, getAllProducts, getProductById, renderProductsPageWithFilteredProducts, saveProduct, updateProductById, updateProductByIdWithoutImage} from '../controllers/productsController'
 import { deleteCategory, getAllCategories, getCategoryById, renderSearchCategoryPage, saveCategory, updateCategory } from '../controllers/categoryController';
 import multer from 'multer';
-import { renderAddPurchaseInvoicePage, renderAdminHomePage, renderCategoriesPage, renderDashboardPage, renderProductsPage, renderPurchaseInvoicesPage, renderSalesInvoicesPage, renderUsersPage, savePurchaseInvoice } from '../controllers/controlPanelController';
+import { renderAddPurchaseInvoicePage, renderAdminHomePage, renderCategoriesPage, renderDashboardPage, renderProductsPage, renderPurchaseInvoicesPage, renderSalesInvoicesPage, renderUsersPage } from '../controllers/controlPanelController';
 import { log } from 'console';
+import { savePurchaseInvoice } from '../controllers/purchaseInvoiceController';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {        

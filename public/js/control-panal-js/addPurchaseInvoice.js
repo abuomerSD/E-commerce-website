@@ -140,7 +140,7 @@ function addPurchaseInvoiceItem() {
     let product =  {
         productName: name,
         productQuantity: qty,
-        productPrice: price,
+        productCost: price,
         productTotal: total,
     }
 
@@ -194,6 +194,9 @@ async function saveInvoice() {
             },
             body: JSON.stringify(data),
         });
+
+        // reloading the page 
+        window.location.reload();
     } catch (error) {
         console.log(error);
     }

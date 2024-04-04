@@ -54,6 +54,7 @@ export class Product extends Model {
   declare viewedTimes: bigint;
   declare saledTimes: number;
   declare quantity: number;
+  declare cost : number;
 }
 
 
@@ -319,7 +320,7 @@ CartHead.hasMany(CartDetails, {
 CartDetails.belongsTo(CartHead);
 
 
-class PurchaseInvoiceHead extends Model {
+export class PurchaseInvoiceHead extends Model {
   declare id: number;
   declare supplierName: string;
   declare total : number;
@@ -344,7 +345,7 @@ PurchaseInvoiceHead.init({
   modelName: 'PurchaseInvoiceHead'
 });
 
-class PurchaseInvoiceDetails extends Model {
+export class PurchaseInvoiceDetails extends Model {
   declare productName: string;
   declare productQuantity: number;
   declare productCost: number;
@@ -372,3 +373,8 @@ PurchaseInvoiceDetails.init({
   sequelize,
   modelName: 'PurchaseInvoiceDetails',
 })
+
+PurchaseInvoiceHead.hasMany(PurchaseInvoiceDetails, {
+  foreignKey: 'purchaseInvoiceHeadId'
+});
+PurchaseInvoiceDetails.belongsTo(PurchaseInvoiceHead);

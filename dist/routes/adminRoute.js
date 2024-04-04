@@ -10,6 +10,7 @@ const productsController_1 = require("../controllers/productsController");
 const categoryController_1 = require("../controllers/categoryController");
 const multer_1 = __importDefault(require("multer"));
 const controlPanelController_1 = require("../controllers/controlPanelController");
+const purchaseInvoiceController_1 = require("../controllers/purchaseInvoiceController");
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/products-images');
@@ -64,4 +65,4 @@ exports.adminRouter.route('/dashboard')
     .get(controlPanelController_1.renderDashboardPage);
 exports.adminRouter.route('/add-purchase-invoice')
     .get(controlPanelController_1.renderAddPurchaseInvoicePage)
-    .post(controlPanelController_1.savePurchaseInvoice);
+    .post(purchaseInvoiceController_1.savePurchaseInvoice);
