@@ -5,9 +5,11 @@ const productTotal = document.getElementById('productTotal');
 const table = document.querySelector('.table');
 const tableBody = document.createElement('tbody');
 const invoiceTotal = document.querySelector('#total');
+const saveInvoiceBtn = document.querySelector('#saveInvoiceBtn');
 
 let productId = '';
 let rowIndex = 0 ;
+let products = [];
 
 // input validation 
 productQty.addEventListener('change', (e) => {
@@ -61,18 +63,26 @@ productName.addEventListener('change', async (e) => {
     });
 });
 
+// when click enter on product price it add item to the table
+
+productPrice.addEventListener('keyup', (e) => {
+    if (e.keyCode === 13) {
+        addPurchaseInvoiceItem();
+    }
+})
+
 
 /**
  * adding item to products table 
  */
 
-async function addPurchaseInvoiceItem() {
+function addPurchaseInvoiceItem() {
     const url = '/admin/add-purchase-invoice';
 
 
     const name = productName.value;
-    const qty = productQty.value;
-    const price = productPrice.value;
+    const qty = Number(productQty.value);
+    const price = Number(productPrice.value);
     const total = Number(productTotal.value);
 
     // validation
@@ -117,6 +127,23 @@ async function addPurchaseInvoiceItem() {
 
     clearInputs();
 
+    let previousTotal = Number(total.innerText);
+    total.innerText = previousTotal + total;
+
+    // activate save invoice button
+    if (saveInvoiceBtn.disabled === true) {
+        saveInvoiceBtn.disabled = false;
+    }
+
+    // adding item to products Array
+    let product =  {
+        name,
+        quantity: qty,
+        price,
+        total,
+    }
+
+    products.push(product);
 
     try {
         // const response = await fetch(url, {
@@ -125,10 +152,9 @@ async function addPurchaseInvoiceItem() {
         //         'Content-Type': 'application/json',
         //     }
         // })
-        let previousTotal = Number(total.innerText);
-        total.innerText = previousTotal + total;
 
-        console.log(productId);
+
+        console.log(productId, products);
     } catch (error) {
         console.log(error);
     }
@@ -143,4 +169,25 @@ function clearInputs() {
     productQty.disabled = true;
     productTotal.value = '';
     productName.focus();
+}
+
+
+/**
+ * save purchase invoice to the database
+ */
+async function saveInvoice() {
+
+}
+
+function disableSaveInvoiceBtn() {
+    saveInvoiceBtn.disabled = true;
+}
+function enableSaveInvoiceBtn() {
+    saveInvoiceBtn.disabled = false;
+}
+
+window.onload = (e) => {
+    if (products.length === 0) {
+        disableSaveInvoiceBtn();
+    }
 }
