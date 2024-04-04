@@ -6,6 +6,7 @@ const table = document.querySelector('.table');
 const tableBody = document.createElement('tbody');
 const invoiceTotal = document.querySelector('#total');
 const saveInvoiceBtn = document.querySelector('#saveInvoiceBtn');
+const supplierName = document.querySelector('#supplierName');
 
 let productId = '';
 let rowIndex = 0 ;
@@ -137,27 +138,14 @@ function addPurchaseInvoiceItem() {
 
     // adding item to products Array
     let product =  {
-        name,
-        quantity: qty,
-        price,
-        total,
+        productName: name,
+        productQuantity: qty,
+        productPrice: price,
+        productTotal: total,
     }
 
     products.push(product);
 
-    try {
-        // const response = await fetch(url, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     }
-        // })
-
-
-        console.log(productId, products);
-    } catch (error) {
-        console.log(error);
-    }
 }
 
 
@@ -176,7 +164,37 @@ function clearInputs() {
  * save purchase invoice to the database
  */
 async function saveInvoice() {
+    const url = '/admin/add-purchase-invoice';
 
+    if (supplierName.value === '') {
+        alert('Please Enter the Supplier Name');
+        supplierName.focus();
+        return;
+    }
+
+    // confirmation
+    const isOk = confirm('Save the invoice ?');
+
+    if (!isOk) {
+        return;
+    }
+
+    let data = {
+        supplierName: supplierName.value,
+        products,
+    }
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 function disableSaveInvoiceBtn() {

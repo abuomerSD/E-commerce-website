@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderAddPurchaseInvoicePage = exports.renderDashboardPage = exports.renderUsersPage = exports.renderPurchaseInvoicesPage = exports.renderSalesInvoicesPage = exports.renderCategoriesPage = exports.renderProductsPage = exports.renderAdminHomePage = void 0;
+exports.savePurchaseInvoice = exports.renderAddPurchaseInvoicePage = exports.renderDashboardPage = exports.renderUsersPage = exports.renderPurchaseInvoicesPage = exports.renderSalesInvoicesPage = exports.renderCategoriesPage = exports.renderProductsPage = exports.renderAdminHomePage = void 0;
 const categoryController_1 = require("./categoryController");
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const productsController_1 = require("./productsController");
@@ -84,4 +84,11 @@ exports.renderDashboardPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __a
 exports.renderAddPurchaseInvoicePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield database_1.Product.findAll();
     res.status(200).render('cpAddPurchaseInvoice', { title: 'New Purchase Invoice', products });
+}));
+/**
+ * save Purchase Invoice
+ */
+exports.savePurchaseInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
+    res.status(201).end();
 }));

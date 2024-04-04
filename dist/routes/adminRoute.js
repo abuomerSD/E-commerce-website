@@ -63,4 +63,5 @@ exports.adminRouter.route('/users')
 exports.adminRouter.route('/dashboard')
     .get(controlPanelController_1.renderDashboardPage);
 exports.adminRouter.route('/add-purchase-invoice')
-    .get(controlPanelController_1.renderAddPurchaseInvoicePage);
+    .get(controlPanelController_1.renderAddPurchaseInvoicePage)
+    .post(controlPanelController_1.savePurchaseInvoice);
