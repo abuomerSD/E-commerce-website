@@ -7,6 +7,7 @@ const tableBody = document.createElement('tbody');
 const invoiceTotal = document.querySelector('#total');
 const saveInvoiceBtn = document.querySelector('#saveInvoiceBtn');
 const supplierName = document.querySelector('#supplierName');
+const navLink = document.querySelector('#purchase-nav-link');
 
 let productId = '';
 let rowIndex = 0 ;
@@ -210,7 +211,12 @@ function enableSaveInvoiceBtn() {
 }
 
 window.onload = (e) => {
+    // disable save button
     if (products.length === 0) {
         disableSaveInvoiceBtn();
     }
+
+    // set nav link active
+    navLink.classList.add('active');
+
 }

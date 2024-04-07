@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { getAllCategories, getAllCategoriesLimitedByPageLimit } from "./categoryController";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { getAllProducts, getLimitedByPaginationProducts } from "./productsController";
-import { Category, Product, SalesInvoiceHead, User } from "../databaseHandler/database";
+import { Category, Product, PurchaseInvoiceHead, SalesInvoiceHead, User } from "../databaseHandler/database";
 import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_NUMBER } from "../utils/contants";
 import { getAllUsers } from "./userController";
 
@@ -105,6 +105,10 @@ export const renderDashboardPage = asyncWrapper(async (req:Request, res: Respons
 
 export const renderAddPurchaseInvoicePage = asyncWrapper(async (req:Request, res: Response) => {
     const products = await Product.findAll();
-    res.status(200).render('cpAddPurchaseInvoice', { title: 'New Purchase Invoice' , products});
+    let lastId =  (await PurchaseInvoiceHead.findOne({ limit: 1, order: [['id', 'DESC']] })).id;
+    if (!lastId) {
+        lastId = 0;
+    }
+    res.status(200).render('cpAddPurchaseInvoice', { title: 'New Purchase Invoice' , products , lastId});
 });
 

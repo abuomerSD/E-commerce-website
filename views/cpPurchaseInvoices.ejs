@@ -23,4 +23,11 @@
         <a href="/admin/add-purchase-invoice" class="btn btn-success">New</a>
     </div>
 </div>
+<script>
+    const navLink = document.querySelector('#purchase-nav-link');
+
+    window.onload = () => {
+        navLink.classList.add('active');
+    }
+</script>
 <%- include('./control-panel/partials/footer.ejs') %>

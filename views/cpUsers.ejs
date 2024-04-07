@@ -5,4 +5,11 @@
         <h3>Users</h3>
     </div>
 </div>
+<script>
+    const navLink = document.querySelector('#users-nav-link');    
+    
+    window.onload = () => {
+        navLink.classList.add('active');
+    }
+</script>
 <%- include('./control-panel/partials/footer.ejs') %>
