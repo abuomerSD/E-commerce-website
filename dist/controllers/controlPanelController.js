@@ -64,7 +64,8 @@ exports.renderSalesInvoicesPage = (0, asyncWrapper_1.asyncWrapper)((req, res) =>
  * render  purchase invoices page
  */
 exports.renderPurchaseInvoicesPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).render('cpPurchaseInvoices', { title: 'Purchase Invoices' });
+    const purchaseInvoices = yield database_1.PurchaseInvoiceHead.findAll();
+    res.status(200).render('cpPurchaseInvoices', { title: 'Purchase Invoices', purchaseInvoices });
 }));
 /**
  * render  Users Control page

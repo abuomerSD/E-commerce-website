@@ -79,7 +79,8 @@ export const renderSalesInvoicesPage = asyncWrapper(async (req: Request, res: Re
  */
 
 export const renderPurchaseInvoicesPage = asyncWrapper(async (req:Request, res: Response) => {
-    res.status(200).render('cpPurchaseInvoices', { title: 'Purchase Invoices' })
+    const purchaseInvoices = await PurchaseInvoiceHead.findAll();
+    res.status(200).render('cpPurchaseInvoices', { title: 'Purchase Invoices' , purchaseInvoices})
 });
 
 /**

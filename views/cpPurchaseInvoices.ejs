@@ -10,12 +10,27 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Supplier</th>
                     <th scope="col">Total</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Show</th>
                 </tr>
             </thead>
             <tbody>
-                
+                <% if(purchaseInvoices.length > 0 ){ %>
+                    <% purchaseInvoices.forEach(invoice => { %>
+                        <tr>
+                            <th scope="row"><%= invoice.id %></th>
+                            <% let date = invoice.createdAt %>
+                            <td><%= date.getDay() %>/<%= date.getMonth() + 1 %>/<%= date.getFullYear() %></td>
+                            <td><%= invoice.supplierName %></td>
+                            <td><%= invoice.total %></td>
+                            <td><button class="btn btn-secondary">Show</button></td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <h6>There is no Purchase Invoices</h6>
+
+                <% } %>
             </tbody>
         </table>
     </div>
