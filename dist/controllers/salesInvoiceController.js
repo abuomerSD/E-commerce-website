@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveSalesInvoice = void 0;
+exports.renderShowSalesInvoice = exports.saveSalesInvoice = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const database_1 = require("../databaseHandler/database");
 /**
@@ -49,7 +49,10 @@ exports.saveSalesInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awai
     });
     res.status(201).end();
 }));
-function updateProductQty(productId) {
-    return __awaiter(this, void 0, void 0, function* () {
-    });
-}
+/**
+ * renderShowSalesInvoice
+ */
+exports.renderShowSalesInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    res.status(200).render('cpShowSalesInvoice', { title: `Sales Invoice No: ${id}` });
+}));

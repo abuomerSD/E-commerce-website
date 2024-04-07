@@ -11,6 +11,7 @@ const categoryController_1 = require("../controllers/categoryController");
 const multer_1 = __importDefault(require("multer"));
 const controlPanelController_1 = require("../controllers/controlPanelController");
 const purchaseInvoiceController_1 = require("../controllers/purchaseInvoiceController");
+const salesInvoiceController_1 = require("../controllers/salesInvoiceController");
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/products-images');
@@ -57,6 +58,8 @@ exports.adminRouter.route('/categories/searchCategory')
     .post(categoryController_1.renderSearchCategoryPage);
 exports.adminRouter.route('/sales-invoices')
     .get(controlPanelController_1.renderSalesInvoicesPage);
+exports.adminRouter.route('/sales-invoices/:id')
+    .get(salesInvoiceController_1.renderShowSalesInvoice);
 exports.adminRouter.route('/purchase-invoices')
     .get(controlPanelController_1.renderPurchaseInvoicesPage);
 exports.adminRouter.route('/users')

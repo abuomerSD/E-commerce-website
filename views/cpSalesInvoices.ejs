@@ -12,7 +12,7 @@
                     <th scope="col">Date</th>
                     <th scope="col">Customer Name</th>
                     <th scope="col">total</th>
-                    <th scope="col">Show & print</th>
+                    <th scope="col">Show</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +32,8 @@
                             <% }); %>
                             <td><%= firstName %> <%= lastName %></td>
                             <td><%= invoice.total %></td>
-                            <td><button class="btn btn-success">print</button></td>
+
+                            <td><a href="/admin/sales-invoices/<%= invoice.id %>" class="btn btn-dark">show</a></td>
                         </tr>
                     <% }); %>
                 <% } else { %>
@@ -48,6 +49,6 @@
     
     window.onload = () => {
         navLink.classList.add('active');
-    }
+    }    
 </script>
 <%- include('./control-panel/partials/footer.ejs') %>

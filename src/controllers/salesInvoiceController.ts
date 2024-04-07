@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
 import { CartDetails, CartHead, Product, SalesInvoiceDetails, SalesInvoiceHead, salesInvoiceDetailsRelationship } from "../databaseHandler/database";
+import { title } from "process";
 
 /**
  * save sales invoice in the database
@@ -47,6 +48,12 @@ export const saveSalesInvoice = asyncWrapper(async (req:Request, res: Response) 
     res.status(201).end();
 })
 
-async function updateProductQty(productId:string) {
-    
-}
+
+/**
+ * renderShowSalesInvoice
+ */
+
+export const renderShowSalesInvoice = asyncWrapper(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    res.status(200).render('cpShowSalesInvoice', { title: `Sales Invoice No: ${id}`});
+})
