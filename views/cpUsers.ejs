@@ -4,6 +4,35 @@
     <div class="title">
         <h3>Users</h3>
     </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" placeholder="First Name" id="firstName">
+        </div>
+        <div class="col-md-2">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" placeholder="Last Name" id="lastName">
+        </div>
+        <div class="col-md-2">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" placeholder="Email" id="email">
+        </div>
+        <div class="col-md-2">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" placeholder="Username" id="username">
+        </div>
+        <div class="col-md-2">
+            <label for="password">Password</label>
+            <input type="text" class="form-control" placeholder="Password" id="password">
+        </div>
+        <div class="col-md-2">
+            <label for="role" style="display: block;">Role</label>
+            <select id="role" class="form-select">
+                <option value="admin">admin</option>
+                <option value="user">user</option>
+            </select>
+        </div>
+    </div>
 </div>
 <script>
     const navLink = document.querySelector('#users-nav-link');    
