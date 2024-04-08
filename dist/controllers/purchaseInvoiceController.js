@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.savePurchaseInvoice = void 0;
+exports.renderShowPurchaseInvoice = exports.savePurchaseInvoice = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const database_1 = require("../databaseHandler/database");
 /**
@@ -54,3 +54,4 @@ function getAverageProductCost(oldProduct, newProduct) {
     const averageCost = ((oldCost * oldQuantity) + (newCost * newQuantity)) / (oldQuantity + newQuantity);
     return averageCost;
 }
+exports.renderShowPurchaseInvoice = asyncWrapper_1.asyncWrapper;

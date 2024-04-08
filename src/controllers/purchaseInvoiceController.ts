@@ -58,3 +58,5 @@ function getAverageProductCost(oldProduct: any, newProduct: any) {
 
     return averageCost;
 }
+
+export const renderShowPurchaseInvoice = asyncWrapper

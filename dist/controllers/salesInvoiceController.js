@@ -54,5 +54,8 @@ exports.saveSalesInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awai
  */
 exports.renderShowSalesInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    res.status(200).render('cpShowSalesInvoice', { title: `Sales Invoice No: ${id}` });
+    const salesInvoicesHead = yield database_1.SalesInvoiceHead.findOne({ where: { id } });
+    const salesInvoiceDetails = yield database_1.SalesInvoiceDetails.findAll({ where: { salesInvoiceHeadId: id } });
+    const user = yield database_1.User.findOne({ where: { id: salesInvoicesHead.userId } });
+    res.status(200).render('cpShowSalesInvoice', { title: `Sales Invoice No: ${id}`, salesInvoicesHead, salesInvoiceDetails, user });
 }));

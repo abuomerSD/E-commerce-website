@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { asyncWrapper } from "../middlewares/asyncWrapper";
-import { CartDetails, CartHead, Product, SalesInvoiceDetails, SalesInvoiceHead, salesInvoiceDetailsRelationship } from "../databaseHandler/database";
+import { CartDetails, CartHead, Product, SalesInvoiceDetails, SalesInvoiceHead, User, salesInvoiceDetailsRelationship } from "../databaseHandler/database";
 import { title } from "process";
 
 /**
@@ -55,5 +55,8 @@ export const saveSalesInvoice = asyncWrapper(async (req:Request, res: Response) 
 
 export const renderShowSalesInvoice = asyncWrapper(async (req: Request, res: Response) => {
     const { id } = req.params;
-    res.status(200).render('cpShowSalesInvoice', { title: `Sales Invoice No: ${id}`});
-})
+    const salesInvoicesHead = await SalesInvoiceHead.findOne({where: {id}});
+    const salesInvoiceDetails = await SalesInvoiceDetails.findAll({where: {salesInvoiceHeadId: id}});
+    const user = await User.findOne({where: { id: salesInvoicesHead.userId }})
+    res.status(200).render('cpShowSalesInvoice', { title: `Sales Invoice No: ${id}` , salesInvoicesHead , salesInvoiceDetails, user});
+});

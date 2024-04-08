@@ -24,7 +24,7 @@
                             <td><%= date.getDay() %>/<%= date.getMonth() + 1 %>/<%= date.getFullYear() %></td>
                             <td><%= invoice.supplierName %></td>
                             <td><%= invoice.total %></td>
-                            <td><button class="btn btn-dark">Show</button></td>
+                            <td><a class="btn btn-dark" href="/admin/purchase-invoices/<%= invoice.id %>">Show</a></td>
                         </tr>
                     <% }); %>
                 <% } else { %>
