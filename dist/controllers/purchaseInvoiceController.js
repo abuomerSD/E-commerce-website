@@ -54,4 +54,9 @@ function getAverageProductCost(oldProduct, newProduct) {
     const averageCost = ((oldCost * oldQuantity) + (newCost * newQuantity)) / (oldQuantity + newQuantity);
     return averageCost;
 }
-exports.renderShowPurchaseInvoice = asyncWrapper_1.asyncWrapper;
+exports.renderShowPurchaseInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const purchaseInvoiceHead = yield database_1.PurchaseInvoiceHead.findOne({ where: { id } });
+    const purchaseInvoiceDetails = yield database_1.PurchaseInvoiceDetails.findAll({ where: { purchaseInvoiceHeadId: id } });
+    res.status(200).render('cpShowPurchaseInvoice', { title: `Purchase Invoice No: ${id}`, purchaseInvoiceHead, purchaseInvoiceDetails });
+}));

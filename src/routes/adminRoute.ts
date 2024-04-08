@@ -5,7 +5,7 @@ import { deleteCategory, getAllCategories, getCategoryById, renderSearchCategory
 import multer from 'multer';
 import { renderAddPurchaseInvoicePage, renderAdminHomePage, renderCategoriesPage, renderDashboardPage, renderProductsPage, renderPurchaseInvoicesPage, renderSalesInvoicesPage, renderUsersPage } from '../controllers/controlPanelController';
 import { log } from 'console';
-import { savePurchaseInvoice } from '../controllers/purchaseInvoiceController';
+import { renderShowPurchaseInvoice, savePurchaseInvoice } from '../controllers/purchaseInvoiceController';
 import { renderShowSalesInvoice } from '../controllers/salesInvoiceController';
 
 const storage = multer.diskStorage({
@@ -73,6 +73,9 @@ adminRouter.route('/sales-invoices/:id')
 
 adminRouter.route('/purchase-invoices')
     .get(renderPurchaseInvoicesPage);
+
+adminRouter.route('/purchase-invoices/:id')
+    .get(renderShowPurchaseInvoice);
 
 adminRouter.route('/users')
     .get(renderUsersPage);

@@ -59,4 +59,9 @@ function getAverageProductCost(oldProduct: any, newProduct: any) {
     return averageCost;
 }
 
-export const renderShowPurchaseInvoice = asyncWrapper
+export const renderShowPurchaseInvoice = asyncWrapper(async (req:Request, res: Response) => {
+    const {id} = req.params;
+    const purchaseInvoiceHead = await PurchaseInvoiceHead.findOne({where: {id}});
+    const purchaseInvoiceDetails = await PurchaseInvoiceDetails.findAll({where: {purchaseInvoiceHeadId: id}});
+    res.status(200).render('cpShowPurchaseInvoice', { title: `Purchase Invoice No: ${id}`, purchaseInvoiceHead, purchaseInvoiceDetails });
+});

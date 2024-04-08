@@ -1,4 +1,46 @@
 <%- include("./control-panel/partials/adminHead.ejs") %>
 <%- include("./control-panel/partials/nav.ejs") %>
-invoice
+<div class="container">
+    <div class="printable">
+        <h3>Purchase Invoice No: <%= purchaseInvoiceHead.id %></h3>
+        <h5>Supplier Name: <%= purchaseInvoiceHead.supplierName %></h5>
+        <hr>
+        <table class="table">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Product Qty</th>
+                <th scope="col">Product Cost</th>
+                <th scope="col">Product Total</th>
+            </thead>
+            <tbody>
+                <% let rowNumber = 1 %>
+                <% purchaseInvoiceDetails.forEach(detail => { %>
+                    <tr>
+                        <th scope="row"><%= rowNumber %></th>
+                        <td><%= detail.productName %></td>
+                        <td><%= detail.productQuantity %></td>
+                        <td>$<%= detail.productCost %></td>
+                        <td>$<%= detail.productTotal %></td>
+                    </tr>    
+                    <% rowNumber += 1 %>
+                <% }); %>
+            </tbody>
+        </table>
+        <div class="total">
+            <h5>Total: $<%= purchaseInvoiceHead.total %></h5>
+        </div>
+        <hr>
+    </div>
+    <button class="btn btn-success" onclick="download()">Download PDF</button>
+</div>
+
+<script>
+    function download() {
+        let element = document.querySelector('.printable');
+        html2pdf(element);
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <%- include("./control-panel/partials/footer.ejs") %>

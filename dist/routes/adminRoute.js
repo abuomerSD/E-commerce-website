@@ -62,6 +62,8 @@ exports.adminRouter.route('/sales-invoices/:id')
     .get(salesInvoiceController_1.renderShowSalesInvoice);
 exports.adminRouter.route('/purchase-invoices')
     .get(controlPanelController_1.renderPurchaseInvoicesPage);
+exports.adminRouter.route('/purchase-invoices/:id')
+    .get(purchaseInvoiceController_1.renderShowPurchaseInvoice);
 exports.adminRouter.route('/users')
     .get(controlPanelController_1.renderUsersPage);
 exports.adminRouter.route('/dashboard')
