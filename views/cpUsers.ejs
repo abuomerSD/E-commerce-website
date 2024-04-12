@@ -7,23 +7,23 @@
     <div class="row">
         <div class="col-md-2">
             <label for="firstName">First Name</label>
-            <input type="text" class="form-control" placeholder="First Name" id="firstName">
+            <input type="text" class="form-control" placeholder="First Name" id="firstName" required>
         </div>
         <div class="col-md-2">
             <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" placeholder="Last Name" id="lastName">
+            <input type="text" class="form-control" placeholder="Last Name" id="lastName" required>
         </div>
         <div class="col-md-2">
             <label for="email">Email</label>
-            <input type="text" class="form-control" placeholder="Email" id="email">
+            <input type="email" class="form-control" placeholder="Email" id="email" required>
         </div>
         <div class="col-md-2">
             <label for="username">Username</label>
-            <input type="text" class="form-control" placeholder="Username" id="username">
+            <input type="text" class="form-control" placeholder="Username" id="username" required>
         </div>
         <div class="col-md-2">
             <label for="password">Password</label>
-            <input type="text" class="form-control" placeholder="Password" id="password">
+            <input type="text" class="form-control" placeholder="Password" id="password" required>
         </div>
         <div class="col-md-2">
             <label for="role" style="display: block;">Role</label>
@@ -33,12 +33,8 @@
             </select>
         </div>
     </div>
+    <button class="btn btn-success mt-2" onclick="addUser()">Add User</button>
+    <h6 id="status" style="display: none;"></h6>
 </div>
-<script>
-    const navLink = document.querySelector('#users-nav-link');    
-    
-    window.onload = () => {
-        navLink.classList.add('active');
-    }
-</script>
+<script src="/js/control-panal-js/users.js"></script>
 <%- include('./control-panel/partials/footer.ejs') %>

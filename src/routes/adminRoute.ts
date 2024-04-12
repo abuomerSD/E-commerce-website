@@ -7,6 +7,7 @@ import { renderAddPurchaseInvoicePage, renderAdminHomePage, renderCategoriesPage
 import { log } from 'console';
 import { renderShowPurchaseInvoice, savePurchaseInvoice } from '../controllers/purchaseInvoiceController';
 import { renderShowSalesInvoice } from '../controllers/salesInvoiceController';
+import { saveUser } from '../controllers/userController';
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {        
@@ -78,6 +79,7 @@ adminRouter.route('/purchase-invoices/:id')
     .get(renderShowPurchaseInvoice);
 
 adminRouter.route('/users')
+    .post(saveUser)
     .get(renderUsersPage);
 
 adminRouter.route('/dashboard')
