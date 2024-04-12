@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-2">
             <label for="password">Password</label>
-            <input type="text" class="form-control" placeholder="Password" id="password" required>
+            <input type="password" class="form-control" placeholder="Password" id="password" required>
         </div>
         <div class="col-md-2">
             <label for="role" style="display: block;">Role</label>
@@ -35,6 +35,31 @@
     </div>
     <button class="btn btn-success mt-2" onclick="addUser()">Add User</button>
     <h6 id="status" style="display: none;"></h6>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Username</th>
+            </tr>
+            <tbody>
+                <% let rowNumber = 1 %>
+                <% users.forEach(user => { %>
+                    <tr>
+                        <th scope="row"><%= rowNumber %></th>
+                        <td><%= user.firstName %></td>
+                        <td><%= user.lastName %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.username %></td>
+                    </tr>
+                    <% rowNumber++; %>
+                <% }); %>
+            </tbody>
+        </thead>
+    </table>
 </div>
 <script src="/js/control-panal-js/users.js"></script>
 <%- include('./control-panel/partials/footer.ejs') %>

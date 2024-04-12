@@ -107,11 +107,13 @@ User.init({
     },
     email: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true,
     },
     username: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true,
     },
     password: {
         type: sequelize_1.DataTypes.STRING,

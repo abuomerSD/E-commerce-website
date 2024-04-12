@@ -88,7 +88,8 @@ export const renderPurchaseInvoicesPage = asyncWrapper(async (req:Request, res: 
  */
 
 export const renderUsersPage = asyncWrapper(async (req:Request, res: Response) => {
-    res.status(200).render('cpUsers', { title: 'Users' })
+    const users = await User.findAll();
+    res.status(200).render('cpUsers', { title: 'Users' , users })
 });
 
 /**

@@ -71,7 +71,8 @@ exports.renderPurchaseInvoicesPage = (0, asyncWrapper_1.asyncWrapper)((req, res)
  * render  Users Control page
  */
 exports.renderUsersPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).render('cpUsers', { title: 'Users' });
+    const users = yield database_1.User.findAll();
+    res.status(200).render('cpUsers', { title: 'Users', users });
 }));
 /**
  * render  Dashboard page

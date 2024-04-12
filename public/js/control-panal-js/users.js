@@ -24,7 +24,8 @@ async function addUser(){
                 'Content-Type' : 'application/json'
             },
             body: JSON.stringify(user),
-        })
+        });
+        window.location.reload();
     } catch (error) {
         console.log(error);
     }
