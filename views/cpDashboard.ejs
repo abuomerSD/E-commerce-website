@@ -61,45 +61,5 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-    const navLink = document.querySelector('#dashboard-nav-link');    
-    const ctx = document.getElementById('sales-chart');
-
-    async function getAllSalesInvoices() {
-        try {
-        const response = await fetch('/admin/get-all-sales-invoices', {
-            method: 'GET',
-        });
-        const salesInvoices = await response.json();
-        console.log(salesInvoices);
-        return salesInvoices;
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    getAllSalesInvoices();
-    new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-        y: {
-            beginAtZero: true
-        }
-        }
-    }
-    });
-
-    window.onload = () => {
-        navLink.classList.add('active');
-    }
-</script>
+<script src="/js/control-panal-js/dashboard.js"></script>
 <%- include('./control-panel/partials/footer.ejs') %>
