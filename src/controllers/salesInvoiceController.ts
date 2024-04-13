@@ -60,3 +60,11 @@ export const renderShowSalesInvoice = asyncWrapper(async (req: Request, res: Res
     const user = await User.findOne({where: { id: salesInvoicesHead.userId }})
     res.status(200).render('cpShowSalesInvoice', { title: `Sales Invoice No: ${id}` , salesInvoicesHead , salesInvoiceDetails, user});
 });
+
+/**
+ * @returns sales invoices json
+ */
+export const getAllSalesInvoicesAsJson = asyncWrapper(async (req:Request, res: Response) => {
+    const invoices = await SalesInvoiceHead.findAll();
+    res.status(200).json(invoices);
+})

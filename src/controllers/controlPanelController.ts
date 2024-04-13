@@ -97,7 +97,11 @@ export const renderUsersPage = asyncWrapper(async (req:Request, res: Response) =
  */
 
 export const renderDashboardPage = asyncWrapper(async (req:Request, res: Response) => {
-    res.status(200).render('cpDashboard', { title: 'Dashboard' })
+    const products = await Product.findAll();
+    const categories = await Category.findAll();
+    const salesInvoicesHeads = await SalesInvoiceHead.findAll();
+    const purchaseInvoiceHeads = await PurchaseInvoiceHead.findAll();
+    res.status(200).render('cpDashboard', { title: 'Dashboard' , products, categories, salesInvoicesHeads, purchaseInvoiceHeads});
 });
 
 

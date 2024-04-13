@@ -4,9 +4,8 @@ import {delelteProduct, getAllProducts, getProductById, renderProductsPageWithFi
 import { deleteCategory, getAllCategories, getCategoryById, renderSearchCategoryPage, saveCategory, updateCategory } from '../controllers/categoryController';
 import multer from 'multer';
 import { renderAddPurchaseInvoicePage, renderAdminHomePage, renderCategoriesPage, renderDashboardPage, renderProductsPage, renderPurchaseInvoicesPage, renderSalesInvoicesPage, renderUsersPage } from '../controllers/controlPanelController';
-import { log } from 'console';
 import { renderShowPurchaseInvoice, savePurchaseInvoice } from '../controllers/purchaseInvoiceController';
-import { renderShowSalesInvoice } from '../controllers/salesInvoiceController';
+import { getAllSalesInvoicesAsJson, renderShowSalesInvoice } from '../controllers/salesInvoiceController';
 import { saveUser } from '../controllers/userController';
 
 const storage = multer.diskStorage({
@@ -88,3 +87,5 @@ adminRouter.route('/dashboard')
 adminRouter.route('/add-purchase-invoice')
     .get(renderAddPurchaseInvoicePage)
     .post(savePurchaseInvoice);
+
+adminRouter.get('/get-all-sales-invoices', getAllSalesInvoicesAsJson);

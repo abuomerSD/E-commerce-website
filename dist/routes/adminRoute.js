@@ -73,3 +73,4 @@ exports.adminRouter.route('/dashboard')
 exports.adminRouter.route('/add-purchase-invoice')
     .get(controlPanelController_1.renderAddPurchaseInvoicePage)
     .post(purchaseInvoiceController_1.savePurchaseInvoice);
+exports.adminRouter.get('/get-all-sales-invoices', salesInvoiceController_1.getAllSalesInvoicesAsJson);

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderShowSalesInvoice = exports.saveSalesInvoice = void 0;
+exports.getAllSalesInvoicesAsJson = exports.renderShowSalesInvoice = exports.saveSalesInvoice = void 0;
 const asyncWrapper_1 = require("../middlewares/asyncWrapper");
 const database_1 = require("../databaseHandler/database");
 /**
@@ -58,4 +58,11 @@ exports.renderShowSalesInvoice = (0, asyncWrapper_1.asyncWrapper)((req, res) => 
     const salesInvoiceDetails = yield database_1.SalesInvoiceDetails.findAll({ where: { salesInvoiceHeadId: id } });
     const user = yield database_1.User.findOne({ where: { id: salesInvoicesHead.userId } });
     res.status(200).render('cpShowSalesInvoice', { title: `Sales Invoice No: ${id}`, salesInvoicesHead, salesInvoiceDetails, user });
+}));
+/**
+ * @returns sales invoices json
+ */
+exports.getAllSalesInvoicesAsJson = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const invoices = yield database_1.SalesInvoiceHead.findAll();
+    res.status(200).json(invoices);
 }));

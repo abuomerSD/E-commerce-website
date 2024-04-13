@@ -78,7 +78,11 @@ exports.renderUsersPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __await
  * render  Dashboard page
  */
 exports.renderDashboardPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).render('cpDashboard', { title: 'Dashboard' });
+    const products = yield database_1.Product.findAll();
+    const categories = yield database_1.Category.findAll();
+    const salesInvoicesHeads = yield database_1.SalesInvoiceHead.findAll();
+    const purchaseInvoiceHeads = yield database_1.PurchaseInvoiceHead.findAll();
+    res.status(200).render('cpDashboard', { title: 'Dashboard', products, categories, salesInvoicesHeads, purchaseInvoiceHeads });
 }));
 /**
  * render  add purchase invoice page
