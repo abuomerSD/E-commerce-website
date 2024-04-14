@@ -59,7 +59,7 @@ async function fillSalesChart() {
     data: {
         // labels: ['Jan', 'Feb', 'Mar'],
         datasets: [{
-        label: '$ US Dollar',
+        label: '$ Sales in US Dollars',
         data: data,
         borderWidth: 1
         }]
