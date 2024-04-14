@@ -49,6 +49,9 @@
             <%= user.username %>
           </button>
           <ul class="dropdown-menu">
+            <% if(user.role === 'admin'){ %>
+              <li><a href="/admin/dashboard" class="btn btn-dark">Control Panel</a></li>
+            <% } %>
             <li><button class="dropdown-item btn btn-danger" onclick="logout()">logout</button></li>
           </ul>
         </div>

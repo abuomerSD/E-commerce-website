@@ -31,41 +31,50 @@ async function getAllSalesInvoices() {
 return salesInvoices;
 }
 
-async function getinvoices() {
+async function getSalesChartData() {
+    let data = [];
+    let total = 0;
     const invoices = await getAllSalesInvoices()
     console.log(invoices);
 
     invoices.forEach(invoice => {
         const date = new Date(invoice.createdAt);
         const month = date.getMonth() + 1;
+        total += invoice.total;
         
-
+        data.push({x:monthsObj[`${month}`], y:invoice.total})
 
         console.log(monthsObj[`${month}`]);
         console.log(date.getMonth() + 1);
     });
+    return data;
 }
 
-getinvoices();
 
-new Chart(ctx, {
-type: 'line',
-data: {
-    labels: ['Jan', 'Feb'],
-    datasets: [{
-    label: '# of Votes',
-    data: monthsObj,
-    borderWidth: 1
-    }]
-},
-options: {
-    scales: {
-    y: {
-        beginAtZero: true
+
+async function fillSalesChart() {
+    const data = await getSalesChartData();
+    new Chart(ctx, {
+    type: 'line',
+    data: {
+        // labels: ['Jan', 'Feb', 'Mar'],
+        datasets: [{
+        label: '$ US Dollar',
+        data: data,
+        borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+        y: {
+            beginAtZero: true
+        }
+        }
     }
-    }
+    });
 }
-});
+
+fillSalesChart();
 
 window.onload = () => {
     navLink.classList.add('active');
