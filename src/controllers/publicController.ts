@@ -66,7 +66,8 @@ export const renderBestSellersPage = asyncWrapper(async (req: Request, res: Resp
  */
 export const renderNewReleasePage = asyncWrapper(async(req: Request, res: Response) => {
     const products = await Product.findAll({
-        order: sequelize.col('createdAt'),
+        // order: sequelize.col('createdAt'),
+        order: [['createdAt', 'DESC']],
         group: ['Product.id'],
     });
     const categories = await Category.findAll();

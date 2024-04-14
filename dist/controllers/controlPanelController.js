@@ -88,10 +88,11 @@ exports.renderDashboardPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __a
  * render  add purchase invoice page
  */
 exports.renderAddPurchaseInvoicePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let lastId = 0;
     const products = yield database_1.Product.findAll();
-    let lastId = (yield database_1.PurchaseInvoiceHead.findOne({ limit: 1, order: [['id', 'DESC']] })).id;
-    if (!lastId) {
-        lastId = 0;
+    const head = yield database_1.PurchaseInvoiceHead.findOne({ limit: 1, order: [['id', 'DESC']] });
+    if (head) {
+        lastId = head.id;
     }
     res.status(200).render('cpAddPurchaseInvoice', { title: 'New Purchase Invoice', products, lastId });
 }));

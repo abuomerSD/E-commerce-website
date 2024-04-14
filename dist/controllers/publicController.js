@@ -92,7 +92,8 @@ exports.renderBestSellersPage = (0, asyncWrapper_1.asyncWrapper)((req, res) => _
  */
 exports.renderNewReleasePage = (0, asyncWrapper_1.asyncWrapper)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield database_1.Product.findAll({
-        order: sequelize_1.default.col('createdAt'),
+        // order: sequelize.col('createdAt'),
+        order: [['createdAt', 'DESC']],
         group: ['Product.id'],
     });
     const categories = yield database_1.Category.findAll();

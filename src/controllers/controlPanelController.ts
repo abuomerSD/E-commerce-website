@@ -110,11 +110,13 @@ export const renderDashboardPage = asyncWrapper(async (req:Request, res: Respons
  */
 
 export const renderAddPurchaseInvoicePage = asyncWrapper(async (req:Request, res: Response) => {
+    let lastId = 0 ;
     const products = await Product.findAll();
-    let lastId =  (await PurchaseInvoiceHead.findOne({ limit: 1, order: [['id', 'DESC']] })).id;
-    if (!lastId) {
-        lastId = 0;
+    const head = await PurchaseInvoiceHead.findOne({ limit: 1, order: [['id', 'DESC']] });
+    if(head) {
+        lastId = head.id;
     }
+
     res.status(200).render('cpAddPurchaseInvoice', { title: 'New Purchase Invoice' , products , lastId});
 });
 
