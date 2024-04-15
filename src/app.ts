@@ -8,6 +8,7 @@ import { publicCategoriesRoute, publicProductsRoute, publicRouter } from './rout
 import { isUser } from './middlewares/isUser';
 import { getAllCategories } from './controllers/categoryController';
 import { checkCategories } from './middlewares/checkCategories';
+import { isAdmin } from './middlewares/isAdmin';
 let cookieParser = require('cookie-parser')
 // let session = require('express-session');
 // let flash = require('connect-flash');
@@ -58,7 +59,7 @@ app.get('/', (req,res) => {
 app.use('/shop', publicRouter);
 
 // handle private routes
-app.use('/admin', adminRouter);
+app.use('/admin', isAdmin ,adminRouter);
 
 // handle public products route 
 // app.use('/products', publicProductsRoute);

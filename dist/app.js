@@ -22,6 +22,7 @@ const publicRoute_1 = require("./routes/publicRoute");
 const isUser_1 = require("./middlewares/isUser");
 const categoryController_1 = require("./controllers/categoryController");
 const checkCategories_1 = require("./middlewares/checkCategories");
+const isAdmin_1 = require("./middlewares/isAdmin");
 let cookieParser = require('cookie-parser');
 // let session = require('express-session');
 // let flash = require('connect-flash');
@@ -54,7 +55,7 @@ app.get('/', (req, res) => {
 });
 app.use('/shop', publicRoute_1.publicRouter);
 // handle private routes
-app.use('/admin', adminRoute_1.adminRouter);
+app.use('/admin', isAdmin_1.isAdmin, adminRoute_1.adminRouter);
 // handle public products route 
 // app.use('/products', publicProductsRoute);
 // handle categories products route 

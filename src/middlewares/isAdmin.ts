@@ -6,26 +6,34 @@ config({path:'../../.env'});
 
 const jwtSecret: any = process.env.JWT_SECRET
 
-export function isUser(req: Request, res: Response, next: NextFunction) {
+export function isAdmin(req: Request, res: Response, next: NextFunction) {
 
     const token: string | null = req.cookies.jwt;
     if (token) {
         verify(token, jwtSecret, async (err: any, decodedToken: any) => {
             if (err) {
-                console.log(err);
+                throw new Error(err);
                 res.locals.user = null;
                 next();
             }
             else {
                 const user = await User.findOne({where: {id: decodedToken.id}})
                 res.locals.user = user;
-                next()
+                if (user.role === 'admin') {
+                    next()
+                }
+                else {
+                    // throw new Error('This Route is only for Admins');
+                    res.send('This Route is only for Admins');
+                }
             }
         })
     }
     else {
         res.locals.user = null;
-        next();
+        // throw new Error("Please Login First");
+        res.send("Please Login First");
+        
     }
 
 }
