@@ -43,16 +43,17 @@ export const saveCartItem = asyncWrapper(async (req:Request, res: Response) => {
 export const deleteItemFromCart = asyncWrapper(async (req:Request, res: Response) => {
     const {productId} = req.body;
 
-    // deleting cart head if the cart only contain one element
     const headId = (await CartDetails.findOne({where: {productId}})).cartHeadId;
-    const cartDetails = await CartDetails.findAll({where: {productId}});
-    if (cartDetails.length === 1) {
-        await CartHead.destroy({where: {id: headId}})
-    }
+    const cartDetails = await CartDetails.findAll({where: {cartHeadId: headId}});
     
     // deleting the cart detail item
     await CartDetails.destroy({where: {productId}});
+    console.log('length: ', cartDetails.length);
     
+    // deleting cart head if the cart only contain one element
+    if (cartDetails.length === 1) {
+        await CartHead.destroy({where: {id: headId}})
+    }
     res.status(200).end();
 })
 
