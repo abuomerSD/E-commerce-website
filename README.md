@@ -5,6 +5,7 @@
 <h4> <span> · </span> <a href="https://github.com/abuomersd/E-commerce Website/blob/master/README.md"> Documentation </a> <span> · </span> <a href="https://github.com/abuomersd/E-commerce Website/issues"> Report Bug </a> <span> · </span> <a href="https://github.com/abuomersd/E-commerce Website/issues"> Request Feature </a> </h4>
 
 ![image](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![image](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 
 <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" />
 
