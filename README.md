@@ -1,6 +1,6 @@
 <div align='center'>
 
-<img src=imgs/1.png alt="logo" width=100 height=100 />
+<img src=imgs/1.png alt="logo" width=500 height=300 />
 
 <h4> <span> · </span> <a href="https://github.com/abuomersd/E-commerce Website/blob/master/README.md"> Documentation </a> <span> · </span> <a href="https://github.com/abuomersd/E-commerce Website/issues"> Report Bug </a> <span> · </span> <a href="https://github.com/abuomersd/E-commerce Website/issues"> Request Feature </a> </h4>
 
