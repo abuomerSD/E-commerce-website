@@ -50,6 +50,7 @@ Secondly: Operations available to regular users (customers):
 You can watch the explanatory video of the website from the following link.
 
 ### :camera: Screenshots
+<div align="center"> <a href=""><img src="./imgs/1.png" alt='image' width='800'/></a> </div>
 <div align="center"> <a href=""><img src="./imgs/2.png" alt='image' width='800'/></a> </div>
 <div align="center"> <a href=""><img src="./imgs/3.png" alt='image' width='800'/></a> </div>
 <div align="center"> <a href=""><img src="./imgs/4.png" alt='image' width='800'/></a> </div>
@@ -65,6 +66,7 @@ You can watch the explanatory video of the website from the following link.
 
 ### :key: Environment Variables
 To run this project, you will need to add the following environment variables to your .env file
+
 `PORT`
 
 `EMAIL`
@@ -77,6 +79,6 @@ To run this project, you will need to add the following environment variables to
 
 ## :handshake: Contact
 
-Eltayeb Ibrahim - [@twitter_handle](https://twitter.com/abuomerSD) - tayeb1293@yahoo.com
+Eltayeb Ibrahim - [twitter](https://twitter.com/abuomerSD) - tayeb1293@yahoo.com
 
 Project Link: [https://youtu.be/A_lohsaMfB4?si=uWzHTMBkIHIbp22C](https://youtu.be/A_lohsaMfB4?si=uWzHTMBkIHIbp22C)
