@@ -33,3 +33,15 @@ Secondly: Operations available to regular users (customers):
 You can watch the explanatory video of the website from the following link.
 
 https://youtu.be/A_lohsaMfB4?si=uWzHTMBkIHIbp22C
+
+
+<div align='center'>
+
+<img src=img/1.png alt="logo" width= height= />
+
+<h4> <span> · </span> <a href="https://github.com/abuomersd/E-commerce Website/blob/master/README.md"> Documentation </a> <span> · </span> <a href="https://github.com/abuomersd/E-commerce Website/issues"> Report Bug </a> <span> · </span> <a href="https://github.com/abuomersd/E-commerce Website/issues"> Request Feature </a> </h4>
+
+
+</div>
+
+## :star2: About the Project
