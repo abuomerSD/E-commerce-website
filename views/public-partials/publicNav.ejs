@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-dark" style="max-height: 19%; color: white;" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-dark" style="max-height: 19%; color: white; overflow: visible; width: 100%;" data-bs-theme="dark">
    <div class="container-fluid" style="color: white;">
      <i class="fa-solid fa-shop"> </i>
      <a class="navbar-brand" href="/">Step Online Shopping</a>
@@ -44,7 +44,7 @@
         </form>
         <% if(user) { %>
 
-         <div class="dropdown m-1">
+         <div class="dropdown m-1" style="overflow: initial;">
           <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <%= user.username %>
           </button>

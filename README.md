@@ -1,65 +1,35 @@
-# E-commerce-website
+This website is an online store for selling products of various kinds.
 
-product :
+Website Sections:
 
-- id
-- name
-- qty
-- cost
-- price
-- image
-- saledTimes
-- viewedTimes
-- categoryid
+Firstly: Operations available to the administrator:
 
-sales cart :
+1- Add a product
 
-- id
-- userid
-- date
-- products list [
-  productname,
-  product qty,
-  product total
-  ]
-- total
+2- Delete a product
 
-purchase bill:
+3- Modify a product
 
-- id
-- supplier id
-- date
-- products list [
-  id,
-  qty,
-  cost,
-  total
-  ]
-- total
+4- Add a product category
 
-category :
+5- Delete a product category
 
-- id
-- name
+6- Modify a product category
 
-customers:
+7- Add a user
 
-- id
-- username
-- password
-- phone number
-- email
+9- View sales invoices and download them as PDF files
 
-supplliers :
+10- Add purchase invoices, display them, and download them as PDF files
 
-- id
-- name
-- phone number
-- address
+Secondly: Operations available to regular users (customers):
 
-todo :
+1- Browse products
 
-- fix search single product issue
-<!-- - add active to current pagination link -->
-- // categoryid not updating
-- 404 page
+2- Add products to the cart
+
+3- Save the sales invoice and complete the payment electronically through the payment gateway (Moyasar)
+
+You can watch the explanatory video of the website from the following link.
+
+https://youtu.be/A_lohsaMfB4?si=uWzHTMBkIHIbp22C
